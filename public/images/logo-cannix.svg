@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 180" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+  <!-- C -->
+  <path d="M30 30 C10 30 10 150 30 150" stroke-dasharray="160" stroke-dashoffset="160"/>
+  <!-- A -->
+  <path d="M65 150 L85 30 L105 150 M73 90 L97 90" stroke-dasharray="180" stroke-dashoffset="180"/>
+  <!-- N (first) -->
+  <path d="M120 150 L120 30 L155 150 L155 30" stroke-dasharray="200" stroke-dashoffset="200"/>
+  <!-- N (second) -->
+  <path d="M170 150 L170 30 L205 150 L205 30" stroke-dasharray="200" stroke-dashoffset="200"/>
+  <!-- I -->
+  <path d="M220 30 L220 150" stroke-dasharray="120" stroke-dashoffset="120"/>
+  <!-- X -->
+  <path d="M240 30 L270 150 M270 30 L240 150" stroke-dasharray="180" stroke-dashoffset="180"/>
+  <!-- Equalizer bars -->
+  <g opacity="0">
+    <rect x="290" y="90" width="12" height="80" rx="2" fill="currentColor" stroke="none"/>
+    <rect x="310" y="60" width="12" height="110" rx="2" fill="currentColor" stroke="none"/>
+    <rect x="330" y="110" width="12" height="60" rx="2" fill="currentColor" stroke="none"/>
+    <rect x="350" y="40" width="12" height="130" rx="2" fill="currentColor" stroke="none"/>
+    <rect x="370" y="80" width="12" height="90" rx="2" fill="currentColor" stroke="none"/>
+  </g>
+</svg>

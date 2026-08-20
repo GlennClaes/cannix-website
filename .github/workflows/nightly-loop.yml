@@ -1,0 +1,41 @@
+name: Nightly SEO, Performance & Maintenance Loop
+
+on:
+  schedule:
+    - cron: "0 22 * * *" # 00:00 Belgische/Nederlandse tijd (22:00 UTC)
+  workflow_dispatch: { }
+
+jobs:
+  nightly-automation:
+    name: Run Full Nightly Automation Loop
+    runs-on: ubuntu-latest
+    timeout-minutes: 360 # Maximaal 6 uur draaien
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Execute Nightly Script
+        run: node scripts/nightly-loop.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+      - name: Push Obsidian Logs & Dashboard
+        run: |
+          git config --local user.email "nightly-bot@github.com"
+          git config --local user.name "Nightly Automation Bot"
+          git add obsidian-vault/
+          git commit -m "docs(nightly): update obsidian backlogs & dashboard [skip ci]" || echo "Geen log wijzigingen"
+          git push origin main

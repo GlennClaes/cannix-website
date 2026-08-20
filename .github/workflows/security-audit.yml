@@ -1,0 +1,52 @@
+name: Daily Security Breach & Vulnerability Audit
+
+on:
+  schedule:
+    - cron: "0 21 * * *" # Elke dag om 21:00 UTC (23:00 CET)
+  workflow_dispatch: { }
+
+jobs:
+  security-audit:
+    name: Audit CVEs & Update Backlog
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Run Security Audit
+        run: |
+          node -e '
+          const { execSync } = require("child_process");
+          const fs = require("fs");
+          const backlogPath = "./obsidian-vault/06-Security-Backlog.md";
+          
+          let content = "# Security Backlog\n\n> Audit gedraaid op " + new Date().toISOString() + "\n\n";
+          
+          try {
+            execSync("npm audit --json", { stdio: "pipe" });
+            content += "- [x] Geen bekende NPM kwetsbaarheden gevonden. #security\n";
+          } catch (err) {
+            const audit = JSON.parse(err.stdout.toString() || "{}");
+            const vulns = audit.vulnerabilities || {};
+            const keys = Object.keys(vulns);
+            content += `### Gevonden Vulnerabilities (${keys.length})\n`;
+            keys.forEach(k => {
+              content += `- [ ] Fix kwetsbaarheid in \`${k}\` (Severity: ${vulns[k].severity}) #security #priority-high\n`;
+            });
+          }
+          
+          fs.writeFileSync(backlogPath, content);
+          '
+
+      - name: Commit Security Updates
+        run: |
+          git config --local user.email "security-bot@github.com"
+          git config --local user.name "Security Audit Bot"
+          git add obsidian-vault/06-Security-Backlog.md
+          git commit -m "chore(security): update security backlog with audit findings" || echo "No changes"
+          git push origin main
