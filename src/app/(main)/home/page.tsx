@@ -10,10 +10,10 @@ import { SoundCloudIcon } from "@/app/components/SocialIcons";
 
 export default function HomePage() {
   const upcomingGig = {
-    date: "2026-08-28",
-    event: "Mexican Wave Party 2026",
-    location: "Antwerp Expo",
-    time: "22:00 - 06:00",
+    date: "2026-09-19",
+    event: "Kermisfuif Loksbergen",
+    location: "Loksbergen, Kerkplein",
+    time: "01:30 - 03:00",
   };
 
   return (

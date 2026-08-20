@@ -21,7 +21,7 @@ export default function ContactPage() {
               Laten we <span className="gradient-text">samenwerken</span>
             </h1>
             <p className="text-lg text-fg-muted leading-relaxed">
-              Heb je een clubavond, festival, private party of corporate event? Vul het formulier in en we nemen binnen 24u contact op.
+              Heb je een fuif, rave, festival, private party of ander event? Vul het formulier in en we nemen binnen 24u contact op.
             </p>
           </motion.div>
         </div>

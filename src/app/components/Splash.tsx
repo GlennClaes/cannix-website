@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { AnimatedLogo } from "./AnimatedLogo";
 import { Button } from "./ui";
@@ -115,8 +115,8 @@ export function Splash({ onComplete, hasSeenSplash }: SplashProps) {
             {/* Main Content - Central Logo Hero */}
             <motion.div
                 className="relative flex flex-col items-center gap-8 px-6 z-10 text-center max-w-4xl"
-                initial={prefersReducedMotion ? {} : { opacity: 0, y: 10, scale: 0.94 }}
-                animate={prefersReducedMotion ? { opacity: 1, y: 0, scale: 1 } : { opacity: 1, y: 0, scale: 1 }}
+                initial={prefersReducedMotion ? {} : { opacity: 0, scale: 0.94 }}
+                animate={prefersReducedMotion ? { opacity: 1, scale: 1 } : { opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             >
                 {/* Hero Animated Logo */}
@@ -128,8 +128,8 @@ export function Splash({ onComplete, hasSeenSplash }: SplashProps) {
 
                 {/* Subtitle Tagline */}
                 <motion.div
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
                     transition={{ delay: prefersReducedMotion ? 0 : 0.4, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                 >
                     <p className="text-base sm:text-xl font-medium tracking-[0.25em] uppercase text-fg-secondary">
@@ -137,27 +137,23 @@ export function Splash({ onComplete, hasSeenSplash }: SplashProps) {
                     </p>
                 </motion.div>
 
-                {/* Button Container: Only "Ga verder" button */}
-                <AnimatePresence>
-                    {showButton && (
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -10 }}
-                            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                            className="mt-6 flex items-center justify-center w-full"
-                        >
-                            <Button
-                                onClick={onComplete}
-                                glow={true}
-                                className="px-12 py-4 text-base font-bold uppercase tracking-wider cursor-pointer"
-                                aria-label="Ga verder naar de website"
-                            >
-                                Ga verder
-                            </Button>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
+                {/* Button Container - Always rendered to prevent layout shift */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: showButton ? 1 : 0 }}
+                    transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                    className="mt-6 flex items-center justify-center w-full"
+                    style={{ pointerEvents: showButton ? "auto" : "none" }}
+                >
+                    <Button
+                        onClick={onComplete}
+                        glow={true}
+                        className="px-12 py-4 text-base font-bold uppercase tracking-wider cursor-pointer"
+                        aria-label="Ga verder naar de website"
+                    >
+                        Ga verder
+                    </Button>
+                </motion.div>
             </motion.div>
         </motion.div>
     );
