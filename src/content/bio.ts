@@ -53,16 +53,15 @@ export const bio = {
     ],
 
     socials: {
-        instagram: "https://instagram.com/djcannix",
+        instagram: "https://www.instagram.com/cannix_dnb/",
         facebook: "https://facebook.com/djcannix",
-        soundcloud: "https://soundcloud.com/djcannix",
-        mixcloud: "https://mixcloud.com/djcannix",
+        soundcloud: "https://soundcloud.com/cannix_dnb",
         email: "mailto:bookings@cannix.be",
     },
 
     contact: {
         email: "bookings@cannix.be",
-        phone: "+32 4XX XX XX XX",
+        phone: "+32 471 74 36 77",
         management: "management@cannix.be",
     },
 };

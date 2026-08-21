@@ -3,14 +3,14 @@ import Link from "next/link";
 import { Shield } from "lucide-react";
 
 export const metadata: Metadata = {
-    title: "Privacybeleid | DJ Cannix",
-    description: "Het privacybeleid van DJ Cannix – hoe we omgaan met jouw persoonsgegevens.",
+    title: "Privacybeleid | Cannix",
+    description: "Het privacybeleid van Cannix – hoe we omgaan met jouw persoonsgegevens.",
 };
 
 const sections = [
     {
         title: "1. Wie zijn wij?",
-        content: "DJ Cannix (hierna 'wij', 'ons' of 'onze') is een muzikale onderneming actief als DJ en entertainer, gevestigd in België. Wij verwerken persoonsgegevens in het kader van boekingsaanvragen en communicatie.",
+        content: "Cannix (hierna 'wij', 'ons' of 'onze') is een muzikale onderneming actief als DJ en entertainer, gevestigd in België. Wij verwerken persoonsgegevens in het kader van boekingsaanvragen en communicatie.",
     },
     {
         title: "2. Welke gegevens verzamelen we?",

@@ -191,17 +191,14 @@ export default function AboutPage() {
                             {
                                 title: "Energie",
                                 desc: "Een goede set moet energie geven en ervoor zorgen dat de dansvloer blijft bewegen.",
-                                icon: "⚡",
                             },
                             {
                                 title: "Muziek",
                                 desc: "Van bekende meezingers tot DnB en hardere remixes. Ik blijf graag nieuwe muziek ontdekken.",
-                                icon: "🎵",
                             },
                             {
                                 title: "Publiek",
                                 desc: "Ik kijk naar de zaal en speel in op wat er op dat moment gebeurt. Het publiek bepaalt mee de richting.",
-                                icon: "👥",
                             },
                         ].map((value, i) => (
                             <motion.article
@@ -212,8 +209,6 @@ export default function AboutPage() {
                                 transition={{ delay: 0.1 * (i + 1) }}
                                 className="card p-8 text-center group"
                             >
-                                <div className="text-4xl mb-4">{value.icon}</div>
-
                                 <h3 className="font-display text-xl font-bold mb-2">
                                     {value.title}
                                 </h3>

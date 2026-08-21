@@ -72,7 +72,7 @@ export default function ContactPage() {
                     <span className="p-2 rounded-xl bg-bg-deep border border-border-subtle"><MapPin className="h-5 w-5" /></span>
                     <div>
                       <p className="text-sm text-fg-muted/60">Locatie</p>
-                      <p className="font-medium">Belgium (wereldwijd boekbaar)</p>
+                      <p className="font-medium">Belgium (Europees boekbaar)</p>
                     </div>
                   </div>
                 </div>
@@ -127,9 +127,9 @@ export default function ContactPage() {
             {[
               { q: "Hoe ver van tevoren moet ik boeken?", a: "Voor weekends en festivals raden we 2–3 maanden van tevoren aan. Weekdagen en last-minute zijn soms mogelijk, afhankelijk van de agenda." },
               { q: "Wat is de prijs van een set?", a: "Prijzen variëren op basis van duur, locatie, dag van de week, uitrusting en of het een club/festival/private event is. Stuur een aanvraag voor een maatwerk offerte." },
-              { q: "Breng je eigen apparatuur?", a: "Standaard speel ik op de house gear (CDJ-3000 / mixer). Voor specifieke riders of eigen controller/vinyl: overleg van tevoren." },
+              { q: "Breng je eigen apparatuur?", a: "Standaard speel ik op de house gear (CDJ-3000 / mixer). Voor specifieke riders of eigen controller: overleg van tevoren." },
               { q: "Speel je ook op bruiloften / corporate events?", a: "Absoluut. Ik heb ruime ervaring met private events en pas de muziek volledig aan aan de sfeer en gewensten van de organisator." },
-              { q: "Hoe ver reis je?", a: "Vanaf België wereldwijd. Reis- en verblijfkosten komen bovenop de Gage voor optredens buiten de Benelux." },
+              { q: "Hoe ver reis je?", a: "Vanaf België Europees. Reis- en verblijfkosten komen niet bovenop de prijs voor optredens buiten Europa." },
               { q: "Kan ik een demo of live set horen?", a: "Zeker. Bekijk de <a href='/videos' className='link'>Videos pagina</a> voor live opnames, of luister naar mixes op <a href={bio.socials.soundcloud} target='_blank' rel='noopener noreferrer' className='link'>SoundCloud</a>." },
             ].map((faq, i) => (
               <motion.article

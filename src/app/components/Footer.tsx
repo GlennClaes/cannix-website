@@ -41,7 +41,7 @@ export function Footer() {
               </a>
               <div className="flex items-center gap-2">
                 <MapPin className="h-4 w-4 text-accent-blue-bright flex-shrink-0" />
-                België (Wereldwijd)
+                België (Europa)
               </div>
             </address>
           </div>
@@ -59,7 +59,7 @@ export function Footer() {
         </div>
 
         <div className="mt-12 pt-8 border-t border-border-subtle/30 flex flex-col md:flex-row items-center justify-between gap-4 text-center">
-          <p className="text-fg-muted/60 text-sm">© {new Date().getFullYear()} DJ Cannix. Alle rechten voorbehouden.</p>
+          <p className="text-fg-muted/60 text-sm">© {new Date().getFullYear()} Cannix. Alle rechten voorbehouden.</p>
           <div className="flex items-center gap-6 text-sm text-fg-muted/60">
             <Link href="/privacy" className="hover:text-accent-blue-bright transition-colors">Privacy</Link>
             <Link href="/terms" className="hover:text-accent-blue-bright transition-colors">Voorwaarden</Link>

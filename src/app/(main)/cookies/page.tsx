@@ -3,8 +3,8 @@ import Link from "next/link";
 import { Cookie } from "lucide-react";
 
 export const metadata: Metadata = {
-    title: "Cookiebeleid | DJ Cannix",
-    description: "Hoe DJ Cannix omgaat met cookies en vergelijkbare technologieën.",
+    title: "Cookiebeleid | Cannix",
+    description: "Hoe Cannix omgaat met cookies en vergelijkbare technologieën.",
 };
 
 const cookieTypes = [

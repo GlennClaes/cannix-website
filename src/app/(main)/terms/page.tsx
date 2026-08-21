@@ -3,14 +3,14 @@ import Link from "next/link";
 import { FileText } from "lucide-react";
 
 export const metadata: Metadata = {
-    title: "Algemene Voorwaarden | DJ Cannix",
-    description: "Algemene voorwaarden van DJ Cannix voor boekingen en evenementen.",
+    title: "Algemene Voorwaarden | Cannix",
+    description: "Algemene voorwaarden van Cannix voor boekingen en evenementen.",
 };
 
 const sections = [
     {
         title: "1. Toepassingsgebied",
-        content: "Deze algemene voorwaarden zijn van toepassing op alle offertes, overeenkomsten en boekingen met DJ Cannix (hierna 'Artiest'). Door een boeking te bevestigen, aanvaardt de klant (hierna 'Opdrachtgever') deze voorwaarden volledig.",
+        content: "Deze algemene voorwaarden zijn van toepassing op alle offertes, overeenkomsten en boekingen met Cannix (hierna 'Artiest'). Door een boeking te bevestigen, aanvaardt de klant (hierna 'Opdrachtgever') deze voorwaarden volledig.",
     },
     {
         title: "2. Boeking & Bevestiging",
@@ -42,7 +42,7 @@ const sections = [
     },
     {
         title: "9. Toepasselijk recht",
-        content: "Op alle overeenkomsten met DJ Cannix is het Belgisch recht van toepassing. Geschillen worden voorgelegd aan de bevoegde rechtbanken van het arrondissement van de vestigingsplaats van de Artiest.",
+        content: "Op alle overeenkomsten met Cannix is het Belgisch recht van toepassing. Geschillen worden voorgelegd aan de bevoegde rechtbanken van het arrondissement van de vestigingsplaats van de Artiest.",
     },
 ];
 
