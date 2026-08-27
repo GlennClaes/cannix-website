@@ -40,6 +40,8 @@ Gebruik `onboarding@resend.dev` niet voor productie. Die afzender is alleen gesc
    - **Install command:** `npm ci`
    - **Build command:** `npm run build`
    - **Node.js version:** 22
+
+De repository gebruikt bewust Node.js 22 (`package.json` en `.nvmrc`). Dit voorkomt dat Vercel automatisch naar een toekomstige major Node-versie overschakelt.
 5. Voeg in **Settings → Environment Variables** deze variabelen toe:
 
 | Variabele | Production | Preview | Development |
@@ -104,6 +106,9 @@ De repository bevat aanvullende workflows voor:
 - Dagelijkse npm security audit
 - Nightly SEO/performance-maintenance loop
 - Automatische Dependabot-updates voor npm en GitHub Actions
+- GitHub Releases via `.github/workflows/release.yml`
+
+Dependabot groepeert compatibele updates. Major updates voor Zod en Lucide worden bewust niet automatisch geopend omdat die API-wijzigingen kunnen bevatten; voer die alleen uit na een gerichte migratie en volledige test.
 
 Voor workflows die logs naar de repository terugschrijven moet GitHub Actions schrijfrechten hebben:
 

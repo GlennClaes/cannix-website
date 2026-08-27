@@ -16,9 +16,10 @@ export default function GalleryPage() {
   const [lightboxIndex, setLightboxIndex] = useState(0);
 
   const filteredItems = activeYear === "All" ? galleryItems : galleryItems.filter((item) => item.year === activeYear);
+  const lightboxItem = filteredItems[lightboxIndex];
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (!lightboxOpen) return;
+    if (!lightboxOpen || filteredItems.length === 0) return;
     if (e.key === "Escape") setLightboxOpen(false);
     if (e.key === "ArrowLeft") setLightboxIndex((i) => (i - 1 + filteredItems.length) % filteredItems.length);
     if (e.key === "ArrowRight") setLightboxIndex((i) => (i + 1) % filteredItems.length);
@@ -72,7 +73,7 @@ export default function GalleryPage() {
               transition={{ delay: index * 0.05, duration: 0.4 }}
               className="group relative aspect-[4/5] overflow-hidden rounded-xl cursor-zoom-in"
               role="listitem"
-              onClick={() => { setLightboxIndex(galleryItems.indexOf(item)); setLightboxOpen(true); }}
+              onClick={() => { setLightboxIndex(filteredItems.indexOf(item)); setLightboxOpen(true); }}
             >
               <Card className="h-full border-0 overflow-hidden">
                 <div className="relative h-full">
@@ -95,7 +96,7 @@ export default function GalleryPage() {
                         </p>
                       </div>
                       <button
-                        onClick={(e) => { e.stopPropagation(); setLightboxIndex(galleryItems.indexOf(item)); setLightboxOpen(true); }}
+                        onClick={(e) => { e.stopPropagation(); setLightboxIndex(filteredItems.indexOf(item)); setLightboxOpen(true); }}
                         className="p-2 rounded-xl bg-bg-surface/90 backdrop-blur border border-border-subtle hover:border-accent-blue/50 hover:bg-bg-surface transition-colors"
                         aria-label={`Vergroot: ${item.alt}`}
                       >
@@ -118,7 +119,7 @@ export default function GalleryPage() {
 
       {/* Lightbox */}
       <AnimatePresence>
-        {lightboxOpen && (
+        {lightboxOpen && lightboxItem && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -154,8 +155,8 @@ export default function GalleryPage() {
             >
               <div className="relative w-full h-full" style={{ maxHeight: "85vh", aspectRatio: "auto" }}>
                 <Image
-                  src={filteredItems[lightboxIndex].src}
-                  alt={filteredItems[lightboxIndex].alt}
+                  src={lightboxItem.src}
+                  alt={lightboxItem.alt}
                   width={1200}
                   height={800}
                   className="mx-auto max-h-[80vh] max-w-full rounded-xl object-contain shadow-2xl"
@@ -195,10 +196,10 @@ export default function GalleryPage() {
               className="absolute bottom-4 left-1/2 -translate-x-1/2 text-center px-4 max-w-2xl"
               onClick={(e) => e.stopPropagation()}
             >
-              <p className="font-semibold text-white text-sm sm:text-base">{filteredItems[lightboxIndex].event}</p>
+              <p className="font-semibold text-white text-sm sm:text-base">{lightboxItem.event}</p>
               <p className="text-sm text-white/60 flex items-center justify-center gap-2 mt-1">
-                <span className="px-2 py-0.5 rounded-full bg-white/10 backdrop-blur text-xs">{filteredItems[lightboxIndex].year}</span>
-                {filteredItems[lightboxIndex].location && <span>· {filteredItems[lightboxIndex].location}</span>}
+                <span className="px-2 py-0.5 rounded-full bg-white/10 backdrop-blur text-xs">{lightboxItem.year}</span>
+                {lightboxItem.location && <span>· {lightboxItem.location}</span>}
               </p>
               <p className="text-xs text-white/40 mt-1">{lightboxIndex + 1} / {filteredItems.length}</p>
             </motion.div>

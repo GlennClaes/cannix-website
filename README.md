@@ -15,7 +15,7 @@ Productie-instellingen voor Resend, Vercel, DNS, CI/CD, Docker en monitoring sta
 - ⚡ **Performance** - Next.js Image optimalisatie, lazy loading, blur placeholders
 - ♿ **Accessibility** - Semantic HTML, focus states, reduced motion, ARIA labels
 - 🔄 **CI/CD** - GitHub Actions-controles + native Vercel Preview/Production deployments
-- 🚀 **Releases** - GitHub Releases via semver-tags (`v1.0.0`)
+- 🚀 **Releases** - GitHub Releases via `.github/workflows/release.yml` en semver-tags (`v1.0.0`)
 
 ## Tech Stack
 
@@ -25,6 +25,7 @@ Productie-instellingen voor Resend, Vercel, DNS, CI/CD, Docker en monitoring sta
 - **Forms:** React Hook Form + Zod
 - **Icons:** Lucide React
 - **Deployment:** Vercel (native Git integration)
+- **Runtime:** Node.js 22
 
 ## Getting Started
 
