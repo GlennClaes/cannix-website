@@ -130,7 +130,7 @@ export default function RootLayout({
             className={`${syne.variable} ${dmSans.variable} ${jetBrainsMono.variable}`}
             data-scroll-behavior="smooth"
         >
-        <body>
+        <body suppressHydrationWarning>
         <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}

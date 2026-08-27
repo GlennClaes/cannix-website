@@ -32,7 +32,7 @@ export default function HomePage() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-blue-bright opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-accent-blue-bright"></span>
               </span>
-              Volgende gig: {new Date(upcomingGig.date).toLocaleDateString("nl-BE", { weekday: "long", day: "numeric", month: "long" })}
+              Volgende gig: {new Date(`${upcomingGig.date}T12:00:00+02:00`).toLocaleDateString("nl-BE", { weekday: "long", day: "numeric", month: "long", timeZone: "Europe/Brussels" })}
             </span>
 
             <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6">
@@ -103,7 +103,7 @@ export default function HomePage() {
                 </div>
                 <div className="flex min-w-0 items-start gap-2">
                   <Calendar className="mt-0.5 h-5 w-5 shrink-0 text-accent-blue-bright" />
-                  <span className="min-w-0 break-words">{new Date(upcomingGig.date).toLocaleDateString("nl-BE", { weekday: "long", day: "numeric", month: "long" })}</span>
+                  <span className="min-w-0 break-words">{new Date(`${upcomingGig.date}T12:00:00+02:00`).toLocaleDateString("nl-BE", { weekday: "long", day: "numeric", month: "long", timeZone: "Europe/Brussels" })}</span>
                 </div>
                 <div className="flex min-w-0 items-start gap-2">
                   <Users className="mt-0.5 h-5 w-5 shrink-0 text-accent-blue-bright" />
