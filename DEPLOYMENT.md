@@ -68,13 +68,14 @@ https://cannix.be/api/health
 
 ## 5. Automatische deployments
 
-Gebruik de native GitHub-integratie van Vercel. Een aparte Vercel-deploymentworkflow is dan niet nodig.
+Gebruik de native GitHub-integratie van Vercel voor de eigenlijke deployment. De aparte `CD - Deployment Verification` workflow controleert daarna automatisch de live homepage, healthcheck, robots.txt en sitemap.
 
 - Pull request naar `main`: automatische Preview Deployment
 - Push naar `main`: automatische Production Deployment
+- Na een geslaagde CI-run: automatische production smoke test
 - Vercel maakt automatisch HTTPS, build caching en rollbackmogelijkheden beschikbaar
 
-Je hebt voor deze aanpak geen `VERCEL_TOKEN`, `VERCEL_ORG_ID` of `VERCEL_PROJECT_ID` nodig in GitHub Secrets.
+Je hebt voor deze aanpak geen `VERCEL_TOKEN`, `VERCEL_ORG_ID` of `VERCEL_PROJECT_ID` nodig in GitHub Secrets. De CD-workflow controleert de publieke URL `https://cannix.be`.
 
 ## 6. GitHub Actions CI
 

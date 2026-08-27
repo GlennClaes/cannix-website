@@ -1,0 +1,50 @@
+name: CD - Deployment Verification
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      url:
+        description: "Production URL to verify"
+        required: false
+        default: "https://cannix.be"
+        type: string
+
+concurrency:
+  group: cd-production
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  verify-production:
+    name: Verify Vercel production deployment
+    if: ${{ github.event_name == 'workflow_dispatch' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      PRODUCTION_URL: ${{ inputs.url || 'https://cannix.be' }}
+    steps:
+      - name: Wait for Vercel deployment
+        run: sleep 20
+
+      - name: Check homepage
+        run: curl --fail --silent --show-error --location --max-time 20 "$PRODUCTION_URL"
+
+      - name: Check health endpoint
+        run: |
+          for attempt in 1 2 3 4 5; do
+            if curl --fail --silent --show-error --location --max-time 20 "$PRODUCTION_URL/api/health"; then
+              exit 0
+            fi
+            sleep 10
+          done
+          exit 1
+
+      - name: Check SEO endpoints
+        run: |
+          curl --fail --silent --show-error --location --max-time 20 "$PRODUCTION_URL/robots.txt"
+          curl --fail --silent --show-error --location --max-time 20 "$PRODUCTION_URL/sitemap.xml"
