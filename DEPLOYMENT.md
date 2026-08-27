@@ -113,7 +113,18 @@ Voor workflows die logs naar de repository terugschrijven moet GitHub Actions sc
 
 Gebruik schrijfrechten alleen omdat de security- en nightly-workflows hun rapporten naar `obsidian-vault/` schrijven.
 
-## 8. Lokale configuratie
+## 8. Releases
+
+Maak een release door een semver-tag naar GitHub te pushen:
+
+```bash
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+De release-workflow maakt automatisch een GitHub Release met gegenereerde release notes. De tag moet het formaat `vMAJOR.MINOR.PATCH` gebruiken.
+
+## 9. Lokale configuratie
 
 Maak lokaal `.env.local` aan. Dit bestand mag nooit naar GitHub worden gepusht.
 
@@ -133,7 +144,7 @@ npm run dev
 
 Open daarna [http://localhost:3000](http://localhost:3000).
 
-## 9. Contactformulier testen
+## 10. Contactformulier testen
 
 Test na een deployment:
 
@@ -154,7 +165,7 @@ Verwachte API-statussen:
 | `502` | Resend kon de mail niet versturen |
 | `503` | Mailomgeving ontbreekt in Vercel |
 
-## 10. Healthcheck en monitoring
+## 11. Healthcheck en monitoring
 
 De endpoint `/api/health` geeft JSON terug:
 
@@ -173,7 +184,7 @@ https://cannix.be/api/health
 
 Vercel toont daarnaast deploymentlogs, function logs en runtime errors in het projectdashboard.
 
-## 11. Docker lokaal gebruiken
+## 12. Docker lokaal gebruiken
 
 Docker is niet nodig voor Vercel, maar kan lokaal gebruikt worden om de productiecontainer te testen:
 
@@ -196,7 +207,7 @@ $env:MAIL_FROM="Cannix Website <bookings@cannix.be>"
 docker compose up --build
 ```
 
-## 12. SEO-controle na livegang
+## 13. SEO-controle na livegang
 
 Controleer na de eerste productie-deployment:
 
@@ -208,7 +219,7 @@ Controleer na de eerste productie-deployment:
 6. Controleer de homepage en contactpagina met Rich Results Test en PageSpeed Insights.
 7. Controleer Open Graph previews met een social sharing debugger.
 
-## 13. Gratis hosting: verwachtingen
+## 14. Gratis hosting: verwachtingen
 
 De basisopstelling kan gratis draaien:
 
@@ -219,7 +230,7 @@ De basisopstelling kan gratis draaien:
 
 Controleer altijd de actuele limieten en gebruiksvoorwaarden. Een commerciële website kan buiten de voorwaarden van een gratis Hobby-plan vallen.
 
-## 14. Productie-checklist
+## 15. Productie-checklist
 
 - [ ] Resend-account aangemaakt
 - [ ] `cannix.be` geverifieerd in Resend

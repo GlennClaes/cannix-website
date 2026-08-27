@@ -1,14 +1,22 @@
-name: Auto Changelog & Release
+name: Release
 
 on:
   push:
-    branches: [ main ]
     tags:
-      - 'v*'
+      - "v*.*.*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Existing version tag to release"
+        required: true
+        type: string
+
+permissions:
+  contents: write
 
 jobs:
-  changelog:
-    name: Generate Changelog
+  release:
+    name: Create GitHub Release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -16,19 +24,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - name: Create release
+        uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65
         with:
-          node-version: "22"
-
-      - name: Generate Changelog
-        id: changelog
-        run: |
-          npm install -g conventional-changelog-cli
-          conventional-changelog -p angular -i CHANGELOG.md -s -r 0      - name: Create Release
-        uses: softprops/action-gh-release@v1
-        with:
+          tag_name: ${{ github.event.inputs.tag || github.ref_name }}
           generate_release_notes: true
-          body_path: CHANGELOG.md
+          make_latest: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

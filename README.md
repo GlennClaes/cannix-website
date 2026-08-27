@@ -2,6 +2,8 @@
 
 Professionele Next.js website voor DJ Cannix met splash animatie, portfolio, contactformulier en deployment naar Vercel.
 
+Productie-instellingen voor Resend, Vercel, DNS, CI/CD, Docker en monitoring staan in [DEPLOYMENT.md](./DEPLOYMENT.md).
+
 ## Features
 
 - 🎬 **Splash pagina** - Full-screen entry met logo animatie, achtergrondvideo en "Ga verder" CTA
@@ -12,7 +14,8 @@ Professionele Next.js website voor DJ Cannix met splash animatie, portfolio, con
 - 📝 **Contact formulier** - React Hook Form + Zod validatie, Resend API route
 - ⚡ **Performance** - Next.js Image optimalisatie, lazy loading, blur placeholders
 - ♿ **Accessibility** - Semantic HTML, focus states, reduced motion, ARIA labels
-- 🔄 **CI/CD** - GitHub Actions → Vercel (preview + production)
+- 🔄 **CI/CD** - GitHub Actions-controles + native Vercel Preview/Production deployments
+- 🚀 **Releases** - GitHub Releases via semver-tags (`v1.0.0`)
 
 ## Tech Stack
 
@@ -38,7 +41,7 @@ git clone <repository-url>
 cd cannix-website
 
 # Install dependencies
-npm install
+npm ci
 
 # Copy environment template
 cp .env.example .env.local
@@ -101,7 +104,8 @@ src/
 │   │   ├── videos/page.tsx     # Video grid + modal player
 │   │   └── contact/page.tsx    # Contact form + FAQ
 │   └── api/
-│       └── contact/route.ts    # Serverless form handler
+│       ├── contact/route.ts    # Resend form handler
+│       └── health/route.ts     # Monitoring healthcheck
 ├── lib/
 │   ├── utils.ts                # cn(), formatters
 │   └── validations.ts          # Zod schemas
@@ -143,7 +147,7 @@ Bewerk `src/app/globals.css` → `@theme` blok voor kleuren, typografie, spacing
 
 ### Forms
 
-De contact API route (`src/app/api/contact/route.ts`) logt naar console. Vervang met echte email service (Resend, Nodemailer, Formspree).
+De contact API route (`src/app/api/contact/route.ts`) verstuurt aanvragen via Resend. Configureer `RESEND_API_KEY`, `MAIL_TO` en `MAIL_FROM` in `.env.local` of Vercel.
 
 ## Deployment
 
