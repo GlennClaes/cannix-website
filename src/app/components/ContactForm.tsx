@@ -31,6 +31,7 @@ export function ContactForm() {
         resolver: zodResolver(contactSchema),
         defaultValues: {
             eventType: "",
+            website: "",
         },
     });
 
@@ -54,6 +55,10 @@ export function ContactForm() {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" noValidate>
+            <div className="hidden" aria-hidden="true">
+                <label htmlFor="website">Website</label>
+                <input id="website" tabIndex={-1} autoComplete="off" {...register("website")} />
+            </div>
             <div className="grid sm:grid-cols-2 gap-6">
                 <Input
                     label="Naam"

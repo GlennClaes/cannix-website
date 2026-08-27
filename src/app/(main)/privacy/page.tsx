@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Shield } from "lucide-react";
 
 export const metadata: Metadata = {
-    title: "Privacybeleid | Cannix",
+    title: "Privacybeleid",
     description: "Het privacybeleid van Cannix – hoe we omgaan met jouw persoonsgegevens.",
 };
 

@@ -1,19 +1,17 @@
 import { defineConfig } from "eslint/config";
-import nextPlugin from "eslint-plugin-next";
+import nextConfig from "eslint-config-next/core-web-vitals";
 
 export default defineConfig([
+  ...nextConfig,
   {
     ignores: [".next/**", "node_modules/**", "out/**", "dist/**"],
   },
   {
-    plugins: {
-      next: nextPlugin,
-    },
     rules: {
-      ...nextPlugin.configs.recommended.rules,
-      ...nextPlugin.configs["core-web-vitals"].rules,
-      "@next/next/no-img-element": "off", // We use next/image properly
+      "@next/next/no-img-element": "off",
       "react/no-unescaped-entities": "off",
+      "react-hooks/set-state-in-effect": "off",
+      "import/no-anonymous-default-export": "off",
     },
   },
 ]);

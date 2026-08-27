@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Play, Calendar, MapPin, Users, Instagram, Facebook } from "lucide-react";
+import { Calendar, MapPin, Users, Instagram, Facebook } from "lucide-react";
 import { bio } from "@/content/bio";
 import { Button } from "@/app/components/ui";
 import { SoundCloudIcon } from "@/app/components/SocialIcons";
@@ -47,11 +47,6 @@ export default function HomePage() {
               <Link href="/contact" className="w-full sm:w-auto">
                 <Button glow={true} className="w-full sm:w-auto px-8 py-3.5 text-base font-bold uppercase tracking-wider">
                   Boek Cannix
-                </Button>
-              </Link>
-              <Link href="/videos" className="w-full sm:w-auto">
-                <Button variant="secondary" className="w-full sm:w-auto px-8 py-3.5 text-base font-semibold">
-                  Bekijk Videos
                 </Button>
               </Link>
             </div>
@@ -163,15 +158,14 @@ export default function HomePage() {
             </div>
             <div className="relative mt-4 max-w-none rounded-2xl border border-border-subtle/60 bg-bg-surface/90 p-4 shadow-2xl backdrop-blur-xl sm:p-6 md:absolute md:-bottom-8 md:-right-8 md:mt-0 md:max-w-xs">
               <div className="flex items-center gap-3 mb-3">
-                <div className="p-3 rounded-xl bg-accent-blue/15"><Play className="h-6 w-6 text-accent-blue-bright" /></div>
                 <div>
-                  <p className="font-semibold text-fg-primary">Live set beschikbaar</p>
-                  <p className="text-sm text-fg-muted">PEMP 2024 - Full set</p>
+                  <p className="font-semibold text-fg-primary">Boekingen open</p>
+                  <p className="text-sm text-fg-muted">Vraag beschikbaarheid aan</p>
                 </div>
               </div>
-              <Link href="/videos">
+              <Link href="/contact">
                 <Button fullWidth={true} variant="secondary" className="py-2 text-xs font-semibold">
-                  Bekijk op Videos
+                  Contact opnemen
                 </Button>
               </Link>
             </div>

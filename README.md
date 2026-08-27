@@ -1,6 +1,6 @@
 # DJ Cannix Website
 
-Professionele Next.js 15 website voor DJ Cannix met splash animatie, portfolio, videos, contact formulier en CI/CD naar Vercel.
+Professionele Next.js website voor DJ Cannix met splash animatie, portfolio, contactformulier en deployment naar Vercel.
 
 ## Features
 
@@ -9,19 +9,19 @@ Professionele Next.js 15 website voor DJ Cannix met splash animatie, portfolio, 
 - 📱 **Responsive** - Mobile-first met hamburger menu, touch-friendly
 - 🖼️ **Gallery** - Masonry grid met lightbox, filter op jaar
 - 🎥 **Videos** - Grid met modale player (YouTube/Vimeo/MP4)
-- 📝 **Contact formulier** - React Hook Form + Zod validatie, API route
+- 📝 **Contact formulier** - React Hook Form + Zod validatie, Resend API route
 - ⚡ **Performance** - Next.js Image optimalisatie, lazy loading, blur placeholders
 - ♿ **Accessibility** - Semantic HTML, focus states, reduced motion, ARIA labels
 - 🔄 **CI/CD** - GitHub Actions → Vercel (preview + production)
 
 ## Tech Stack
 
-- **Framework:** Next.js 15 (App Router, TypeScript, Turbopack)
+- **Framework:** Next.js 16 (App Router, TypeScript, Turbopack)
 - **Styling:** Tailwind CSS v4 (@theme directive)
 - **Animation:** Framer Motion
 - **Forms:** React Hook Form + Zod
 - **Icons:** Lucide React
-- **Deployment:** Vercel
+- **Deployment:** Vercel (native Git integration)
 
 ## Getting Started
 
@@ -47,9 +47,10 @@ cp .env.example .env.local
 ### Environment Variables
 
 ```env
-# Optional: Formspree/email service
-FORMSPREE_ENDPOINT=your_formspree_endpoint
-RESEND_API_KEY=your_resend_key
+# Resend (required for the contact form in production)
+RESEND_API_KEY=re_...
+MAIL_TO=bookings@cannix.be
+MAIL_FROM=Cannix Website <bookings@cannix.be>
 
 # Optional: Analytics
 NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
@@ -150,13 +151,21 @@ De contact API route (`src/app/api/contact/route.ts`) logt naar console. Vervang
 
 1. Push naar GitHub
 2. Importeer in Vercel
-3. Voeg environment variables toe:
-   - `VERCEL_TOKEN` (uit Vercel account settings)
-   - `VERCEL_ORG_ID` (uit Vercel project settings)
-   - `VERCEL_PROJECT_ID` (uit Vercel project settings)
-4. GitHub Actions deployt automatisch:
-   - **Pull Requests** → Preview deployment
-   - **Push to main** → Production deployment
+3. Voeg in Vercel Project Settings → Environment Variables toe voor Preview en Production:
+   - `RESEND_API_KEY`
+   - `MAIL_TO`
+   - `MAIL_FROM` (een afzender op een in Resend geverifieerd domein)
+4. Koppel het GitHub-repository aan Vercel. Vercel maakt automatisch preview deployments voor pull requests en een production deployment bij een push naar `main`.
+
+Resend vereist eerst domeinverificatie (SPF/DKIM). Gebruik niet `onboarding@resend.dev` voor productie; die afzender is alleen bedoeld voor testen.
+
+### Docker
+
+```bash
+docker compose up --build
+```
+
+De compose-configuratie werkt zonder `.env.local`; zet `RESEND_API_KEY`, `MAIL_TO` en `MAIL_FROM` als environment variables voor een werkende mailflow.
 
 ### Andere Platforms
 

@@ -5,6 +5,9 @@ on:
     - cron: "0 22 * * *" # 00:00 Belgische/Nederlandse tijd (22:00 UTC)
   workflow_dispatch: { }
 
+permissions:
+  contents: write
+
 jobs:
   nightly-automation:
     name: Run Full Nightly Automation Loop

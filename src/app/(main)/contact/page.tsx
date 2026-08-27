@@ -54,7 +54,7 @@ export default function ContactPage() {
               <Card className="p-6">
                 <h3 className="font-display text-xl font-bold mb-6">Direct contact</h3>
                 <div className="space-y-4">
-                  <a href={bio.contact.email} className={cn("flex min-w-0 items-start gap-3 text-fg-muted hover:text-accent-blue-bright transition-colors group")}>
+                  <a href={`mailto:${bio.contact.email}`} className={cn("flex min-w-0 items-start gap-3 text-fg-muted hover:text-accent-blue-bright transition-colors group")}>
                     <span className={cn("p-2 rounded-xl bg-accent-blue/10 border border-accent-blue/30 flex-shrink-0 group-hover:bg-accent-blue/20")}><Mail className="h-5 w-5 text-accent-blue-bright" /></span>
                     <div className="min-w-0">
                       <p className="text-sm text-fg-muted/60">Boekingen & Info</p>
@@ -130,7 +130,7 @@ export default function ContactPage() {
               { q: "Breng je eigen apparatuur?", a: "Standaard speel ik op de house gear (CDJ-3000 / mixer). Voor specifieke riders of eigen controller: overleg van tevoren." },
               { q: "Speel je ook op bruiloften / corporate events?", a: "Absoluut. Ik heb ruime ervaring met private events en pas de muziek volledig aan aan de sfeer en gewensten van de organisator." },
               { q: "Hoe ver reis je?", a: "Vanaf België Europees. Reis- en verblijfkosten komen niet bovenop de prijs voor optredens buiten Europa." },
-              { q: "Kan ik een demo of live set horen?", a: "Zeker. Bekijk de <a href='/videos' className='link'>Videos pagina</a> voor live opnames, of luister naar mixes op <a href={bio.socials.soundcloud} target='_blank' rel='noopener noreferrer' className='link'>SoundCloud</a>." },
+              { q: "Kan ik een demo of live set horen?", a: "Zeker. Luister naar mixes en producties op SoundCloud of vraag een live demo aan via het formulier." },
             ].map((faq, i) => (
               <motion.article
                 key={i}

@@ -1,8 +1,8 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "npm run build",
-  "devCommand": "next dev --turbopack",
-  "installCommand": "npm install",
+  "devCommand": "npm run dev",
+  "installCommand": "npm ci",
   "framework": "nextjs",
   "cleanUrls": true,
   "trailingSlash": false,
@@ -35,14 +35,8 @@
           "value": "camera=(), microphone=(), geolocation=(), browsing-topics=()"
         },
         {
-          "key": "X-XSS-Protection",
-          "value": "1; mode=block"
-        },
-        {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.youtube.com https://s.ytimg.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline'
-          https://fonts.googleapis.com; img-src 'self' data: blob: https:; font-src 'self' https://fonts.gstatic.com data:; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com; connect-src 'self'
-          https://www.google-analytics.com;"
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.youtube.com https://s.ytimg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https:; font-src 'self' https://fonts.gstatic.com data:; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com; connect-src 'self'; form-action 'self'; base-uri 'self'; frame-ancestors 'none';"
         }
       ]
     },

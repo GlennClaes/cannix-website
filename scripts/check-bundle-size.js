@@ -2,7 +2,9 @@ const fs = require('fs');
 const path = require('path');
 
 const BUILD_DIR = path.join(__dirname, '../.next');
-const MAX_JS_SIZE = 250 * 1024; // 250 KBfunction checkBundleSize() {
+const MAX_JS_SIZE = 250 * 1024; // 250 KB
+
+function checkBundleSize() {
 const serverDir = path.join(BUILD_DIR, 'server');
 const staticDir = path.join(BUILD_DIR, 'static');
 

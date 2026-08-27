@@ -1,0 +1,17 @@
+{
+  "name": "Cannix",
+  "short_name": "Cannix",
+  "description": "Belgische DJ en producer voor fuiven, clubs, private events en festivals.",
+  "start_url": "/home",
+  "display": "standalone",
+  "background_color": "#03050A",
+  "theme_color": "#1A5FD8",
+  "icons": [
+    {
+      "src": "/images/logo_cannix.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

@@ -5,6 +5,9 @@ on:
     - cron: "0 21 * * *" # Elke dag om 21:00 UTC (23:00 CET)
   workflow_dispatch: { }
 
+permissions:
+  contents: write
+
 jobs:
   security-audit:
     name: Audit CVEs & Update Backlog
@@ -17,6 +20,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "22"
+
+      - name: Install dependencies
+        run: npm ci
 
       - name: Run Security Audit
         run: |

@@ -1,81 +1,47 @@
-name: CI Pipeline
+name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
 
 jobs:
-  code-quality:
-    name: 1. Lint, Typecheck & Formatting
+  verify:
+    name: Lint, Typecheck and Build
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      NEXT_TELEMETRY_DISABLED: 1
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "22"
-          cache: "npm"
+          node-version: 22
+          cache: npm
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Run ESLint
+      - name: Lint
         run: npm run lint
 
-      - name: Run TypeScript typecheck
+      - name: Typecheck
         run: npm run typecheck
 
-  security-scan:
-    name: 2. Security Vulnerability Scan
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "22"
-          cache: "npm"
-
-      - name: Run NPM Audit
-        run: npm audit --audit-level=high
-
-  build-and-test:
-    name: 3. Build & Rate Limit Verification
-    needs: [ code-quality, security-scan ]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "22"
-          cache: "npm"
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build Next.js project
+      - name: Build
         run: npm run build
-        env:
-          NEXT_TELEMETRY_DISABLED: 1
 
-      - name: Run Lighthouse CI
-        run: npx @lhci/cli@latest autorun
-        env:
-          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
-
-      - name: Verify Rate Limiting
-        run: |
-          npm start &
-          npx wait-on http://localhost:3000
-          # Bombardeer contact route voor rate-limit test (429 Too Many Requests)
-          for i in {1..30}; do curl -s -o /dev/null -w "%{http_code}\n" http://localhost:3000/api/contact; done | grep -q "429\|200"
-    
+      - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=high

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { FileText } from "lucide-react";
 
 export const metadata: Metadata = {
-    title: "Algemene Voorwaarden | Cannix",
+    title: "Algemene voorwaarden",
     description: "Algemene voorwaarden van Cannix voor boekingen en evenementen.",
 };
 

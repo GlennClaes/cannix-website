@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Cookie } from "lucide-react";
 
 export const metadata: Metadata = {
-    title: "Cookiebeleid | Cannix",
+    title: "Cookiebeleid",
     description: "Hoe Cannix omgaat met cookies en vergelijkbare technologieën.",
 };
 

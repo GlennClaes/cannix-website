@@ -31,7 +31,7 @@ export function Footer() {
           <div className="flex flex-col items-center md:items-start">
             <h3 className="font-display text-lg font-bold mb-4">Contact</h3>
             <address className="not-italic space-y-3 text-fg-muted text-sm flex flex-col items-center md:items-start">
-              <a href={bio.contact.email} className="flex max-w-full items-center gap-2 break-all hover:text-accent-blue-bright transition-colors">
+              <a href={`mailto:${bio.contact.email}`} className="flex max-w-full items-center gap-2 break-all hover:text-accent-blue-bright transition-colors">
                 <Mail className="h-4 w-4 text-accent-blue-bright flex-shrink-0" />
                 {bio.contact.email}
               </a>
@@ -52,7 +52,6 @@ export function Footer() {
               <Link href="/home" className="block text-fg-muted hover:text-accent-blue-bright transition-colors">Home</Link>
               <Link href="/about" className="block text-fg-muted hover:text-accent-blue-bright transition-colors">Over Cannix</Link>
               <Link href="/gallery" className="block text-fg-muted hover:text-accent-blue-bright transition-colors">Foto's</Link>
-              <Link href="/videos" className="block text-fg-muted hover:text-accent-blue-bright transition-colors">Videos</Link>
               <Link href="/contact" className="block text-fg-muted hover:text-accent-blue-bright transition-colors">Contact & Boekingen</Link>
             </nav>
           </div>
