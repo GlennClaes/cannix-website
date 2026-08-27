@@ -146,22 +146,22 @@ export default function AboutPage() {
                                 <div className="space-y-3">
                                     <a
                                         href={`mailto:${bio.contact.email}`}
-                                        className="flex items-center gap-3 text-fg-muted hover:text-accent-blue-bright transition-colors group"
+                                        className="flex min-w-0 items-start gap-3 text-fg-muted hover:text-accent-blue-bright transition-colors group"
                                     >
                                         <span className="p-2 rounded-lg bg-bg-deep border border-border-subtle group-hover:border-accent-blue/50">
                                             <Mail className="h-5 w-5" />
                                         </span>
-                                        <span>{bio.contact.email}</span>
+                                        <span className="min-w-0 break-all">{bio.contact.email}</span>
                                     </a>
 
                                     <a
                                         href={`tel:${bio.contact.phone}`}
-                                        className="flex items-center gap-3 text-fg-muted hover:text-accent-blue-bright transition-colors group"
+                                        className="flex min-w-0 items-start gap-3 text-fg-muted hover:text-accent-blue-bright transition-colors group"
                                     >
                                         <span className="p-2 rounded-lg bg-bg-deep border border-border-subtle group-hover:border-accent-blue/50">
                                             <Phone className="h-5 w-5" />
                                         </span>
-                                        <span>{bio.contact.phone}</span>
+                                        <span className="min-w-0 break-words">{bio.contact.phone}</span>
                                     </a>
                                 </div>
                             </Card>

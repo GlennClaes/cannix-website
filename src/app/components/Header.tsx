@@ -32,15 +32,15 @@ export function Header() {
                     {/* ================= LOGO ================= */}
                     <Link
                         href="/home"
-                        className="flex items-center"
+                        className="flex min-w-0 items-center"
                         aria-label="Cannix home"
                     >
-                        <StaticLogo size="lg" glow={true} />
+                        <StaticLogo size="header" glow={true} />
                     </Link>
 
                     {/* ================= DESKTOP NAVIGATIE ================= */}
                     <nav
-                        className="hidden items-center gap-1 md:flex"
+                        className="hidden items-center gap-1 lg:flex"
                         aria-label="Hoofdnavigatie"
                     >
                         {navItems.map((item) => {
@@ -76,7 +76,7 @@ export function Header() {
                     </nav>
 
                     {/* ================= DESKTOP CTA ================= */}
-                    <div className="hidden md:flex items-center">
+                    <div className="hidden lg:flex items-center">
                         <Link href="/contact">
                             <Button glow={true} className="px-6 py-2.5 text-sm font-semibold">
                                 Boek Cannix
@@ -91,7 +91,7 @@ export function Header() {
                         className={cn(
                             "flex h-11 w-11 items-center justify-center rounded-xl",
                             "border border-border-subtle/60 bg-bg-surface/80 text-fg-primary",
-                            "transition-all duration-200 hover:border-accent-blue/50 md:hidden"
+                            "transition-all duration-200 hover:border-accent-blue/50 lg:hidden"
                         )}
                         aria-label={isOpen ? "Menu sluiten" : "Menu openen"}
                         aria-expanded={isOpen}
@@ -125,7 +125,7 @@ export function Header() {
                         <motion.button
                             type="button"
                             aria-label="Menu sluiten"
-                            className="fixed inset-0 z-[110] bg-black/80 backdrop-blur-md md:hidden"
+                            className="fixed inset-0 z-[110] bg-black/80 backdrop-blur-md lg:hidden"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
@@ -135,19 +135,19 @@ export function Header() {
                         {/* MENU PANEL */}
                         <motion.aside
                             id="mobile-menu"
-                            className="fixed right-0 top-0 z-[120] flex h-dvh w-[88vw] max-w-[400px] flex-col border-l border-border-subtle/50 bg-[#03050A] p-6 shadow-2xl md:hidden"
+                            className="fixed right-0 top-0 z-[120] flex h-dvh w-[88vw] max-w-[400px] flex-col overflow-y-auto border-l border-border-subtle/50 bg-[#03050A] p-4 shadow-2xl sm:p-6 lg:hidden"
                             initial={{ x: "100%", opacity: 0.9 }}
                             animate={{ x: 0, opacity: 1 }}
                             exit={{ x: "100%", opacity: 0.9 }}
                             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                         >
                             {/* MOBILE MENU HEADER - LARGE LOGO */}
-                            <div className="flex h-16 items-center justify-between border-b border-border-subtle/40 pb-4">
+                            <div className="flex h-14 items-center justify-between gap-3 border-b border-border-subtle/40 pb-4 sm:h-16">
                                 <Link
                                     href="/home"
                                     onClick={closeMenu}
                                     aria-label="Cannix home"
-                                    className="flex items-center"
+                                    className="flex min-w-0 items-center"
                                 >
                                     <StaticLogo size="hamburger" glow={true} />
                                 </Link>
@@ -155,7 +155,7 @@ export function Header() {
                                 <button
                                     type="button"
                                     onClick={closeMenu}
-                                    className="flex h-10 w-10 items-center justify-center rounded-xl border border-border-subtle/50 text-fg-muted hover:text-fg-primary"
+                                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border-subtle/50 text-fg-muted hover:text-fg-primary"
                                     aria-label="Menu sluiten"
                                 >
                                     <X className="h-5 w-5" />
@@ -164,7 +164,7 @@ export function Header() {
 
                             {/* MOBILE NAVIGATION LINKS */}
                             <nav
-                                className="mt-8 flex flex-col gap-2"
+                                className="mt-6 flex flex-col gap-2 sm:mt-8"
                                 aria-label="Mobiele navigatie"
                             >
                                 {navItems.map((item, index) => {
@@ -196,7 +196,7 @@ export function Header() {
                             </nav>
 
                             {/* MOBILE CTA */}
-                            <div className="mt-auto pt-8 border-t border-border-subtle/40">
+                            <div className="mt-auto shrink-0 pt-8 border-t border-border-subtle/40">
                                 <Link href="/contact" onClick={closeMenu} className="block w-full">
                                     <Button fullWidth={true} glow={true} className="py-3.5 text-base font-bold uppercase tracking-wider">
                                         Boek Cannix

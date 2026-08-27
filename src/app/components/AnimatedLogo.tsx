@@ -106,18 +106,20 @@ export function StaticLogo({
     className,
     size = "md",
     glow = true,
-}: { className?: string; size?: "sm" | "md" | "lg" | "hamburger"; withBgWrapper?: boolean; glow?: boolean }) {
+}: { className?: string; size?: "sm" | "md" | "lg" | "header" | "hamburger"; withBgWrapper?: boolean; glow?: boolean }) {
     const sizeClasses = {
         sm: "h-10 w-[140px]",
         md: "h-14 w-[210px]",
         lg: "h-18 w-[270px]",
-        hamburger: "h-16 w-[230px] sm:h-20 sm:w-[280px]",
+        header: "h-14 w-[190px] sm:h-16 sm:w-[220px] lg:h-18 lg:w-[270px]",
+        hamburger: "h-12 w-[170px] sm:h-16 sm:w-[230px]",
     };
 
     const glowClasses = {
         sm: "drop-shadow-glow-blue",
         md: "drop-shadow-glow-blue",
         lg: "drop-shadow-glow-blue-lg",
+        header: "drop-shadow-glow-blue-lg",
         hamburger: "drop-shadow-glow-blue-lg",
     };
 
@@ -129,7 +131,7 @@ export function StaticLogo({
                 fill
                 className={cn("object-contain brightness-[1.18] contrast-[1.10]", glow && glowClasses[size])}
                 priority
-                sizes={size === "hamburger" ? "280px" : size === "lg" ? "270px" : size === "md" ? "210px" : "140px"}
+                sizes={size === "hamburger" ? "(max-width: 640px) 170px, 230px" : size === "header" ? "(max-width: 640px) 190px, (max-width: 1024px) 220px, 270px" : size === "lg" ? "270px" : size === "md" ? "210px" : "140px"}
             />
         </div>
     );

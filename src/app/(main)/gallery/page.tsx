@@ -158,9 +158,9 @@ export default function GalleryPage() {
                   alt={filteredItems[lightboxIndex].alt}
                   width={1200}
                   height={800}
-                  className="object-contain rounded-xl shadow-2xl max-h-[80vh] w-auto mx-auto"
+                  className="mx-auto max-h-[80vh] max-w-full rounded-xl object-contain shadow-2xl"
                   priority
-                  style={{ maxHeight: "80vh", width: "auto" }}
+                  style={{ maxHeight: "80vh", width: "auto", maxWidth: "100%" }}
                 />
               </div>
             </motion.div>

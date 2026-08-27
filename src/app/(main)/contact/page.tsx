@@ -37,7 +37,7 @@ export default function ContactPage() {
             viewport={{ once: true }}
             className="lg:col-span-2"
           >
-            <Card className="p-6 md:p-8">
+            <Card className="p-4 sm:p-6 md:p-8">
               <h2 className="font-display text-2xl font-bold mb-6">Stuur een bericht</h2>
               <ContactForm />
             </Card>
@@ -54,23 +54,23 @@ export default function ContactPage() {
               <Card className="p-6">
                 <h3 className="font-display text-xl font-bold mb-6">Direct contact</h3>
                 <div className="space-y-4">
-                  <a href={bio.contact.email} className={cn("flex items-center gap-3 text-fg-muted hover:text-accent-blue-bright transition-colors group")}>
+                  <a href={bio.contact.email} className={cn("flex min-w-0 items-start gap-3 text-fg-muted hover:text-accent-blue-bright transition-colors group")}>
                     <span className={cn("p-2 rounded-xl bg-accent-blue/10 border border-accent-blue/30 flex-shrink-0 group-hover:bg-accent-blue/20")}><Mail className="h-5 w-5 text-accent-blue-bright" /></span>
-                    <div>
+                    <div className="min-w-0">
                       <p className="text-sm text-fg-muted/60">Boekingen & Info</p>
-                      <p className="font-medium">{bio.contact.email}</p>
+                      <p className="break-all font-medium">{bio.contact.email}</p>
                     </div>
                   </a>
-                  <a href={`tel:${bio.contact.phone}`} className={cn("flex items-center gap-3 text-fg-muted hover:text-accent-blue-bright transition-colors group")}>
+                  <a href={`tel:${bio.contact.phone}`} className={cn("flex min-w-0 items-start gap-3 text-fg-muted hover:text-accent-blue-bright transition-colors group")}>
                     <span className={cn("p-2 rounded-xl bg-accent-blue/10 border border-accent-blue/30 flex-shrink-0 group-hover:bg-accent-blue/20")}><Phone className="h-5 w-5 text-accent-blue-bright" /></span>
-                    <div>
+                    <div className="min-w-0">
                       <p className="text-sm text-fg-muted/60">Telefoon</p>
                       <p className="font-medium">{bio.contact.phone}</p>
                     </div>
                   </a>
-                  <div className="flex items-center gap-3 text-fg-muted">
+                  <div className="flex min-w-0 items-start gap-3 text-fg-muted">
                     <span className="p-2 rounded-xl bg-bg-deep border border-border-subtle"><MapPin className="h-5 w-5" /></span>
-                    <div>
+                    <div className="min-w-0">
                       <p className="text-sm text-fg-muted/60">Locatie</p>
                       <p className="font-medium">Belgium (Europees boekbaar)</p>
                     </div>

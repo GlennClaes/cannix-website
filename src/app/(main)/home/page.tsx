@@ -27,7 +27,7 @@ export default function HomePage() {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="max-w-3xl"
           >
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent-blue/15 border border-accent-blue/30 text-accent-blue-bright text-sm font-semibold mb-6">
+            <span className="mb-6 inline-flex max-w-full flex-wrap items-center justify-center gap-2 rounded-full border border-accent-blue/30 bg-accent-blue/15 px-3 py-1.5 text-center text-sm font-semibold leading-snug text-accent-blue-bright sm:px-4">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-blue-bright opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-accent-blue-bright"></span>
@@ -87,34 +87,37 @@ export default function HomePage() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="rounded-3xl p-6 md:p-8 bg-bg-surface/60 border border-border-subtle/50 backdrop-blur-md relative overflow-hidden group"
+          className="rounded-3xl p-4 sm:p-6 md:p-8 bg-bg-surface/60 border border-border-subtle/50 backdrop-blur-md relative overflow-hidden group"
         >
-          <div className="relative flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-            <div className="flex items-center gap-4">
-              <div className="p-4 rounded-2xl bg-accent-blue/15 border border-accent-blue/30">
-                <Calendar className="h-8 w-8 text-accent-blue-bright" />
+          <div className="relative flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+            <div className="min-w-0">
+              <div className="flex items-start gap-3 sm:gap-4">
+                <div className="shrink-0 rounded-2xl border border-accent-blue/30 bg-accent-blue/15 p-3 sm:p-4">
+                  <Calendar className="h-6 w-6 text-accent-blue-bright sm:h-8 sm:w-8" />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-sm text-fg-muted font-medium">Volgend evenement</p>
+                  <h2 className="font-display text-xl font-bold leading-tight sm:text-3xl">{upcomingGig.event}</h2>
+                </div>
               </div>
-              <div>
-                <p className="text-sm text-fg-muted font-medium">Volgend evenement</p>
-                <h2 className="font-display text-2xl sm:text-3xl font-bold">{upcomingGig.event}</h2>
+
+              <div className="mt-5 grid gap-3 text-left text-sm text-fg-muted sm:grid-cols-2 xl:flex xl:flex-wrap xl:items-center xl:gap-x-5 xl:gap-y-3">
+                <div className="flex min-w-0 items-start gap-2">
+                  <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-accent-blue-bright" />
+                  <span className="min-w-0 break-words">{upcomingGig.location}</span>
+                </div>
+                <div className="flex min-w-0 items-start gap-2">
+                  <Calendar className="mt-0.5 h-5 w-5 shrink-0 text-accent-blue-bright" />
+                  <span className="min-w-0 break-words">{new Date(upcomingGig.date).toLocaleDateString("nl-BE", { weekday: "long", day: "numeric", month: "long" })}</span>
+                </div>
+                <div className="flex min-w-0 items-start gap-2">
+                  <Users className="mt-0.5 h-5 w-5 shrink-0 text-accent-blue-bright" />
+                  <span className="min-w-0 break-words">{upcomingGig.time}</span>
+                </div>
               </div>
             </div>
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 text-left">
-              <div className="flex items-center gap-2 text-fg-muted">
-                <MapPin className="h-5 w-5 text-accent-blue-bright" />
-                <span>{upcomingGig.location}</span>
-              </div>
-              <div className="flex items-center gap-2 text-fg-muted">
-                <Calendar className="h-5 w-5 text-accent-blue-bright" />
-                <span>{new Date(upcomingGig.date).toLocaleDateString("nl-BE", { weekday: "long", day: "numeric", month: "long" })}</span>
-              </div>
-              <div className="flex items-center gap-2 text-fg-muted">
-                <Users className="h-5 w-5 text-accent-blue-bright" />
-                <span>{upcomingGig.time}</span>
-              </div>
-            </div>
-            <Link href="/contact">
-              <Button glow={true} className="px-6 py-3 text-sm font-bold">
+            <Link href="/contact" className="w-full shrink-0 lg:w-auto">
+              <Button glow={true} className="w-full px-6 py-3 text-sm font-bold lg:w-auto">
                 Tickets & Info
               </Button>
             </Link>
@@ -158,7 +161,7 @@ export default function HomePage() {
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
             </div>
-            <div className="absolute -bottom-6 -right-6 md:-bottom-8 md:-right-8 p-6 bg-bg-surface/90 backdrop-blur-xl border border-border-subtle/60 rounded-2xl shadow-2xl max-w-xs">
+            <div className="relative mt-4 max-w-none rounded-2xl border border-border-subtle/60 bg-bg-surface/90 p-4 shadow-2xl backdrop-blur-xl sm:p-6 md:absolute md:-bottom-8 md:-right-8 md:mt-0 md:max-w-xs">
               <div className="flex items-center gap-3 mb-3">
                 <div className="p-3 rounded-xl bg-accent-blue/15"><Play className="h-6 w-6 text-accent-blue-bright" /></div>
                 <div>

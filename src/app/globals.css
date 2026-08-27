@@ -96,6 +96,7 @@
 
   html {
     scroll-behavior: smooth;
+    overflow-x: clip;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -120,6 +121,7 @@
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: clip;
   }
 
   ::selection {
