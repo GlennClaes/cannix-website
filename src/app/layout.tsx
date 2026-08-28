@@ -56,10 +56,10 @@ export const metadata: Metadata = {
     icons: {
         icon: [
             { url: "/images/logo-cannix.svg", type: "image/svg+xml" },
-            { url: "/images/logo_cannix.png", type: "image/png" },
+            { url: "/images/logo_cannix.webp", type: "image/webp" },
         ],
-        shortcut: "/images/logo_cannix.png",
-        apple: "/images/logo_cannix.png",
+        shortcut: "/images/logo_cannix.webp",
+        apple: "/images/logo_cannix.webp",
     },
     manifest: "/site.webmanifest",
     openGraph: {

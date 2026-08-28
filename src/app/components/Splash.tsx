@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { AnimatedLogo } from "./AnimatedLogo";
 import { Button } from "./ui";
@@ -32,7 +32,7 @@ export function Splash({ onComplete, hasSeenSplash }: SplashProps) {
 
         const buttonTimer = setTimeout(() => {
             setShowButton(true);
-        }, 1000);
+        }, 450);
 
         return () => clearTimeout(buttonTimer);
     }, [hasSeenSplash, prefersReducedMotion]);
