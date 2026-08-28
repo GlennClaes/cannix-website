@@ -6,7 +6,7 @@ Deze handleiding beschrijft de volledige productie-instelling voor Cannix op Ver
 
 - Een GitHub-account met toegang tot `GlennClaes/cannix-website`
 - Een Vercel-account
-- Het domein `cannix.be`
+- Een Vercel-project; `cannix.be` is optioneel en kan later gekoppeld worden
 - Een Resend-account
 - Node.js 22+ voor lokale controles
 - Docker Desktop, alleen wanneer je lokaal met Docker wilt testen
@@ -49,12 +49,17 @@ De repository gebruikt bewust Node.js 22 (`package.json` en `.nvmrc`). Dit voork
 | `RESEND_API_KEY` | Ja | Ja | Optioneel |
 | `MAIL_TO` | Ja | Ja | Optioneel |
 | `MAIL_FROM` | Ja | Ja | Optioneel |
+| `NEXT_PUBLIC_SITE_URL` | Optioneel | Optioneel | Optioneel |
+
+Zolang `cannix.be` nog niet beschikbaar is, laat je `NEXT_PUBLIC_SITE_URL` leeg. De site gebruikt
+dan automatisch de Vercel-deployment-URL (en lokaal `http://localhost:3000`). Zodra het domein
+gekoppeld is, stel je `NEXT_PUBLIC_SITE_URL=https://cannix.be` in voor Production.
 
 Gebruik voor Preview bij voorkeur een aparte testmailbox, zodat testaanvragen niet tussen echte boekingen terechtkomen.
 
 ## 4. Domein koppelen
 
-1. Open in Vercel **Settings → Domains**.
+1. Open in Vercel **Settings → Domains** wanneer je het domein beschikbaar hebt.
 2. Voeg `cannix.be` toe.
 3. Voeg de DNS-records toe die Vercel toont.
 4. Stel `www.cannix.be` eventueel in als redirect naar `cannix.be`.
@@ -74,10 +79,10 @@ Gebruik de native GitHub-integratie van Vercel voor de eigenlijke deployment. De
 
 - Pull request naar `main`: automatische Preview Deployment
 - Push naar `main`: automatische Production Deployment
-- Na een geslaagde CI-run: automatische production smoke test
+- Na een geslaagde CI-run: automatische production smoke test wanneer de GitHub repository variable `PRODUCTION_URL` is ingesteld
 - Vercel maakt automatisch HTTPS, build caching en rollbackmogelijkheden beschikbaar
 
-Je hebt voor deze aanpak geen `VERCEL_TOKEN`, `VERCEL_ORG_ID` of `VERCEL_PROJECT_ID` nodig in GitHub Secrets. De CD-workflow controleert de publieke URL `https://cannix.be`.
+Je hebt voor deze aanpak geen `VERCEL_TOKEN`, `VERCEL_ORG_ID` of `VERCEL_PROJECT_ID` nodig in GitHub Secrets. Stel voor de CD-workflow de repository variable `PRODUCTION_URL` in zodra je een publieke URL wilt controleren, bijvoorbeeld de Vercel-URL of later `https://cannix.be`.
 
 ## 6. GitHub Actions CI
 

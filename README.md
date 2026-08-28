@@ -51,6 +51,9 @@ cp .env.example .env.local
 ### Environment Variables
 
 ```env
+# Optional: canonical site URL. Leave empty until a custom domain is connected.
+NEXT_PUBLIC_SITE_URL=
+
 # Resend (required for the contact form in production)
 RESEND_API_KEY=re_...
 MAIL_TO=bookings@cannix.be

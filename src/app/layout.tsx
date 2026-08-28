@@ -1,23 +1,27 @@
 import type { Metadata } from "next";
-import { DM_Sans, JetBrains_Mono, Syne } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
+import { siteUrl } from "@/lib/site-config";
 
-const syne = Syne({
-    subsets: ["latin"],
+const syne = localFont({
+    src: "../../public/fonts/Syne-Variable.ttf",
     variable: "--font-display",
     display: "swap",
+    weight: "400 800",
 });
 
-const dmSans = DM_Sans({
-    subsets: ["latin"],
+const dmSans = localFont({
+    src: "../../public/fonts/DM-Sans-Variable.ttf",
     variable: "--font-body",
     display: "swap",
+    weight: "100 1000",
 });
 
-const jetBrainsMono = JetBrains_Mono({
-    subsets: ["latin"],
+const jetBrainsMono = localFont({
+    src: "../../public/fonts/JetBrains-Mono-Variable.ttf",
     variable: "--font-mono",
     display: "swap",
+    weight: "100 800",
 });
 
 export const metadata: Metadata = {
@@ -27,7 +31,7 @@ export const metadata: Metadata = {
     },
     description:
         "Boek Cannix, Belgische DJ en producer voor fuiven, clubs, private events en festivals. Energieke sets met fuifmuziek, meezingers, harde remixes en Drum & Bass.",
-    metadataBase: new URL("https://cannix.be"),
+    metadataBase: new URL(siteUrl),
     applicationName: "Cannix",
     authors: [{ name: "Cannix" }],
     creator: "Cannix",
@@ -63,7 +67,7 @@ export const metadata: Metadata = {
             "Boek Cannix voor fuiven, clubs, private events en festivals. Energieke sets met fuifmuziek, meezingers, harde remixes en Drum & Bass.",
         type: "website",
         locale: "nl_BE",
-        url: "https://cannix.be",
+        url: siteUrl,
         siteName: "Cannix",
         images: [
             {
@@ -104,8 +108,8 @@ export default function RootLayout({
         "@type": "Person",
         name: "Cannix",
         jobTitle: "DJ en producer",
-        url: "https://cannix.be",
-        image: "https://cannix.be/images/PEMP_2024.jpg",
+        url: siteUrl,
+        image: `${siteUrl}/images/PEMP_2024.jpg`,
         genre: ["Allround", "Drum & Bass", "Jump Up", "Hardstyle", "Jumpstyle"],
         areaServed: ["Belgium", "Europe"],
         email: "bookings@cannix.be",

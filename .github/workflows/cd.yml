@@ -9,7 +9,7 @@ on:
       url:
         description: "Production URL to verify"
         required: false
-        default: "https://cannix.be"
+        default: ""
         type: string
 
 concurrency:
@@ -22,11 +22,11 @@ permissions:
 jobs:
   verify-production:
     name: Verify Vercel production deployment
-    if: ${{ github.event_name == 'workflow_dispatch' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main') }}
+    if: ${{ (github.event_name == 'workflow_dispatch' && inputs.url != '') || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main' && vars.PRODUCTION_URL != '') }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
-      PRODUCTION_URL: ${{ inputs.url || 'https://cannix.be' }}
+      PRODUCTION_URL: ${{ inputs.url || vars.PRODUCTION_URL }}
     steps:
       - name: Wait for Vercel deployment
         run: sleep 20

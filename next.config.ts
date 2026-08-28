@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-    output: "standalone",
+    // Vercel builds its own deployment bundle. Standalone is only needed by Docker.
+    ...(process.env.DOCKER_BUILD === "1" ? { output: "standalone" } : {}),
     images: {
         remotePatterns: [{ protocol: "https", hostname: "**" }],
         formats: ["image/avif", "image/webp"],
