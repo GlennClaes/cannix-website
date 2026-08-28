@@ -50,7 +50,7 @@ export default function ContactPage() {
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
           >
-            <div className="sticky top-24 space-y-6">
+            <div className="space-y-6 lg:sticky lg:top-24">
               <Card className="p-6">
                 <h3 className="font-display text-xl font-bold mb-6">Direct contact</h3>
                 <div className="space-y-4">
@@ -134,11 +134,11 @@ export default function ContactPage() {
             ].map((faq, i) => (
               <motion.article
                 key={i}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.05 }}
-                className="card p-6 group"
+                className="card h-full p-6 group"
               >
                 <h3 className="font-display font-bold mb-2 text-fg-primary group-hover:text-accent-blue-bright transition-colors">{faq.q}</h3>
                 <p className="text-fg-muted text-sm leading-relaxed">{faq.a}</p>

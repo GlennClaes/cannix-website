@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import { siteUrl } from "@/lib/site-config";
 
@@ -140,6 +141,7 @@ export default function RootLayout({
             dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
         {children}
+        <SpeedInsights />
         </body>
         </html>
     );

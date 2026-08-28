@@ -35,11 +35,11 @@ export default function HomePage() {
               Volgende gig: {new Date(`${upcomingGig.date}T12:00:00+02:00`).toLocaleDateString("nl-BE", { weekday: "long", day: "numeric", month: "long", timeZone: "Europe/Brussels" })}
             </span>
 
-            <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6">
+            <h1 className="mx-auto mb-6 max-w-[18ch] font-display text-3xl font-extrabold leading-[1.08] tracking-tight sm:text-6xl lg:text-7xl">
               Energy. Bass. <span className="gradient-text">Connection.</span>
             </h1>
 
-            <p className="text-fg-secondary text-lg sm:text-xl leading-relaxed mb-8 max-w-2xl mx-auto">
+            <p className="mx-auto mb-8 max-w-2xl px-2 text-lg leading-relaxed text-fg-secondary sm:text-xl">
               Belgische DJ gespecialiseerd in energieke festivalsets, fuifclassics, meezingers en harde remixes.
             </p>
 

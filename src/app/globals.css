@@ -176,14 +176,14 @@
 }
 
 .section {
-  padding-top: 4rem; /* py-16 */
-  padding-bottom: 4rem;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
 }
 
 @media (min-width: 640px) {
   .section {
-    padding-top: 6rem; /* sm:py-24 */
-    padding-bottom: 6rem;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
   }
 }
 
@@ -368,10 +368,12 @@ a,
   transition: all 300ms ease-out;
 }
 
-.card:hover {
-  box-shadow: var(--shadow-card-hover);
-  border-color: var(--color-accent-blue-bright);
-  transform: translateY(-4px);
+@media (hover: hover) and (pointer: fine) {
+  .card:hover {
+    box-shadow: var(--shadow-card-hover);
+    border-color: var(--color-accent-blue-bright);
+    transform: translateY(-4px);
+  }
 }
 
 .link {

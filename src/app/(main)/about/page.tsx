@@ -97,7 +97,7 @@ export default function AboutPage() {
                         viewport={{ once: true }}
                         transition={{ delay: 0.1 }}
                     >
-                        <div className="sticky top-24 space-y-6">
+                        <div className="space-y-6 lg:sticky lg:top-24">
                             <Card className="p-6">
                                 <h3 className="font-display text-xl font-bold mb-6">
                                     Cijfers
@@ -186,7 +186,7 @@ export default function AboutPage() {
                         </p>
                     </motion.div>
 
-                    <div className="grid md:grid-cols-3 gap-8">
+                    <div className="grid items-stretch gap-8 md:grid-cols-3">
                         {[
                             {
                                 title: "Energie",
@@ -203,11 +203,11 @@ export default function AboutPage() {
                         ].map((value, i) => (
                             <motion.article
                                 key={value.title}
-                                initial={{ opacity: 0, y: 20 }}
+                                initial={{ opacity: 0 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: 0.1 * (i + 1) }}
-                                className="card p-8 text-center group"
+                                className="card h-full p-8 text-center group"
                             >
                                 <h3 className="font-display text-xl font-bold mb-2">
                                     {value.title}
