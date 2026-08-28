@@ -18,7 +18,7 @@ export function BackgroundSystem() {
                     alt="DJ Cannix"
                     fill
                     quality={55}
-                    className="object-contain object-center"
+                    className="object-cover object-center md:object-contain"
                     sizes="100vw"
                 />
             </div>
