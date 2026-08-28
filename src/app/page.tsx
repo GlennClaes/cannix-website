@@ -23,6 +23,10 @@ export default function SplashPage() {
 
   return (
     <AnimatePresence mode="wait">
+      <h1 className="sr-only">Cannix - Belgische DJ en producer</h1>
+      <p className="sr-only">
+        Boek Cannix voor fuiven, clubs, festivals, raves en private events in België en Europa.
+      </p>
       <Splash onComplete={handleComplete} hasSeenSplash={hasSeenSplash} />
     </AnimatePresence>
   );

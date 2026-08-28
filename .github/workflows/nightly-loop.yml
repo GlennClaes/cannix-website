@@ -1,4 +1,4 @@
-name: Nightly SEO, Performance & Maintenance Loop
+name: Maintenance - Nightly SEO & Performance
 
 on:
   schedule:
@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   nightly-automation:
-    name: Run Full Nightly Automation Loop
+    name: Run Nightly Maintenance
     runs-on: ubuntu-latest
     timeout-minutes: 360 # Maximaal 6 uur draaien
 

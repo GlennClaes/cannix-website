@@ -21,6 +21,7 @@ const eventTypes = [
 
 export function ContactForm() {
     const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+    const [errorMessage, setErrorMessage] = useState("");
 
     const {
         register,
@@ -37,6 +38,7 @@ export function ContactForm() {
 
     const onSubmit = async (data: ContactFormData) => {
         setStatus("idle");
+        setErrorMessage("");
         try {
             const response = await fetch("/api/contact", {
                 method: "POST",
@@ -44,12 +46,16 @@ export function ContactForm() {
                 body: JSON.stringify(data),
             });
 
-            if (!response.ok) throw new Error("Form submit failed");
+            const result = (await response.json().catch(() => ({}))) as { error?: string };
+            if (!response.ok) {
+                throw new Error(result.error || "Versturen lukte niet.");
+            }
 
             setStatus("success");
             reset();
         } catch (error) {
             setStatus("error");
+            setErrorMessage(error instanceof Error ? error.message : "Versturen lukte niet.");
         }
     };
 
@@ -148,8 +154,7 @@ export function ContactForm() {
                     <AlertCircle className="h-5 w-5 flex-shrink-0 mt-0.5"/>
                     <div>
                         <p className="font-semibold">Versturen lukte niet.</p>
-                        <p className="text-sm text-red-300/80">Probeer opnieuw of mail direct naar
-                            bookings@cannix.be.</p>
+                        <p className="text-sm text-red-300/80">{errorMessage || "Probeer opnieuw of mail direct naar bookings@cannix.be."}</p>
                     </div>
                 </div>
             )}

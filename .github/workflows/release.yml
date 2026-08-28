@@ -1,4 +1,4 @@
-name: Release
+name: Release - GitHub Release
 
 on:
   push:
@@ -16,7 +16,7 @@ permissions:
 
 jobs:
   release:
-    name: Create GitHub Release
+    name: Publish GitHub Release
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:

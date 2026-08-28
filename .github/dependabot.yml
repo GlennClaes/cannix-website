@@ -11,6 +11,11 @@ updates:
           - minor
           - patch
     ignore:
+      # Keep the toolchain compatible with Next.js 16 and the current ESLint plugins.
+      - dependency-name: eslint
+        versions: [">=10"]
+      - dependency-name: typescript
+        versions: [">=7"]
       - dependency-name: zod
         versions: [">=4"]
       - dependency-name: lucide-react

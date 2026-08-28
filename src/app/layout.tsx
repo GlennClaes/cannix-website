@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
-import { siteUrl } from "@/lib/site-config";
+import { isProductionSite, siteUrl } from "@/lib/site-config";
 
 const syne = localFont({
     src: "../../public/fonts/Syne-Variable.ttf",
@@ -87,11 +87,11 @@ export const metadata: Metadata = {
         images: ["/images/PEMP_2024.jpg"],
     },
     robots: {
-        index: true,
-        follow: true,
+        index: isProductionSite,
+        follow: isProductionSite,
         googleBot: {
-            index: true,
-            follow: true,
+            index: isProductionSite,
+            follow: isProductionSite,
             "max-image-preview": "large",
             "max-snippet": -1,
             "max-video-preview": -1,

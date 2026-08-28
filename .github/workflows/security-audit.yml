@@ -1,4 +1,4 @@
-name: Daily Security Breach & Vulnerability Audit
+name: Security - Daily Vulnerability Audit
 
 on:
   schedule:

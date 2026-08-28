@@ -68,7 +68,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const result = contactSchema.safeParse(await request.json());
+    let payload: unknown;
+    try {
+      payload = await request.json();
+    } catch {
+      return NextResponse.json({ error: "Ongeldige aanvraag." }, { status: 400 });
+    }
+
+    const result = contactSchema.safeParse(payload);
     if (!result.success) {
       return NextResponse.json(
         { error: "Validatie mislukt", details: result.error.flatten().fieldErrors },

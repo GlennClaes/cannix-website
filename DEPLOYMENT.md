@@ -39,9 +39,9 @@ Gebruik `onboarding@resend.dev` niet voor productie. Die afzender is alleen gesc
    - **Framework preset:** Next.js
    - **Install command:** `npm ci`
    - **Build command:** `npm run build`
-   - **Node.js version:** 22
+   - **Node.js version:** 22 or 24
 
-De repository gebruikt bewust Node.js 22 (`package.json` en `.nvmrc`). Dit voorkomt dat Vercel automatisch naar een toekomstige major Node-versie overschakelt.
+De repository ondersteunt Node.js 22 en 24 (`package.json`). Kies in Vercel bij voorkeur Node.js 24; Node.js 22 blijft ondersteund voor lokale en Docker-builds.
 5. Voeg in **Settings → Environment Variables** deze variabelen toe:
 
 | Variabele | Production | Preview | Development |
@@ -54,6 +54,7 @@ De repository gebruikt bewust Node.js 22 (`package.json` en `.nvmrc`). Dit voork
 Zolang `cannix.be` nog niet beschikbaar is, laat je `NEXT_PUBLIC_SITE_URL` leeg. De site gebruikt
 dan automatisch de Vercel-deployment-URL (en lokaal `http://localhost:3000`). Zodra het domein
 gekoppeld is, stel je `NEXT_PUBLIC_SITE_URL=https://cannix.be` in voor Production.
+Preview-deployments krijgen automatisch `noindex`, zodat tijdelijke URLs niet in Google verschijnen.
 
 Gebruik voor Preview bij voorkeur een aparte testmailbox, zodat testaanvragen niet tussen echte boekingen terechtkomen.
 

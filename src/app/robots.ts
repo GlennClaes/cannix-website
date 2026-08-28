@@ -1,14 +1,14 @@
 import type { MetadataRoute } from "next";
-import { siteUrl } from "@/lib/site-config";
+import { isProductionSite, siteUrl } from "@/lib/site-config";
 
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       userAgent: "*",
-      allow: "/",
-      disallow: ["/api/", "/_next/"],
+      allow: isProductionSite ? "/" : undefined,
+      disallow: isProductionSite ? ["/api/", "/_next/"] : "/",
     },
-    host: siteUrl,
-    sitemap: `${siteUrl}/sitemap.xml`,
+    host: isProductionSite ? siteUrl : undefined,
+    sitemap: isProductionSite ? `${siteUrl}/sitemap.xml` : undefined,
   };
 }

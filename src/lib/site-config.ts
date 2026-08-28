@@ -17,3 +17,6 @@ function resolveSiteUrl(): string {
 }
 
 export const siteUrl = resolveSiteUrl();
+export const isProductionSite =
+    process.env.VERCEL_ENV === "production" ||
+    process.env.NEXT_PUBLIC_SITE_URL?.includes("cannix.be") === true;

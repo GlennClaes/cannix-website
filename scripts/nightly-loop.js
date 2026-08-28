@@ -20,8 +20,7 @@ const THRESHOLDS = {
 };
 
 const NIGHTLY_TASKS = [
-    { id: 'security-patch', name: 'Security Patches', cmd: 'npm audit fix --only=prod', critical: true },
-    { id: 'format-code', name: 'Code Formatting', cmd: 'npx prettier --write .', critical: false },
+    { id: 'security-audit', name: 'Security Audit', cmd: 'npm audit --omit=dev --audit-level=high', critical: true },
     { id: 'lint', name: 'ESLint', cmd: 'npm run lint', critical: true },
     { id: 'typecheck', name: 'TypeScript', cmd: 'npm run typecheck', critical: true },
     { id: 'build', name: 'Production Build', cmd: 'npm run build', critical: true },

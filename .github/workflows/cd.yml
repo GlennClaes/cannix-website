@@ -2,7 +2,7 @@ name: CD - Deployment Verification
 
 on:
   workflow_run:
-    workflows: ["CI"]
+    workflows: ["CI - Quality Gate"]
     types: [completed]
   workflow_dispatch:
     inputs:
