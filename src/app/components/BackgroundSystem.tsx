@@ -8,10 +8,6 @@ export function BackgroundSystem() {
             {/* Background Photo 2 - Complete image with smooth side-edge fade into #03050A */}
             <div
                 className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.65]"
-                style={{
-                    WebkitMaskImage: "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 12%, rgba(0,0,0,1) 25%, rgba(0,0,0,1) 75%, rgba(0,0,0,0.85) 88%, transparent 100%)",
-                    maskImage: "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 12%, rgba(0,0,0,1) 25%, rgba(0,0,0,1) 75%, rgba(0,0,0,0.85) 88%, transparent 100%)",
-                }}
             >
                 <Image
                     src={backgroundImage}
