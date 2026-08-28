@@ -131,18 +131,14 @@ export default function ContactPage() {
               { q: "Speel je ook op bruiloften / corporate events?", a: "Absoluut. Ik heb ruime ervaring met private events en pas de muziek volledig aan aan de sfeer en gewensten van de organisator." },
               { q: "Hoe ver reis je?", a: "Vanaf België Europees. Reis- en verblijfkosten komen niet bovenop de prijs voor optredens buiten Europa." },
               { q: "Kan ik een demo of live set horen?", a: "Zeker. Luister naar mixes en producties op SoundCloud of vraag een live demo aan via het formulier." },
-            ].map((faq, i) => (
-              <motion.article
-                key={i}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.05 }}
+            ].map((faq) => (
+              <article
+                key={faq.q}
                 className="card h-full p-6 group"
               >
                 <h3 className="font-display font-bold mb-2 text-fg-primary group-hover:text-accent-blue-bright transition-colors">{faq.q}</h3>
                 <p className="text-fg-muted text-sm leading-relaxed">{faq.a}</p>
-              </motion.article>
+              </article>
             ))}
           </div>
         </div>

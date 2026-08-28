@@ -200,13 +200,9 @@ export default function AboutPage() {
                                 title: "Publiek",
                                 desc: "Ik kijk naar de zaal en speel in op wat er op dat moment gebeurt. Het publiek bepaalt mee de richting.",
                             },
-                        ].map((value, i) => (
-                            <motion.article
+                        ].map((value) => (
+                            <article
                                 key={value.title}
-                                initial={{ opacity: 0 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: 0.1 * (i + 1) }}
                                 className="card h-full p-8 text-center group"
                             >
                                 <h3 className="font-display text-xl font-bold mb-2">
@@ -216,7 +212,7 @@ export default function AboutPage() {
                                 <p className="text-fg-muted">
                                     {value.desc}
                                 </p>
-                            </motion.article>
+                            </article>
                         ))}
                     </div>
                 </div>
