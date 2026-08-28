@@ -4,7 +4,7 @@ const backgroundImage = "/images/cannix_background_2.JPG";
 
 export function BackgroundSystem() {
     return (
-        <div className="background-system fixed inset-x-0 top-0 -z-10 h-[100svh] overflow-hidden bg-[#03050A]" aria-hidden="true">
+        <div className="background-system absolute inset-0 min-h-full overflow-hidden bg-[#03050A]" aria-hidden="true">
             {/* Background Photo 2 - Complete image with smooth side-edge fade into #03050A */}
             <div
                 className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.65]"

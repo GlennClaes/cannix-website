@@ -96,8 +96,6 @@
 
   @media (max-width: 767px) {
     .background-system {
-      position: absolute !important;
-      height: 100svh;
       contain: paint;
     }
 
