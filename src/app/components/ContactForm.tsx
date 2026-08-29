@@ -1,7 +1,7 @@
 "use client";
 
 import {useState} from "react";
-import {useForm} from "react-hook-form";
+import {useForm, useWatch} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {CheckCircle2, AlertCircle} from "lucide-react";
 import {contactSchema, type ContactFormData} from "@/lib/validations";
@@ -16,12 +16,19 @@ const eventTypes = [
     "Rave",
     "Private party",
     "Bruiloft",
-    "Algemene vraag",
-    "Samenwerking",
-    "Muziek of productie",
-    "Media of interview",
     "Anders",
 ]
+
+const contactReasons = [
+    {value: "booking", label: "Ik wil Cannix boeken"},
+    {value: "question", label: "Ik heb een algemene vraag"},
+    {value: "collaboration", label: "Ik wil samenwerken"},
+    {value: "media", label: "Media of interview"},
+];
+
+const questionTypes = ["Algemene informatie", "Muziek en producties", "Beschikbaarheid", "Technische vraag", "Anders"];
+const collaborationTypes = ["Artiest of event", "Merk of organisatie", "Muzikale samenwerking", "Anders"];
+const mediaTypes = ["Interview", "Persbericht", "Foto- of videovraag", "Anders"];
 
 
 export function ContactForm() {
@@ -30,16 +37,22 @@ export function ContactForm() {
 
     const {
         register,
+        control,
         handleSubmit,
         formState: {errors, isSubmitting},
         reset,
     } = useForm<ContactFormData>({
         resolver: zodResolver(contactSchema),
         defaultValues: {
+            contactReason: "",
             eventType: "",
+            questionType: "",
+            collaborationType: "",
+            mediaType: "",
             website: "",
         },
     });
+    const contactReason = useWatch({control, name: "contactReason"});
 
     const onSubmit = async (data: ContactFormData) => {
         setStatus("idle");
@@ -91,6 +104,23 @@ export function ContactForm() {
             </div>
 
             <div className="grid sm:grid-cols-2 gap-6">
+                <div>
+                    <label htmlFor="contactReason" className="label">Waarvoor neem je contact op?</label>
+                    <select
+                        id="contactReason"
+                        required
+                        className={cn("input", errors.contactReason && "border-red-500 focus:border-red-500 focus:ring-red-500/20")}
+                        aria-invalid={errors.contactReason ? "true" : "false"}
+                        {...register("contactReason")}
+                    >
+                        <option value="">Maak een keuze</option>
+                        {contactReasons.map((reason) => (
+                            <option key={reason.value} value={reason.value}>{reason.label}</option>
+                        ))}
+                    </select>
+                    {errors.contactReason &&
+                        <p className="mt-1.5 text-sm text-red-400" role="alert">{errors.contactReason.message}</p>}
+                </div>
                 <Input
                     label="Telefoon"
                     type="tel"
@@ -100,6 +130,9 @@ export function ContactForm() {
                     error={errors.phone?.message}
                     {...register("phone")}
                 />
+            </div>
+
+            {contactReason === "booking" && (
                 <div>
                     <label htmlFor="eventType" className="label">Type evenement</label>
                     <select
@@ -109,15 +142,22 @@ export function ContactForm() {
                         aria-invalid={errors.eventType ? "true" : "false"}
                         {...register("eventType")}
                     >
-                        <option value="">Kies een type</option>
-                        {eventTypes.map((type) => (
-                            <option key={type} value={type}>{type}</option>
-                        ))}
+                        <option value="">Kies een type evenement</option>
+                        {eventTypes.map((type) => <option key={type} value={type}>{type}</option>)}
                     </select>
-                    {errors.eventType &&
-                        <p className="mt-1.5 text-sm text-red-400" role="alert">{errors.eventType.message}</p>}
+                    {errors.eventType && <p className="mt-1.5 text-sm text-red-400" role="alert">{errors.eventType.message}</p>}
                 </div>
-            </div>
+            )}
+
+            {contactReason === "question" && (
+                <ConditionalSelect id="questionType" label="Onderwerp van je vraag" options={questionTypes} register={register} error={errors.questionType?.message} />
+            )}
+            {contactReason === "collaboration" && (
+                <ConditionalSelect id="collaborationType" label="Type samenwerking" options={collaborationTypes} register={register} error={errors.collaborationType?.message} />
+            )}
+            {contactReason === "media" && (
+                <ConditionalSelect id="mediaType" label="Type media-aanvraag" options={mediaTypes} register={register} error={errors.mediaType?.message} />
+            )}
 
             <div className="grid sm:grid-cols-2 gap-6">
                 <Input
@@ -193,5 +233,36 @@ export function ContactForm() {
                 </Button>
             </Modal>
         </form>
+    );
+}
+
+function ConditionalSelect({
+    id,
+    label,
+    options,
+    register,
+    error,
+}: {
+    id: "questionType" | "collaborationType" | "mediaType";
+    label: string;
+    options: string[];
+    register: ReturnType<typeof useForm<ContactFormData>>["register"];
+    error?: string;
+}) {
+    return (
+        <div>
+            <label htmlFor={id} className="label">{label}</label>
+            <select
+                id={id}
+                required
+                className={cn("input", error && "border-red-500 focus:border-red-500 focus:ring-red-500/20")}
+                aria-invalid={error ? "true" : "false"}
+                {...register(id)}
+            >
+                <option value="">Maak een keuze</option>
+                {options.map((option) => <option key={option} value={option}>{option}</option>)}
+            </select>
+            {error && <p className="mt-1.5 text-sm text-red-400" role="alert">{error}</p>}
+        </div>
     );
 }
