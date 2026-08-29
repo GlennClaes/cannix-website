@@ -16,6 +16,10 @@ const eventTypes = [
     "Rave",
     "Private party",
     "Bruiloft",
+    "Algemene vraag",
+    "Samenwerking",
+    "Muziek of productie",
+    "Media of interview",
     "Anders",
 ]
 

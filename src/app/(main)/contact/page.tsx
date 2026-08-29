@@ -16,12 +16,12 @@ export default function ContactPage() {
       <section className="relative min-h-[50vh] flex items-center">
         <div className="container relative z-10 py-20">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="max-w-3xl text-center mx-auto">
-            <span className="inline-block px-3 py-1 text-sm font-medium text-accent-blue-bright mb-4">Contact & Boekingen</span>
+            <span className="inline-block px-3 py-1 text-sm font-medium text-accent-blue-bright mb-4">Contact & Samenwerking</span>
             <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-tight mb-6">
               Laten we <span className="gradient-text">samenwerken</span>
             </h1>
             <p className="text-lg text-fg-muted leading-relaxed">
-              Heb je een fuif, rave, festival, private party of ander event? Vul het formulier in en we nemen binnen 24u contact op.
+              Heb je een boekingsaanvraag, algemene vraag, samenwerkingsidee of media-aanvraag? Vul het formulier in en we nemen binnen 24u contact op.
             </p>
           </motion.div>
         </div>
@@ -57,7 +57,7 @@ export default function ContactPage() {
                   <a href={`mailto:${bio.contact.email}`} className={cn("flex min-w-0 items-start gap-3 text-fg-muted hover:text-accent-blue-bright transition-colors group")}>
                     <span className={cn("p-2 rounded-xl bg-accent-blue/10 border border-accent-blue/30 flex-shrink-0 group-hover:bg-accent-blue/20")}><Mail className="h-5 w-5 text-accent-blue-bright" /></span>
                     <div className="min-w-0">
-                      <p className="text-sm text-fg-muted/60">Boekingen & Info</p>
+                      <p className="text-sm text-fg-muted/60">Contact & boekingen</p>
                       <p className="break-all font-medium">{bio.contact.email}</p>
                     </div>
                   </a>
@@ -120,7 +120,7 @@ export default function ContactPage() {
             className="text-center max-w-3xl mx-auto mb-12"
           >
             <h2 className="section-title mb-4">Veelgestelde vragen</h2>
-            <p className="text-fg-muted">De meest voorkomende vragen over boekingen.</p>
+            <p className="text-fg-muted">De meest voorkomende vragen over contact en boekingen.</p>
           </motion.div>
 
           <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">

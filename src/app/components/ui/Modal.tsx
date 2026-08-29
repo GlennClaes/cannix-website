@@ -41,15 +41,12 @@ export function Modal({ isOpen, onClose, children, title, className, size = "md"
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className={cn(
-              "fixed inset-0 z-modal flex items-center justify-center p-4",
-              sizes[size]
-            )}
+            className="fixed inset-0 z-modal flex items-center justify-center p-4"
             role="dialog"
             aria-modal="true"
             aria-labelledby={title ? "modal-title" : undefined}
           >
-            <div className={cn("w-full bg-bg-surface border border-border-subtle rounded-2xl overflow-hidden", className)}>
+            <div className={cn("w-full bg-bg-surface border border-border-subtle rounded-2xl overflow-hidden", sizes[size], className)}>
               <div className="flex items-center justify-between p-4 border-b border-border-subtle">
                 {title ? (
                   <h2 id="modal-title" className="font-display text-lg font-bold">
