@@ -63,7 +63,7 @@ export default function HomePage() {
           >
             {bio.stats.map((stat, i) => (
               <motion.div
-                key={stat.label}
+                key={`${stat.label}-${i}`}
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.3 + i * 0.1, duration: 0.5 }}
@@ -190,8 +190,8 @@ export default function HomePage() {
           >
             <h3 className="font-display text-2xl font-bold mb-6">{t("home.genres")}</h3>
             <div className="flex flex-wrap gap-3">
-              {bio.genres.map((genre) => (
-                <span key={genre} className="px-4 py-2 rounded-full bg-bg-surface/70 border border-border-subtle/60 text-fg-muted hover:border-accent-blue/50 hover:text-accent-blue-bright transition-colors cursor-default">
+              {bio.genres.map((genre, index) => (
+                <span key={`${genre}-${index}`} className="px-4 py-2 rounded-full bg-bg-surface/70 border border-border-subtle/60 text-fg-muted hover:border-accent-blue/50 hover:text-accent-blue-bright transition-colors cursor-default">
                   {genre}
                 </span>
               ))}

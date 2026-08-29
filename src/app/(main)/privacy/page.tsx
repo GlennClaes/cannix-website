@@ -32,8 +32,8 @@ export default function PrivacyPage() {
                     </p>
 
                     <div className="space-y-8 sm:space-y-10">
-                        {sections.map((section) => (
-                            <div key={section.title} className="border-l-2 border-accent-blue/30 pl-4 sm:pl-6">
+                        {sections.map((section, index) => (
+                            <div key={`privacy-section-${index}`} className="border-l-2 border-accent-blue/30 pl-4 sm:pl-6">
                                 <h2 className="font-display text-base sm:text-xl font-bold mb-2 sm:mb-3 text-fg-primary">{section.title}</h2>
                                 <p className="text-fg-muted text-sm sm:text-base leading-relaxed break-words">{section.content}</p>
                             </div>

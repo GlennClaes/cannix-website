@@ -1,23 +1,59 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown, Globe2, Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { StaticLogo } from "./AnimatedLogo";
 import { Button } from "./ui";
 import { languages, useLanguage, type Language } from "@/lib/i18n";
+import { getLocaleFromPathname, localePath } from "@/lib/locales";
 
 export function Header() {
     const pathname = usePathname();
+    const router = useRouter();
     const [isOpen, setIsOpen] = useState(false);
+    const menuButtonRef = useRef<HTMLButtonElement>(null);
+    const menuPanelRef = useRef<HTMLElement>(null);
+    const wasMenuOpenRef = useRef(false);
     const { language, setLanguage, languageInfo, t } = useLanguage();
+    const localePrefix = getLocaleFromPathname(pathname);
+    const basePathname = localePrefix ? pathname.replace(/^\/(?:en|fr|de)(?=\/|$)/, "") || "/home" : pathname;
+    const currentSlug = basePathname === "/home" || basePathname === "/" ? ["home"] : basePathname.slice(1).split("/");
 
     const closeMenu = () => setIsOpen(false);
+    useEffect(() => {
+        if (isOpen) {
+            wasMenuOpenRef.current = true;
+            const frame = window.requestAnimationFrame(() => {
+                menuPanelRef.current?.querySelector<HTMLElement>("button, a")?.focus();
+            });
+            return () => window.cancelAnimationFrame(frame);
+        }
+        if (wasMenuOpenRef.current) {
+            menuButtonRef.current?.focus();
+            wasMenuOpenRef.current = false;
+        }
+    }, [isOpen]);
+
+    useEffect(() => {
+        if (!isOpen) return;
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === "Escape") {
+                event.preventDefault();
+                closeMenu();
+            }
+        };
+        document.addEventListener("keydown", handleKeyDown);
+        return () => document.removeEventListener("keydown", handleKeyDown);
+    }, [isOpen]);
     const changeLanguage = (value: Language) => {
         setLanguage(value);
+        if (localePrefix) {
+            router.push(localePath(value, currentSlug));
+        }
     };
     const navItems = [
         { href: "/home", label: t("nav.home") },
@@ -34,7 +70,7 @@ export function Header() {
 
                     {/* ================= LOGO ================= */}
                     <Link
-                        href="/home"
+                        href={localePrefix ? localePath(localePrefix, ["home"]) : "/home"}
                         className="flex min-w-0 items-center"
                         aria-label={t("header.home")}
                     >
@@ -47,12 +83,13 @@ export function Header() {
                         aria-label={t("nav.main")}
                     >
                         {navItems.map((item) => {
-                            const active = pathname === item.href;
+                            const href = localePrefix ? localePath(localePrefix, [item.href.slice(1)]) : item.href;
+                            const active = basePathname === item.href || (item.href === "/home" && basePathname === "/");
 
                             return (
                                 <Link
                                     key={item.href}
-                                    href={item.href}
+                                    href={href}
                                     className={cn(
                                         "relative rounded-full px-5 py-2 text-sm font-semibold tracking-wide",
                                         "text-fg-muted transition-all duration-200",
@@ -80,7 +117,7 @@ export function Header() {
 
                     {/* ================= DESKTOP CTA ================= */}
                     <div className="hidden lg:flex items-center">
-                        <Link href="/contact">
+                        <Link href={localePrefix ? localePath(localePrefix, ["contact"]) : "/contact"}>
                             <Button glow={true} className="px-6 py-2.5 text-sm font-semibold">
                                 {t("booking")}
                             </Button>
@@ -98,6 +135,7 @@ export function Header() {
                     {/* ================= HAMBURGER BUTTON ================= */}
                     <button
                         type="button"
+                        ref={menuButtonRef}
                         onClick={() => setIsOpen((previous) => !previous)}
                         className={cn(
                             "flex h-11 w-11 items-center justify-center rounded-xl",
@@ -146,6 +184,7 @@ export function Header() {
                         {/* MENU PANEL */}
                         <motion.aside
                             id="mobile-menu"
+                            ref={menuPanelRef}
                             className="fixed right-0 top-0 z-[120] flex h-dvh w-[88vw] max-w-[400px] flex-col overflow-y-auto border-l border-border-subtle/50 bg-[#03050A] p-4 shadow-2xl sm:p-6 lg:hidden"
                             initial={{ x: "100%", opacity: 0.9 }}
                             animate={{ x: 0, opacity: 1 }}
@@ -155,7 +194,7 @@ export function Header() {
                             {/* MOBILE MENU HEADER - LARGE LOGO */}
                             <div className="flex h-14 items-center justify-between gap-3 border-b border-border-subtle/40 pb-4 sm:h-16">
                                 <Link
-                                    href="/home"
+                                    href={localePrefix ? localePath(localePrefix, ["home"]) : "/home"}
                                     onClick={closeMenu}
                                     aria-label={t("header.home")}
                                     className="flex min-w-0 items-center"
@@ -179,7 +218,8 @@ export function Header() {
                                 aria-label={t("nav.mobile")}
                             >
                                 {navItems.map((item, index) => {
-                                    const active = pathname === item.href;
+                                    const href = localePrefix ? localePath(localePrefix, [item.href.slice(1)]) : item.href;
+                                    const active = basePathname === item.href || (item.href === "/home" && basePathname === "/");
 
                                     return (
                                         <motion.div
@@ -189,7 +229,7 @@ export function Header() {
                                             transition={{ delay: index * 0.05, duration: 0.25 }}
                                         >
                                             <Link
-                                                href={item.href}
+                                                href={href}
                                                 onClick={closeMenu}
                                                 className={cn(
                                                     "flex items-center rounded-xl px-5 py-3.5",
@@ -216,7 +256,7 @@ export function Header() {
 
                             {/* MOBILE CTA */}
                             <div className="mt-auto shrink-0 pt-8 border-t border-border-subtle/40">
-                                <Link href="/contact" onClick={closeMenu} className="block w-full">
+                                <Link href={localePrefix ? localePath(localePrefix, ["contact"]) : "/contact"} onClick={closeMenu} className="block w-full">
                                     <Button fullWidth={true} glow={true} className="py-3.5 text-base font-bold uppercase tracking-wider">
                                         {t("booking")}
                                     </Button>
@@ -244,11 +284,33 @@ function LanguagePicker({
     label: string;
 }) {
     const [isOpen, setIsOpen] = useState(false);
+    const [activeIndex, setActiveIndex] = useState(() => Math.max(0, languages.findIndex((item) => item.value === language)));
+    const buttonRef = useRef<HTMLButtonElement>(null);
+    const optionRefs = useRef<Array<HTMLButtonElement | null>>([]);
+
+    useEffect(() => {
+        if (!isOpen) return;
+        const selectedIndex = Math.max(0, languages.findIndex((item) => item.value === language));
+        setActiveIndex(selectedIndex);
+        const frame = window.requestAnimationFrame(() => optionRefs.current[selectedIndex]?.focus());
+        return () => window.cancelAnimationFrame(frame);
+    }, [isOpen, language]);
+
+    const closePicker = () => {
+        setIsOpen(false);
+        buttonRef.current?.focus();
+    };
+
+    const selectLanguage = (value: Language) => {
+        onChange(value);
+        closePicker();
+    };
 
     return (
         <div className={cn("relative", className)}>
             <button
                 type="button"
+                ref={buttonRef}
                 onClick={() => setIsOpen((open) => !open)}
                 className="flex w-full items-center gap-2 rounded-full border border-border-subtle/60 bg-bg-surface/60 px-3 py-2 text-sm font-semibold text-fg-muted transition-colors hover:border-accent-blue/50 hover:text-fg-primary"
                 aria-haspopup="listbox"
@@ -270,17 +332,39 @@ function LanguagePicker({
                         className="absolute right-0 top-full z-[140] min-w-[190px] overflow-hidden rounded-2xl border border-border-subtle bg-bg-surface p-1.5 shadow-2xl"
                         role="listbox"
                         aria-label={label}
+                        onKeyDown={(event) => {
+                            if (event.key === "Escape") {
+                                event.preventDefault();
+                                closePicker();
+                            } else if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+                                event.preventDefault();
+                                const direction = event.key === "ArrowDown" ? 1 : -1;
+                                const nextIndex = (activeIndex + direction + languages.length) % languages.length;
+                                setActiveIndex(nextIndex);
+                                optionRefs.current[nextIndex]?.focus();
+                            } else if (event.key === "Home" || event.key === "End") {
+                                event.preventDefault();
+                                const nextIndex = event.key === "Home" ? 0 : languages.length - 1;
+                                setActiveIndex(nextIndex);
+                                optionRefs.current[nextIndex]?.focus();
+                            } else if (event.key === "Enter" || event.key === " ") {
+                                event.preventDefault();
+                                selectLanguage(languages[activeIndex].value);
+                            } else if (event.key === "Tab") {
+                                setIsOpen(false);
+                            }
+                        }}
                     >
                         {languages.map((item) => (
                             <button
                                 key={item.value}
                                 type="button"
+                                ref={(element) => { optionRefs.current[languages.indexOf(item)] = element; }}
                                 role="option"
                                 aria-selected={language === item.value}
-                                onClick={() => {
-                                    onChange(item.value);
-                                    setIsOpen(false);
-                                }}
+                                tabIndex={activeIndex === languages.indexOf(item) ? 0 : -1}
+                                onFocus={() => setActiveIndex(languages.indexOf(item))}
+                                onClick={() => selectLanguage(item.value)}
                                 className={cn(
                                     "flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm transition-colors",
                                     language === item.value

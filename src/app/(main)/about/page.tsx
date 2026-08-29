@@ -79,9 +79,9 @@ export default function AboutPage() {
                             </p>
 
                             <div className="flex flex-wrap gap-3">
-                                {bio.genres.map((genre) => (
+                                {bio.genres.map((genre, index) => (
                                     <span
-                                        key={genre}
+                                        key={`${genre}-${index}`}
                                         className="px-4 py-2 rounded-full bg-bg-surface border border-border-subtle text-fg-primary hover:border-accent-blue/50 hover:text-accent-blue-bright transition-colors"
                                     >
                                         {genre}
@@ -105,14 +105,14 @@ export default function AboutPage() {
                                 </h3>
 
                                 <div className="space-y-6">
-                                    {bio.stats.map((stat) => {
+                                    {bio.stats.map((stat, index) => {
                                         const Icon =
                                             statIcons[stat.label as keyof typeof statIcons] ||
                                             Music;
 
                                         return (
                                             <div
-                                                key={stat.label}
+                                                key={`${stat.label}-${index}`}
                                                 className="flex items-center gap-4"
                                             >
                                                 <div className="p-3 rounded-xl bg-accent-blue/10 border border-accent-blue/30 flex-shrink-0">
@@ -200,9 +200,9 @@ export default function AboutPage() {
                                 title: t("about.audience"),
                                 desc: t("about.audienceText"),
                             },
-                        ].map((value) => (
+                        ].map((value, index) => (
                             <article
-                                key={value.title}
+                                key={`about-drive-${index}`}
                                 className="card h-full p-8 text-center group"
                             >
                                 <h3 className="font-display text-xl font-bold mb-2">

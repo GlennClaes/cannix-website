@@ -34,6 +34,7 @@ export const createContactSchema = (messages: ContactValidationMessages) => z.ob
     .min(20, messages.message)
     .max(5000, messages.messageLong),
   website: z.string().optional(),
+  language: z.enum(["nl", "en", "fr", "de"]).optional(),
 }).superRefine((data, context) => {
   const dependentFields = {
     booking: ["eventType", messages.eventType],

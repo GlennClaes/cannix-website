@@ -40,9 +40,9 @@ export default function CookiesPage() {
                     {/* Cookie Table */}
                     <h2 className="font-display text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-fg-primary">{t("cookies.which")}</h2>
                     <div className="space-y-4 mb-8 sm:mb-12">
-                        {cookieTypes.map((cookie) => (
+                        {cookieTypes.map((cookie, index) => (
                             <div
-                                key={cookie.name}
+                                key={`cookie-${index}`}
                                 className="rounded-2xl border border-border-subtle/60 bg-bg-surface/30 backdrop-blur-sm p-4 sm:p-6"
                             >
                                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4 mb-3">

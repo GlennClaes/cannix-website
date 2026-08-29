@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Play, Youtube, ExternalLink } from "lucide-react";
 import { videos, type VideoItem } from "@/content/videos";
@@ -12,9 +12,13 @@ import { useLanguage } from "@/lib/i18n";
 export default function VideosPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedVideo, setSelectedVideo] = useState<VideoItem | null>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
   const { t } = useLanguage();
 
-  const openModal = (video: VideoItem) => {
+  const openModal = (video: VideoItem, trigger?: HTMLElement) => {
+    previousFocusRef.current = trigger || (document.activeElement instanceof HTMLElement ? document.activeElement : null);
     setSelectedVideo(video);
     setModalOpen(true);
   };
@@ -23,6 +27,42 @@ export default function VideosPage() {
     setModalOpen(false);
     setSelectedVideo(null);
   };
+
+  useEffect(() => {
+    if (modalOpen) {
+      const frame = window.requestAnimationFrame(() => closeButtonRef.current?.focus());
+      return () => window.cancelAnimationFrame(frame);
+    }
+    previousFocusRef.current?.focus();
+    previousFocusRef.current = null;
+  }, [modalOpen]);
+
+  useEffect(() => {
+    if (!modalOpen) return;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeModal();
+        return;
+      }
+      if (event.key === "Tab" && modalRef.current) {
+        const focusable = Array.from(modalRef.current.querySelectorAll<HTMLElement>("button, iframe"));
+        if (focusable.length > 0) {
+          const first = focusable[0];
+          const last = focusable[focusable.length - 1];
+          if (event.shiftKey && document.activeElement === first) {
+            event.preventDefault();
+            last.focus();
+          } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first.focus();
+          }
+        }
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [modalOpen]);
 
   const getEmbedUrl = (video: VideoItem) => {
     if (video.type === "youtube") {
@@ -67,7 +107,7 @@ export default function VideosPage() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-bg-deep/90 via-transparent to-transparent" />
                   <button
-                    onClick={() => openModal(video)}
+                    onClick={(event) => openModal(video, event.currentTarget)}
                     className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                     aria-label={t("videos.watch", { title })}
                   >
@@ -139,6 +179,7 @@ export default function VideosPage() {
             role="dialog"
             aria-modal="true"
             aria-label={selectedVideo.title}
+            ref={modalRef}
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -159,6 +200,7 @@ export default function VideosPage() {
 
             <button
               onClick={closeModal}
+              ref={closeButtonRef}
               className="absolute top-4 right-4 p-2 rounded-full bg-bg-surface/50 backdrop-blur border border-border-subtle hover:border-accent-blue-bright hover:bg-bg-surface transition-colors text-fg-primary"
               aria-label={t("videos.close")}
             >

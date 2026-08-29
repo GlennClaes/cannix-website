@@ -151,7 +151,11 @@ Bewerk `src/app/globals.css` → `@theme` blok voor kleuren, typografie, spacing
 
 ### Forms
 
-De contact API route (`src/app/api/contact/route.ts`) verstuurt aanvragen via Resend. Configureer `RESEND_API_KEY`, `MAIL_TO` en `MAIL_FROM` in `.env.local` of Vercel.
+
+### SEO na livegang
+
+Verifieer de site in Google Search Console, dien `/sitemap.xml` in en voeg het bedrijfsprofiel (Google Business Profile) handmatig toe of claim het. Controleer adres-, categorie- en contactgegevens daar rechtstreeks; deze externe verificatie en profielinstellingen kunnen niet vanuit de repository worden uitgevoerd.
+
 
 ## Deployment
 

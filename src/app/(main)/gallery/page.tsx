@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight, Maximize2, Instagram } from "lucide-react";
 import { galleryItems, type GalleryItem } from "@/content/gallery";
@@ -15,20 +15,62 @@ export default function GalleryPage() {
   const [activeYear, setActiveYear] = useState("All");
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
+  const lightboxRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
   const { t } = useLanguage();
 
   const filteredItems = activeYear === "All" ? galleryItems : galleryItems.filter((item) => item.year === activeYear);
   const lightboxItem = filteredItems[lightboxIndex];
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (!lightboxOpen || filteredItems.length === 0) return;
-    if (e.key === "Escape") setLightboxOpen(false);
-    if (e.key === "ArrowLeft") setLightboxIndex((i) => (i - 1 + filteredItems.length) % filteredItems.length);
-    if (e.key === "ArrowRight") setLightboxIndex((i) => (i + 1) % filteredItems.length);
+  const openLightbox = (index: number, trigger: HTMLElement) => {
+    previousFocusRef.current = trigger;
+    setLightboxIndex(index);
+    setLightboxOpen(true);
   };
 
+  useEffect(() => {
+    if (lightboxOpen) {
+      const frame = window.requestAnimationFrame(() => closeButtonRef.current?.focus());
+      return () => window.cancelAnimationFrame(frame);
+    }
+    previousFocusRef.current?.focus();
+    previousFocusRef.current = null;
+  }, [lightboxOpen]);
+
+  useEffect(() => {
+    if (!lightboxOpen) return;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setLightboxOpen(false);
+      } else if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        setLightboxIndex((i) => (i - 1 + filteredItems.length) % filteredItems.length);
+      } else if (event.key === "ArrowRight") {
+        event.preventDefault();
+        setLightboxIndex((i) => (i + 1) % filteredItems.length);
+      } else if (event.key === "Tab" && lightboxRef.current) {
+        const focusable = Array.from(lightboxRef.current.querySelectorAll<HTMLElement>("button"));
+        if (focusable.length > 0) {
+          const first = focusable[0];
+          const last = focusable[focusable.length - 1];
+          if (event.shiftKey && document.activeElement === first) {
+            event.preventDefault();
+            last.focus();
+          } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first.focus();
+          }
+        }
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [lightboxOpen, filteredItems.length]);
+
   return (
-    <div onKeyDown={handleKeyDown}>
+    <div>
       {/* Filter Tabs */}
       <section className="section container">
         <motion.div
@@ -68,14 +110,22 @@ export default function GalleryPage() {
         >
           {filteredItems.map((item, index) => (
             <motion.article
-              key={item.src}
+              key={`${item.src}-${index}`}
               layout
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: index * 0.05, duration: 0.4 }}
               className="group relative aspect-[4/5] overflow-hidden rounded-xl cursor-zoom-in"
               role="listitem"
-              onClick={() => { setLightboxIndex(filteredItems.indexOf(item)); setLightboxOpen(true); }}
+              tabIndex={0}
+              aria-label={t("gallery.enlarge", { alt: item.alt })}
+              onClick={(event) => openLightbox(filteredItems.indexOf(item), event.currentTarget)}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  openLightbox(filteredItems.indexOf(item), event.currentTarget);
+                }
+              }}
             >
               <Card className="h-full border-0 overflow-hidden">
                 <div className="relative h-full">
@@ -98,7 +148,7 @@ export default function GalleryPage() {
                         </p>
                       </div>
                       <button
-                        onClick={(e) => { e.stopPropagation(); setLightboxIndex(filteredItems.indexOf(item)); setLightboxOpen(true); }}
+                        onClick={(e) => { e.stopPropagation(); openLightbox(filteredItems.indexOf(item), e.currentTarget); }}
                         className="p-2 rounded-xl bg-bg-surface/90 backdrop-blur border border-border-subtle hover:border-accent-blue/50 hover:bg-bg-surface transition-colors"
                         aria-label={t("gallery.enlarge", { alt: item.alt })}
                       >
@@ -133,6 +183,7 @@ export default function GalleryPage() {
             role="dialog"
             aria-modal="true"
             aria-label={t("gallery.photo", { current: lightboxIndex + 1, total: filteredItems.length })}
+            ref={lightboxRef}
           >
             {/* Prev Button */}
             <motion.button
@@ -182,6 +233,7 @@ export default function GalleryPage() {
             {/* Close Button */}
             <motion.button
               onClick={() => setLightboxOpen(false)}
+              ref={closeButtonRef}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
               className="absolute top-4 right-4 z-10 p-2.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 hover:border-accent-blue/60 transition-colors cursor-pointer"

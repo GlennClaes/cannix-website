@@ -266,13 +266,23 @@ interface LanguageContextValue {
 
 const LanguageContext = createContext<LanguageContextValue | null>(null);
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguageState] = useState<Language>("nl");
+export function LanguageProvider({
+  children,
+  initialLanguage,
+}: {
+  children: ReactNode;
+  initialLanguage?: Language;
+}) {
+  const [language, setLanguageState] = useState<Language>(initialLanguage || "nl");
 
   useEffect(() => {
+    if (initialLanguage) {
+      setLanguageState(initialLanguage);
+      return;
+    }
     const saved = window.localStorage.getItem("cannix-language") as Language | null;
     if (saved && languages.some((item) => item.value === saved)) setLanguageState(saved);
-  }, []);
+  }, [initialLanguage]);
 
   useEffect(() => {
     const info = languages.find((item) => item.value === language) || languages[0];

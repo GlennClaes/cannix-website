@@ -50,7 +50,6 @@ De repository ondersteunt Node.js 22 en 24 (`package.json`). Kies in Vercel bij 
 | `MAIL_TO` | Ja | Ja | Optioneel |
 | `MAIL_FROM` | Ja | Ja | Optioneel |
 | `NEXT_PUBLIC_SITE_URL` | Optioneel | Optioneel | Optioneel |
-
 Zolang `cannix.be` nog niet beschikbaar is, laat je `NEXT_PUBLIC_SITE_URL` leeg. De site gebruikt
 dan automatisch de Vercel-deployment-URL (en lokaal `http://localhost:3000`). Zodra het domein
 gekoppeld is, stel je `NEXT_PUBLIC_SITE_URL=https://cannix.be` in voor Production.
@@ -231,6 +230,19 @@ Controleer na de eerste productie-deployment:
 6. Controleer de homepage en contactpagina met Rich Results Test en PageSpeed Insights.
 7. Controleer Open Graph previews met een social sharing debugger.
 
+### Google Search Console en Business Profile
+
+Deze stappen vereisen externe accounts en kunnen niet door de applicatie worden uitgevoerd:
+
+1. Maak in [Google Search Console](https://search.google.com/search-console) een **Domain property**
+   voor `cannix.be` en voltooi de DNS-verificatie, of gebruik de URL-prefix-methode.
+2. Dien `https://cannix.be/sitemap.xml` in en vraag indexering van de homepage en contactpagina aan.
+3. Maak of claim het [Google Business Profile](https://www.google.com/business/), voltooi de
+   adres- of servicegebied-verificatie en vul alleen echte bedrijfsgegevens, categorieën,
+   openingstijden en profiel-links in.
+4. Houd profielgegevens gelijk aan de site en voeg pas beoordelingen toe als ze echt bestaan;
+   de site genereert geen review- of rating-schema zonder echte brondata.
+
 ## 14. Gratis hosting: verwachtingen
 
 De basisopstelling kan gratis draaien:
@@ -263,4 +275,5 @@ Controleer altijd de actuele limieten en gebruiksvoorwaarden. Een commerciële w
 - [ ] Echt contactformulier getest
 - [ ] Mail ontvangen en reply getest
 - [ ] Google Search Console gekoppeld
+- [ ] Google Business Profile aangemaakt of geclaimd
 - [ ] Branch protection ingesteld

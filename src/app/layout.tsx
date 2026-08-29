@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import localFont from "next/font/local";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
@@ -44,6 +45,10 @@ export const metadata: Metadata = {
         "DJ Cannix",
         "Belgische DJ",
         "DJ boeken",
+        "DJ Limburg",
+        "DJ boeken Limburg",
+        "DJ België",
+        "DJ Halen",
         "fuif DJ",
         "Drum and Bass DJ",
         "Jump Up",
@@ -53,6 +58,13 @@ export const metadata: Metadata = {
     ],
     alternates: {
         canonical: "/",
+        languages: {
+            nl: "/",
+            en: "/en",
+            fr: "/fr",
+            de: "/de",
+            "x-default": "/",
+        },
     },
     icons: {
         icon: [
@@ -100,11 +112,15 @@ export const metadata: Metadata = {
     },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
                                        children,
                                    }: Readonly<{
     children: React.ReactNode;
 }>) {
+    const requestLocale = (await headers()).get("x-cannix-locale");
+    const htmlLang = requestLocale === "en" || requestLocale === "fr" || requestLocale === "de"
+        ? requestLocale
+        : "nl-BE";
     const structuredData = {
         "@context": "https://schema.org",
         "@graph": [
@@ -140,12 +156,28 @@ export default function RootLayout({
                     "https://soundcloud.com/cannix_dnb",
                 ],
             },
+            {
+                "@type": "ProfessionalService",
+                "@id": `${siteUrl}/#dj-booking-service`,
+                name: "Cannix DJ booking",
+                url: `${siteUrl}/contact`,
+                description:
+                    "DJ booking voor fuiven, clubs, festivals en private events in Limburg, België en Europa.",
+                serviceType: "DJ booking and live entertainment",
+                provider: { "@id": `${siteUrl}/#person` },
+                areaServed: [
+                    { "@type": "AdministrativeArea", name: "Limburg, Belgium" },
+                    { "@type": "Country", name: "Belgium" },
+                    { "@type": "Place", name: "Europe" },
+                ],
+                availableLanguage: ["nl-BE", "en", "fr", "de"],
+            },
         ],
     };
 
     return (
         <html
-            lang="nl"
+            lang={htmlLang}
             className={`${syne.variable} ${dmSans.variable} ${jetBrainsMono.variable}`}
             data-scroll-behavior="smooth"
         >

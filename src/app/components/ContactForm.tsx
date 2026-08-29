@@ -13,7 +13,7 @@ import {useLanguage} from "@/lib/i18n";
 export function ContactForm() {
     const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
     const [errorMessage, setErrorMessage] = useState("");
-    const { t } = useLanguage();
+    const { language, t } = useLanguage();
     const contactSchema = useMemo(() => createContactSchema({
         name: t("validation.name"), nameLong: t("validation.nameLong"), email: t("validation.email"),
         phone: t("validation.phone"), phoneLong: t("validation.phoneLong"), reason: t("validation.reason"),
@@ -49,7 +49,7 @@ export function ContactForm() {
             const response = await fetch("/api/contact", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
-                body: JSON.stringify(data),
+                body: JSON.stringify({...data, language}),
             });
 
             const result = (await response.json().catch(() => ({}))) as { error?: string };

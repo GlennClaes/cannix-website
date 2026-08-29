@@ -92,7 +92,7 @@ export default function ContactPage() {
                     { icon: Music, text: t("contact.vibe") },
                     { icon: Calendar, text: t("contact.budget") },
                   ].map((item, i) => (
-                    <li key={i} className="flex items-center gap-3 group">
+                    <li key={`contact-detail-${i}`} className="flex items-center gap-3 group">
                       <span className="p-2 rounded-lg bg-bg-deep border border-border-subtle group-hover:border-accent-blue/50"><item.icon className="h-5 w-5" /></span>
                       <span>{item.text}</span>
                     </li>
@@ -127,9 +127,9 @@ export default function ContactPage() {
           </motion.div>
 
           <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-            {faqs.map((faq) => (
+            {faqs.map((faq, index) => (
               <article
-                key={faq.q}
+                key={`faq-${index}`}
                 className="card h-full p-6 group"
               >
                 <h3 className="font-display font-bold mb-2 text-fg-primary group-hover:text-accent-blue-bright transition-colors">{faq.q}</h3>
