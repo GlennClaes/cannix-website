@@ -6,6 +6,7 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {CheckCircle2, AlertCircle} from "lucide-react";
 import {contactSchema, type ContactFormData} from "@/lib/validations";
 import {Input, Textarea, Button} from "@/app/components/ui";
+import {Modal} from "@/app/components/ui/Modal";
 import {cn} from "@/lib/utils";
 
 const eventTypes = [
@@ -70,6 +71,7 @@ export function ContactForm() {
                     label="Naam"
                     placeholder="Je naam"
                     autoComplete="name"
+                    required
                     error={errors.name?.message}
                     {...register("name")}
                 />
@@ -78,6 +80,7 @@ export function ContactForm() {
                     type="email"
                     placeholder="naam@example.com"
                     autoComplete="email"
+                    required
                     error={errors.email?.message}
                     {...register("email")}
                 />
@@ -89,7 +92,7 @@ export function ContactForm() {
                     type="tel"
                     placeholder="+32 ..."
                     autoComplete="tel"
-                    hint="Optioneel"
+                    required
                     error={errors.phone?.message}
                     {...register("phone")}
                 />
@@ -97,6 +100,7 @@ export function ContactForm() {
                     <label htmlFor="eventType" className="label">Type evenement</label>
                     <select
                         id="eventType"
+                        required
                         className={cn("input", errors.eventType && "border-red-500 focus:border-red-500 focus:ring-red-500/20")}
                         aria-invalid={errors.eventType ? "true" : "false"}
                         {...register("eventType")}
@@ -122,6 +126,7 @@ export function ContactForm() {
                 <Input
                     label="Locatie"
                     placeholder="Stad / venue"
+                    required
                     error={errors.location?.message}
                     {...register("location")}
                 />
@@ -131,21 +136,10 @@ export function ContactForm() {
                 label="Bericht"
                 placeholder="Vertel kort over je event, timing, verwacht aantal bezoekers en wat je zoekt."
                 rows={6}
+                required
                 error={errors.message?.message}
                 {...register("message")}
             />
-
-            {status === "success" && (
-                <div
-                    className="flex items-start gap-3 p-4 rounded-xl bg-green-500/10 border border-green-500/30 text-green-300"
-                    role="status">
-                    <CheckCircle2 className="h-5 w-5 flex-shrink-0 mt-0.5"/>
-                    <div>
-                        <p className="font-semibold">Aanvraag verstuurd.</p>
-                        <p className="text-sm text-green-300/80">We nemen zo snel mogelijk contact met je op.</p>
-                    </div>
-                </div>
-            )}
 
             {status === "error" && (
                 <div
@@ -169,6 +163,31 @@ export function ContactForm() {
             >
                 {isSubmitting ? "Versturen..." : "Verstuur aanvraag"}
             </Button>
+
+            <Modal
+                isOpen={status === "success"}
+                onClose={() => setStatus("idle")}
+                title="Aanvraag verstuurd"
+                size="sm"
+            >
+                <div className="flex items-start gap-3 text-green-300" role="status">
+                    <CheckCircle2 className="mt-0.5 h-6 w-6 flex-shrink-0"/>
+                    <div>
+                        <p className="font-semibold">Bedankt voor je aanvraag.</p>
+                        <p className="mt-1 text-sm text-green-300/80">
+                            We nemen zo snel mogelijk contact met je op.
+                        </p>
+                    </div>
+                </div>
+                <Button
+                    type="button"
+                    fullWidth={true}
+                    className="mt-6"
+                    onClick={() => setStatus("idle")}
+                >
+                    Sluiten
+                </Button>
+            </Modal>
         </form>
     );
 }

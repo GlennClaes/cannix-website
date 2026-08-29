@@ -59,6 +59,7 @@ export function Modal({ isOpen, onClose, children, title, className, size = "md"
                   <span />
                 )}
                 <button
+                  type="button"
                   onClick={onClose}
                   className="btn-ghost p-2 rounded-lg hover:bg-bg-deep transition-colors"
                   aria-label="Sluiten"
