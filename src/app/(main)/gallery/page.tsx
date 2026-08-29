@@ -7,6 +7,7 @@ import { X, ChevronLeft, ChevronRight, Maximize2, Instagram } from "lucide-react
 import { galleryItems, type GalleryItem } from "@/content/gallery";
 import { Card } from "@/app/components/ui";
 import { cn, formatYear } from "@/lib/utils";
+import { useLanguage } from "@/lib/i18n";
 
 const years = ["All", ...Array.from(new Set(galleryItems.map((item) => item.year))).sort((a, b) => Number(b) - Number(a))];
 
@@ -14,6 +15,7 @@ export default function GalleryPage() {
   const [activeYear, setActiveYear] = useState("All");
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
+  const { t } = useLanguage();
 
   const filteredItems = activeYear === "All" ? galleryItems : galleryItems.filter((item) => item.year === activeYear);
   const lightboxItem = filteredItems[lightboxIndex];
@@ -35,7 +37,7 @@ export default function GalleryPage() {
           transition={{ duration: 0.6 }}
           className="flex flex-wrap gap-2 justify-center mb-12"
           role="tablist"
-          aria-label="Filter op jaar"
+          aria-label={t("gallery.filter")}
         >
           {years.map((year) => (
             <button
@@ -50,7 +52,7 @@ export default function GalleryPage() {
                   : "bg-bg-surface text-fg-muted hover:text-fg-primary hover:border-accent-blue/50 border border-border-subtle",
               )}
             >
-              {year}
+              {year === "All" ? t("gallery.all") : year}
             </button>
           ))}
         </motion.div>
@@ -62,7 +64,7 @@ export default function GalleryPage() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
           role="list"
-          aria-label="Foto gallery"
+          aria-label={t("gallery.list")}
         >
           {filteredItems.map((item, index) => (
             <motion.article
@@ -98,7 +100,7 @@ export default function GalleryPage() {
                       <button
                         onClick={(e) => { e.stopPropagation(); setLightboxIndex(filteredItems.indexOf(item)); setLightboxOpen(true); }}
                         className="p-2 rounded-xl bg-bg-surface/90 backdrop-blur border border-border-subtle hover:border-accent-blue/50 hover:bg-bg-surface transition-colors"
-                        aria-label={`Vergroot: ${item.alt}`}
+                        aria-label={t("gallery.enlarge", { alt: item.alt })}
                       >
                         <Maximize2 className="h-5 w-5 text-fg-primary" />
                       </button>
@@ -112,7 +114,7 @@ export default function GalleryPage() {
 
         {filteredItems.length === 0 && (
           <div className="text-center py-16 text-fg-muted">
-            Geen foto's gevonden voor {activeYear}.
+            {t("gallery.none", { year: activeYear === "All" ? t("gallery.all") : activeYear })}
           </div>
         )}
       </section>
@@ -130,7 +132,7 @@ export default function GalleryPage() {
             onClick={() => setLightboxOpen(false)}
             role="dialog"
             aria-modal="true"
-            aria-label={`Foto ${lightboxIndex + 1} van ${filteredItems.length}`}
+            aria-label={t("gallery.photo", { current: lightboxIndex + 1, total: filteredItems.length })}
           >
             {/* Prev Button */}
             <motion.button
@@ -138,7 +140,7 @@ export default function GalleryPage() {
               whileHover={{ scale: 1.1, x: -2 }}
               whileTap={{ scale: 0.95 }}
               className="absolute left-3 sm:left-6 z-10 p-3 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 hover:border-accent-blue/60 transition-colors cursor-pointer"
-              aria-label="Vorige foto"
+              aria-label={t("gallery.previous")}
             >
               <ChevronLeft className="h-6 w-6 text-white" />
             </motion.button>
@@ -172,7 +174,7 @@ export default function GalleryPage() {
               whileHover={{ scale: 1.1, x: 2 }}
               whileTap={{ scale: 0.95 }}
               className="absolute right-3 sm:right-6 z-10 p-3 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 hover:border-accent-blue/60 transition-colors cursor-pointer"
-              aria-label="Volgende foto"
+              aria-label={t("gallery.next")}
             >
               <ChevronRight className="h-6 w-6 text-white" />
             </motion.button>
@@ -183,7 +185,7 @@ export default function GalleryPage() {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
               className="absolute top-4 right-4 z-10 p-2.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 hover:border-accent-blue/60 transition-colors cursor-pointer"
-              aria-label="Sluiten"
+              aria-label={t("close")}
             >
               <X className="h-5 w-5 text-white" />
             </motion.button>

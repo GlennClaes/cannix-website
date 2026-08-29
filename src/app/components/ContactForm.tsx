@@ -1,39 +1,27 @@
 "use client";
 
-import {useState} from "react";
+import {useMemo, useState} from "react";
 import {useForm, useWatch} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {CheckCircle2, AlertCircle} from "lucide-react";
-import {contactSchema, type ContactFormData} from "@/lib/validations";
+import {createContactSchema, type ContactFormData} from "@/lib/validations";
 import {Input, Textarea, Button} from "@/app/components/ui";
 import {Modal} from "@/app/components/ui/Modal";
 import {cn} from "@/lib/utils";
-
-const eventTypes = [
-    "Clubavond",
-    "Festival",
-    "Fuif",
-    "Rave",
-    "Private party",
-    "Bruiloft",
-    "Anders",
-]
-
-const contactReasons = [
-    {value: "booking", label: "Ik wil Cannix boeken"},
-    {value: "question", label: "Ik heb een algemene vraag"},
-    {value: "collaboration", label: "Ik wil samenwerken"},
-    {value: "media", label: "Media of interview"},
-];
-
-const questionTypes = ["Algemene informatie", "Muziek en producties", "Beschikbaarheid", "Technische vraag", "Anders"];
-const collaborationTypes = ["Artiest of event", "Merk of organisatie", "Muzikale samenwerking", "Anders"];
-const mediaTypes = ["Interview", "Persbericht", "Foto- of videovraag", "Anders"];
-
+import {useLanguage} from "@/lib/i18n";
 
 export function ContactForm() {
     const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
     const [errorMessage, setErrorMessage] = useState("");
+    const { t } = useLanguage();
+    const contactSchema = useMemo(() => createContactSchema({
+        name: t("validation.name"), nameLong: t("validation.nameLong"), email: t("validation.email"),
+        phone: t("validation.phone"), phoneLong: t("validation.phoneLong"), reason: t("validation.reason"),
+        eventType: t("validation.eventType"), questionType: t("validation.questionType"),
+        collaborationType: t("validation.collaborationType"), mediaType: t("validation.mediaType"),
+        location: t("validation.location"), locationLong: t("validation.locationLong"),
+        message: t("validation.message"), messageLong: t("validation.messageLong"),
+    }), [t]);
 
     const {
         register,
@@ -80,20 +68,20 @@ export function ContactForm() {
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" noValidate>
             <div className="hidden" aria-hidden="true">
-                <label htmlFor="website">Website</label>
+                <label htmlFor="website">{t("form.website")}</label>
                 <input id="website" tabIndex={-1} autoComplete="off" {...register("website")} />
             </div>
             <div className="grid sm:grid-cols-2 gap-6">
                 <Input
-                    label="Naam"
-                    placeholder="Je naam"
+                    label={t("form.name")}
+                    placeholder={t("form.namePlaceholder")}
                     autoComplete="name"
                     required
                     error={errors.name?.message}
                     {...register("name")}
                 />
                 <Input
-                    label="E-mail"
+                    label={t("form.email")}
                     type="email"
                     placeholder="naam@example.com"
                     autoComplete="email"
@@ -105,7 +93,7 @@ export function ContactForm() {
 
             <div className="grid sm:grid-cols-2 gap-6">
                 <div>
-                    <label htmlFor="contactReason" className="label">Waarvoor neem je contact op?</label>
+                    <label htmlFor="contactReason" className="label">{t("form.reason")}</label>
                     <select
                         id="contactReason"
                         required
@@ -113,16 +101,16 @@ export function ContactForm() {
                         aria-invalid={errors.contactReason ? "true" : "false"}
                         {...register("contactReason")}
                     >
-                        <option value="">Maak een keuze</option>
-                        {contactReasons.map((reason) => (
-                            <option key={reason.value} value={reason.value}>{reason.label}</option>
+                        <option value="">{t("form.choose")}</option>
+                        {["booking", "question", "collaboration", "media"].map((reason) => (
+                            <option key={reason} value={reason}>{t(`form.reason.${reason}`)}</option>
                         ))}
                     </select>
                     {errors.contactReason &&
                         <p className="mt-1.5 text-sm text-red-400" role="alert">{errors.contactReason.message}</p>}
                 </div>
                 <Input
-                    label="Telefoon"
+                    label={t("form.phone")}
                     type="tel"
                     placeholder="+32 ..."
                     autoComplete="tel"
@@ -134,7 +122,7 @@ export function ContactForm() {
 
             {contactReason === "booking" && (
                 <div>
-                    <label htmlFor="eventType" className="label">Type evenement</label>
+                    <label htmlFor="eventType" className="label">{t("form.eventType")}</label>
                     <select
                         id="eventType"
                         required
@@ -142,34 +130,34 @@ export function ContactForm() {
                         aria-invalid={errors.eventType ? "true" : "false"}
                         {...register("eventType")}
                     >
-                        <option value="">Kies een type evenement</option>
-                        {eventTypes.map((type) => <option key={type} value={type}>{type}</option>)}
+                        <option value="">{t("form.eventChoose")}</option>
+                        {["club", "festival", "party", "rave", "private", "wedding", "other"].map((type) => <option key={type} value={type}>{t(`form.event.${type}`)}</option>)}
                     </select>
                     {errors.eventType && <p className="mt-1.5 text-sm text-red-400" role="alert">{errors.eventType.message}</p>}
                 </div>
             )}
 
             {contactReason === "question" && (
-                <ConditionalSelect id="questionType" label="Onderwerp van je vraag" options={questionTypes} register={register} error={errors.questionType?.message} />
+                <ConditionalSelect id="questionType" label={t("form.questionSubject")} options={["general", "music", "availability", "technical", "other"].map((key) => ({ value: key, label: t(`form.question.${key}`) }))} register={register} error={errors.questionType?.message} chooseLabel={t("form.choose")} />
             )}
             {contactReason === "collaboration" && (
-                <ConditionalSelect id="collaborationType" label="Type samenwerking" options={collaborationTypes} register={register} error={errors.collaborationType?.message} />
+                <ConditionalSelect id="collaborationType" label={t("form.collaborationType")} options={["artist", "brand", "music", "other"].map((key) => ({ value: key, label: t(`form.collab.${key}`) }))} register={register} error={errors.collaborationType?.message} chooseLabel={t("form.choose")} />
             )}
             {contactReason === "media" && (
-                <ConditionalSelect id="mediaType" label="Type media-aanvraag" options={mediaTypes} register={register} error={errors.mediaType?.message} />
+                <ConditionalSelect id="mediaType" label={t("form.mediaType")} options={["interview", "press", "photo", "other"].map((key) => ({ value: key, label: t(`form.media.${key}`) }))} register={register} error={errors.mediaType?.message} chooseLabel={t("form.choose")} />
             )}
 
             <div className="grid sm:grid-cols-2 gap-6">
                 <Input
-                    label="Datum"
+                    label={t("form.date")}
                     type="date"
-                    hint="Optioneel"
+                    hint={t("form.optional")}
                     error={errors.eventDate?.message}
                     {...register("eventDate")}
                 />
                 <Input
-                    label="Locatie"
-                    placeholder="Stad / venue"
+                    label={t("form.location")}
+                    placeholder={t("form.locationPlaceholder")}
                     required
                     error={errors.location?.message}
                     {...register("location")}
@@ -177,8 +165,8 @@ export function ContactForm() {
             </div>
 
             <Textarea
-                label="Bericht"
-                placeholder="Vertel kort over je event, timing, verwacht aantal bezoekers en wat je zoekt."
+                label={t("form.message")}
+                placeholder={t("form.messagePlaceholder")}
                 rows={6}
                 required
                 error={errors.message?.message}
@@ -191,8 +179,8 @@ export function ContactForm() {
                     role="alert">
                     <AlertCircle className="h-5 w-5 flex-shrink-0 mt-0.5"/>
                     <div>
-                        <p className="font-semibold">Versturen lukte niet.</p>
-                        <p className="text-sm text-red-300/80">{errorMessage || "Probeer opnieuw of mail direct naar bookings@cannix.be."}</p>
+                        <p className="font-semibold">{t("form.error")}</p>
+                        <p className="text-sm text-red-300/80">{errorMessage || t("form.retry")}</p>
                     </div>
                 </div>
             )}
@@ -205,21 +193,21 @@ export function ContactForm() {
                 className="text-base font-bold uppercase tracking-wider py-4"
                 disabled={isSubmitting}
             >
-                {isSubmitting ? "Versturen..." : "Verstuur aanvraag"}
+                {isSubmitting ? t("form.sending") : t("form.send")}
             </Button>
 
             <Modal
                 isOpen={status === "success"}
                 onClose={() => setStatus("idle")}
-                title="Aanvraag verstuurd"
+                title={t("form.successTitle")}
                 size="sm"
             >
                 <div className="flex items-start gap-3 text-green-300" role="status">
                     <CheckCircle2 className="mt-0.5 h-6 w-6 flex-shrink-0"/>
                     <div>
-                        <p className="font-semibold">Bedankt voor je aanvraag.</p>
+                        <p className="font-semibold">{t("form.thanks")}</p>
                         <p className="mt-1 text-sm text-green-300/80">
-                            We nemen zo snel mogelijk contact met je op.
+                            {t("form.successText")}
                         </p>
                     </div>
                 </div>
@@ -229,7 +217,7 @@ export function ContactForm() {
                     className="mt-6"
                     onClick={() => setStatus("idle")}
                 >
-                    Sluiten
+                    {t("close")}
                 </Button>
             </Modal>
         </form>
@@ -242,12 +230,14 @@ function ConditionalSelect({
     options,
     register,
     error,
+    chooseLabel,
 }: {
     id: "questionType" | "collaborationType" | "mediaType";
     label: string;
-    options: string[];
+    options: { value: string; label: string }[];
     register: ReturnType<typeof useForm<ContactFormData>>["register"];
     error?: string;
+    chooseLabel: string;
 }) {
     return (
         <div>
@@ -259,8 +249,8 @@ function ConditionalSelect({
                 aria-invalid={error ? "true" : "false"}
                 {...register(id)}
             >
-                <option value="">Maak een keuze</option>
-                {options.map((option) => <option key={option} value={option}>{option}</option>)}
+                <option value="">{chooseLabel}</option>
+                {options.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
             </select>
             {error && <p className="mt-1.5 text-sm text-red-400" role="alert">{error}</p>}
         </div>

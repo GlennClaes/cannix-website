@@ -8,20 +8,23 @@ import { ContactForm } from "@/app/components/ContactForm";
 import { Card, CardContent } from "@/app/components/ui";
 import { cn } from "@/lib/utils";
 import { SoundCloudIcon } from "@/app/components/SocialIcons";
+import { useLanguage } from "@/lib/i18n";
 
 export default function ContactPage() {
+  const { t } = useLanguage();
+  const faqs = [1, 2, 3, 4, 5, 6].map((index) => ({ q: t(`faq.${index}q`), a: t(`faq.${index}a`) }));
   return (
     <div className="min-h-screen">
       {/* Hero */}
       <section className="relative min-h-[50vh] flex items-center">
         <div className="container relative z-10 py-20">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="max-w-3xl text-center mx-auto">
-            <span className="inline-block px-3 py-1 text-sm font-medium text-accent-blue-bright mb-4">Contact & Samenwerking</span>
+            <span className="inline-block px-3 py-1 text-sm font-medium text-accent-blue-bright mb-4">{t("contact.title")}</span>
             <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-tight mb-6">
-              Laten we <span className="gradient-text">samenwerken</span>
+              {t("contact.heading")}
             </h1>
             <p className="text-lg text-fg-muted leading-relaxed">
-              Heb je een boekingsaanvraag, algemene vraag, samenwerkingsidee of media-aanvraag? Vul het formulier in en we nemen binnen 24u contact op.
+              {t("contact.intro")}
             </p>
           </motion.div>
         </div>
@@ -38,7 +41,7 @@ export default function ContactPage() {
             className="lg:col-span-2"
           >
             <Card className="p-4 sm:p-6 md:p-8">
-              <h2 className="font-display text-2xl font-bold mb-6">Stuur een bericht</h2>
+              <h2 className="font-display text-2xl font-bold mb-6">{t("contact.send")}</h2>
               <ContactForm />
             </Card>
           </motion.div>
@@ -52,42 +55,42 @@ export default function ContactPage() {
           >
             <div className="space-y-6 lg:sticky lg:top-24">
               <Card className="p-6">
-                <h3 className="font-display text-xl font-bold mb-6">Direct contact</h3>
+                <h3 className="font-display text-xl font-bold mb-6">{t("contact.direct")}</h3>
                 <div className="space-y-4">
                   <a href={`mailto:${bio.contact.email}`} className={cn("flex min-w-0 items-start gap-3 text-fg-muted hover:text-accent-blue-bright transition-colors group")}>
                     <span className={cn("p-2 rounded-xl bg-accent-blue/10 border border-accent-blue/30 flex-shrink-0 group-hover:bg-accent-blue/20")}><Mail className="h-5 w-5 text-accent-blue-bright" /></span>
                     <div className="min-w-0">
-                      <p className="text-sm text-fg-muted/60">Contact & boekingen</p>
+                      <p className="text-sm text-fg-muted/60">{t("contact.bookings")}</p>
                       <p className="break-all font-medium">{bio.contact.email}</p>
                     </div>
                   </a>
                   <a href={`tel:${bio.contact.phone}`} className={cn("flex min-w-0 items-start gap-3 text-fg-muted hover:text-accent-blue-bright transition-colors group")}>
                     <span className={cn("p-2 rounded-xl bg-accent-blue/10 border border-accent-blue/30 flex-shrink-0 group-hover:bg-accent-blue/20")}><Phone className="h-5 w-5 text-accent-blue-bright" /></span>
                     <div className="min-w-0">
-                      <p className="text-sm text-fg-muted/60">Telefoon</p>
+                      <p className="text-sm text-fg-muted/60">{t("contact.phone")}</p>
                       <p className="font-medium">{bio.contact.phone}</p>
                     </div>
                   </a>
                   <div className="flex min-w-0 items-start gap-3 text-fg-muted">
                     <span className="p-2 rounded-xl bg-bg-deep border border-border-subtle"><MapPin className="h-5 w-5" /></span>
                     <div className="min-w-0">
-                      <p className="text-sm text-fg-muted/60">Locatie</p>
-                      <p className="font-medium">Belgium (Europees boekbaar)</p>
+                      <p className="text-sm text-fg-muted/60">{t("contact.location")}</p>
+                      <p className="font-medium">{t("contact.locationValue")}</p>
                     </div>
                   </div>
                 </div>
               </Card>
 
               <Card className="p-6">
-                <h3 className="font-display text-xl font-bold mb-6">Wat we nodig hebben</h3>
-                <p className="text-fg-muted mb-4">Voor een passend voorstel helpen deze details:</p>
+                <h3 className="font-display text-xl font-bold mb-6">{t("contact.whatNeed")}</h3>
+                <p className="text-fg-muted mb-4">{t("contact.needIntro")}</p>
                 <ul className="space-y-3 text-fg-muted">
                   {[
-                    { icon: Calendar, text: "Datum & tijdstip" },
-                    { icon: MapPin, text: "Locatie / venue" },
-                    { icon: Users, text: "Verwacht aantal bezoekers" },
-                    { icon: Music, text: "Muzikale richting / vibe" },
-                    { icon: Calendar, text: "Budget indicatie" },
+                    { icon: Calendar, text: t("contact.date") },
+                    { icon: MapPin, text: t("contact.venue") },
+                    { icon: Users, text: t("contact.attendees") },
+                    { icon: Music, text: t("contact.vibe") },
+                    { icon: Calendar, text: t("contact.budget") },
                   ].map((item, i) => (
                     <li key={i} className="flex items-center gap-3 group">
                       <span className="p-2 rounded-lg bg-bg-deep border border-border-subtle group-hover:border-accent-blue/50"><item.icon className="h-5 w-5" /></span>
@@ -98,7 +101,7 @@ export default function ContactPage() {
               </Card>
 
               <Card className="p-6">
-                <h3 className="font-display text-xl font-bold mb-6">Socials</h3>
+                <h3 className="font-display text-xl font-bold mb-6">{t("contact.socials")}</h3>
                 <div className="flex flex-wrap gap-3">
                   <a href={bio.socials.instagram} target="_blank" rel="noopener noreferrer" className={cn("btn-ghost px-4 py-2 group")}><Instagram className="h-5 w-5" /><span className="ml-2 hidden sm:inline">Instagram</span></a>
                   <a href={bio.socials.facebook} target="_blank" rel="noopener noreferrer" className={cn("btn-ghost px-4 py-2 group")}><Facebook className="h-5 w-5" /><span className="ml-2 hidden sm:inline">Facebook</span></a>
@@ -119,19 +122,12 @@ export default function ContactPage() {
             viewport={{ once: true }}
             className="text-center max-w-3xl mx-auto mb-12"
           >
-            <h2 className="section-title mb-4">Veelgestelde vragen</h2>
-            <p className="text-fg-muted">De meest voorkomende vragen over contact en boekingen.</p>
+            <h2 className="section-title mb-4">{t("contact.faq")}</h2>
+            <p className="text-fg-muted">{t("contact.faqIntro")}</p>
           </motion.div>
 
           <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-            {[
-              { q: "Hoe ver van tevoren moet ik boeken?", a: "Voor weekends en festivals raden we 2–3 maanden van tevoren aan. Weekdagen en last-minute zijn soms mogelijk, afhankelijk van de agenda." },
-              { q: "Wat is de prijs van een set?", a: "Prijzen variëren op basis van duur, locatie, dag van de week, uitrusting en of het een club/festival/private event is. Stuur een aanvraag voor een maatwerk offerte." },
-              { q: "Breng je eigen apparatuur?", a: "Standaard speel ik op de house gear (CDJ-3000 / mixer). Voor specifieke riders of eigen controller: overleg van tevoren." },
-              { q: "Speel je ook op bruiloften / corporate events?", a: "Absoluut. Ik heb ruime ervaring met private events en pas de muziek volledig aan aan de sfeer en gewensten van de organisator." },
-              { q: "Hoe ver reis je?", a: "Vanaf België Europees. Reis- en verblijfkosten komen niet bovenop de prijs voor optredens buiten Europa." },
-              { q: "Kan ik een demo of live set horen?", a: "Zeker. Luister naar mixes en producties op SoundCloud of vraag een live demo aan via het formulier." },
-            ].map((faq) => (
+            {faqs.map((faq) => (
               <article
                 key={faq.q}
                 className="card h-full p-6 group"

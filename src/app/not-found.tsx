@@ -6,8 +6,10 @@ import { ArrowLeft, Calendar } from "lucide-react";
 import { AnimatedLogo } from "@/app/components/AnimatedLogo";
 import { BackgroundSystem } from "@/app/components/BackgroundSystem";
 import { Button } from "@/app/components/ui";
+import { useLanguage } from "@/lib/i18n";
 
 export default function NotFound() {
+  const { t } = useLanguage();
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Photo background system */}
@@ -52,11 +54,10 @@ export default function NotFound() {
           className="mt-4"
         >
           <h1 className="font-display text-2xl sm:text-3xl font-bold mb-3 text-fg-primary">
-            Pagina niet gevonden
+            {t("notFound.title")}
           </h1>
           <p className="text-fg-muted leading-relaxed text-base sm:text-lg">
-            De pagina die je zoekt bestaat niet of is verplaatst.
-            Geen worries — de beat gaat door.
+            {t("notFound.description")}
           </p>
         </motion.div>
 
@@ -74,7 +75,7 @@ export default function NotFound() {
               iconPosition="left"
               className="w-full sm:w-auto px-8 py-3.5 text-base font-bold uppercase tracking-wider"
             >
-              Terug naar Home
+              {t("notFound.home")}
             </Button>
           </Link>
           <Link href="/contact" className="w-full sm:w-auto">
@@ -83,7 +84,7 @@ export default function NotFound() {
               icon={<Calendar className="h-5 w-5" />}
               className="w-full sm:w-auto px-8 py-3.5 text-base font-semibold"
             >
-              Boek Cannix
+              {t("booking")}
             </Button>
           </Link>
         </motion.div>

@@ -4,9 +4,11 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AnimatePresence } from "framer-motion";
 import { Splash } from "./components/Splash";
+import { useLanguage } from "@/lib/i18n";
 
 export default function SplashPage() {
   const router = useRouter();
+  const { t } = useLanguage();
   const [hasSeenSplash, setHasSeenSplash] = useState(false);
 
   useEffect(() => {
@@ -23,10 +25,8 @@ export default function SplashPage() {
 
   return (
     <AnimatePresence mode="wait">
-      <h1 className="sr-only">Cannix - Belgische DJ en producer</h1>
-      <p className="sr-only">
-        Boek Cannix voor fuiven, clubs, festivals, raves en private events in België en Europa.
-      </p>
+      <h1 className="sr-only">Cannix - {t("home.description")}</h1>
+      <p className="sr-only">{t("booking")}</p>
       <Splash onComplete={handleComplete} hasSeenSplash={hasSeenSplash} />
     </AnimatePresence>
   );

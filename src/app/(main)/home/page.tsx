@@ -7,8 +7,10 @@ import { Calendar, MapPin, Users, Instagram, Facebook } from "lucide-react";
 import { bio } from "@/content/bio";
 import { Button } from "@/app/components/ui";
 import { SoundCloudIcon } from "@/app/components/SocialIcons";
+import { useLanguage } from "@/lib/i18n";
 
 export default function HomePage() {
+  const { t, languageInfo } = useLanguage();
   const upcomingGig = {
     date: "2026-09-19",
     event: "Kermisfuif Loksbergen",
@@ -32,7 +34,7 @@ export default function HomePage() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-blue-bright opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-accent-blue-bright"></span>
               </span>
-              Volgende gig: {new Date(`${upcomingGig.date}T12:00:00+02:00`).toLocaleDateString("nl-BE", { weekday: "long", day: "numeric", month: "long", timeZone: "Europe/Brussels" })}
+              {t("home.nextGig")}: {new Date(`${upcomingGig.date}T12:00:00+02:00`).toLocaleDateString(languageInfo.htmlLang, { weekday: "long", day: "numeric", month: "long", timeZone: "Europe/Brussels" })}
             </span>
 
             <h1 className="mx-auto mb-6 max-w-[18ch] font-display text-3xl font-extrabold leading-[1.08] tracking-tight sm:text-6xl lg:text-7xl">
@@ -40,13 +42,13 @@ export default function HomePage() {
             </h1>
 
             <p className="mx-auto mb-8 max-w-2xl px-2 text-lg leading-relaxed text-fg-secondary sm:text-xl">
-              Belgische DJ gespecialiseerd in energieke festivalsets, fuifclassics, meezingers en harde remixes.
+              {t("home.description")}
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link href="/contact" className="w-full sm:w-auto">
                 <Button glow={true} className="w-full sm:w-auto px-8 py-3.5 text-base font-bold uppercase tracking-wider">
-                  Boek Cannix
+                  {t("booking")}
                 </Button>
               </Link>
             </div>
@@ -68,7 +70,12 @@ export default function HomePage() {
                 className="p-5 rounded-2xl bg-bg-surface/50 border border-border-subtle/50 backdrop-blur-sm"
               >
                 <div className="font-display text-3xl sm:text-4xl font-extrabold text-accent-blue-bright">{stat.value}</div>
-                <div className="text-sm text-fg-muted font-medium mt-1">{stat.label}</div>
+                <div className="text-sm text-fg-muted font-medium mt-1">{({
+                  Leeftijd: t("home.stats.age"),
+                  "Jaar ervaring": t("home.stats.experience"),
+                  Optredens: t("home.stats.shows"),
+                  Festivals: t("home.stats.festivals"),
+                } as Record<string, string>)[stat.label] || stat.label}</div>
               </motion.div>
             ))}
           </motion.div>
@@ -91,7 +98,7 @@ export default function HomePage() {
                   <Calendar className="h-6 w-6 text-accent-blue-bright sm:h-8 sm:w-8" />
                 </div>
                 <div className="min-w-0">
-                  <p className="text-sm text-fg-muted font-medium">Volgend evenement</p>
+                  <p className="text-sm text-fg-muted font-medium">{t("home.nextEvent")}</p>
                   <h2 className="font-display text-xl font-bold leading-tight sm:text-3xl">{upcomingGig.event}</h2>
                 </div>
               </div>
@@ -103,7 +110,7 @@ export default function HomePage() {
                 </div>
                 <div className="flex min-w-0 items-start gap-2">
                   <Calendar className="mt-0.5 h-5 w-5 shrink-0 text-accent-blue-bright" />
-                  <span className="min-w-0 break-words">{new Date(`${upcomingGig.date}T12:00:00+02:00`).toLocaleDateString("nl-BE", { weekday: "long", day: "numeric", month: "long", timeZone: "Europe/Brussels" })}</span>
+                  <span className="min-w-0 break-words">{new Date(`${upcomingGig.date}T12:00:00+02:00`).toLocaleDateString(languageInfo.htmlLang, { weekday: "long", day: "numeric", month: "long", timeZone: "Europe/Brussels" })}</span>
                 </div>
                 <div className="flex min-w-0 items-start gap-2">
                   <Users className="mt-0.5 h-5 w-5 shrink-0 text-accent-blue-bright" />
@@ -113,7 +120,7 @@ export default function HomePage() {
             </div>
             <Link href="/contact" className="w-full shrink-0 lg:w-auto">
               <Button glow={true} className="w-full px-6 py-3 text-sm font-bold lg:w-auto">
-                Tickets & Info
+                {t("home.tickets")}
               </Button>
             </Link>
           </div>
@@ -130,13 +137,13 @@ export default function HomePage() {
             transition={{ duration: 0.6 }}
           >
             <span className="inline-block px-3.5 py-1 rounded-full bg-accent-blue/15 border border-accent-blue/30 text-xs font-semibold text-accent-blue-bright uppercase tracking-wider mb-4">
-              Over Cannix
+              {t("home.about")}
             </span>
-            <h2 className="section-title mb-4">Muziek die verbindt</h2>
-            <p className="text-fg-muted mb-6 leading-relaxed text-base sm:text-lg">{bio.longBio.split("\n")[0].trim()}</p>
-            <p className="text-fg-muted mb-6 leading-relaxed text-base sm:text-lg">{bio.longBio.split("\n")[2].trim()}</p>
+            <h2 className="section-title mb-4">{t("home.musicConnects")}</h2>
+            <p className="text-fg-muted mb-6 leading-relaxed text-base sm:text-lg">{t("bio.long.1")}</p>
+            <p className="text-fg-muted mb-6 leading-relaxed text-base sm:text-lg">{t("bio.long.3")}</p>
             <Link href="/about" className="link inline-flex items-center gap-2 font-semibold">
-              Lees meer
+              {t("home.readMore")}
             </Link>
           </motion.div>
 
@@ -159,13 +166,13 @@ export default function HomePage() {
             <div className="relative mt-4 max-w-none rounded-2xl border border-border-subtle/60 bg-bg-surface/90 p-4 shadow-2xl backdrop-blur-xl sm:p-6 md:absolute md:-bottom-8 md:-right-8 md:mt-0 md:max-w-xs">
               <div className="flex items-center gap-3 mb-3">
                 <div>
-                  <p className="font-semibold text-fg-primary">Boekingen open</p>
-                  <p className="text-sm text-fg-muted">Vraag beschikbaarheid aan</p>
+                  <p className="font-semibold text-fg-primary">{t("home.bookingsOpen")}</p>
+                  <p className="text-sm text-fg-muted">{t("home.availability")}</p>
                 </div>
               </div>
               <Link href="/contact">
                 <Button fullWidth={true} variant="secondary" className="py-2 text-xs font-semibold">
-                  Contact opnemen
+                  {t("home.contact")}
                 </Button>
               </Link>
             </div>
@@ -181,7 +188,7 @@ export default function HomePage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h3 className="font-display text-2xl font-bold mb-6">Genres</h3>
+            <h3 className="font-display text-2xl font-bold mb-6">{t("home.genres")}</h3>
             <div className="flex flex-wrap gap-3">
               {bio.genres.map((genre) => (
                 <span key={genre} className="px-4 py-2 rounded-full bg-bg-surface/70 border border-border-subtle/60 text-fg-muted hover:border-accent-blue/50 hover:text-accent-blue-bright transition-colors cursor-default">
@@ -197,7 +204,7 @@ export default function HomePage() {
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
           >
-            <h3 className="font-display text-2xl font-bold mb-6">Volg de vibe</h3>
+            <h3 className="font-display text-2xl font-bold mb-6">{t("home.follow")}</h3>
             <div className="flex flex-wrap gap-3">
               <a href={bio.socials.instagram} target="_blank" rel="noopener noreferrer">
                 <Button variant="secondary" icon={<Instagram className="h-4 w-4" />}>Instagram</Button>

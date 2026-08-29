@@ -7,10 +7,12 @@ import { X, Play, Youtube, ExternalLink } from "lucide-react";
 import { videos, type VideoItem } from "@/content/videos";
 import { Card, CardContent, Button } from "@/app/components/ui";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/lib/i18n";
 
 export default function VideosPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedVideo, setSelectedVideo] = useState<VideoItem | null>(null);
+  const { t } = useLanguage();
 
   const openModal = (video: VideoItem) => {
     setSelectedVideo(video);
@@ -42,7 +44,10 @@ export default function VideosPage() {
           transition={{ duration: 0.6 }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
-          {videos.map((video, index) => (
+          {videos.map((video, index) => {
+            const title = t(`video.${index + 1}.title`);
+            const description = t(`video.${index + 1}.description`);
+            return (
             <motion.article
               key={video.id}
               initial={{ opacity: 0, y: 20 }}
@@ -54,7 +59,7 @@ export default function VideosPage() {
                 <div className="relative aspect-video overflow-hidden">
                   <Image
                     src={video.thumbnail}
-                    alt={video.title}
+                    alt={title}
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                     sizes="(max-width: 768px) 50vw, 33vw"
@@ -64,7 +69,7 @@ export default function VideosPage() {
                   <button
                     onClick={() => openModal(video)}
                     className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    aria-label={`Bekijk: ${video.title}`}
+                    aria-label={t("videos.watch", { title })}
                   >
                     <motion.div
                       whileHover={{ scale: 1.15 }}
@@ -86,12 +91,12 @@ export default function VideosPage() {
                     <span className="px-2 py-0.5 rounded bg-bg-deep border border-border-subtle">{video.year}</span>
                     {video.event && <span>· {video.event}</span>}
                   </div>
-                  <h3 className="font-display text-lg font-bold mb-1 line-clamp-2">{video.title}</h3>
-                  <p className="text-sm text-fg-muted line-clamp-2">{video.description}</p>
+                  <h3 className="font-display text-lg font-bold mb-1 line-clamp-2">{title}</h3>
+                  <p className="text-sm text-fg-muted line-clamp-2">{description}</p>
                 </CardContent>
               </Card>
             </motion.article>
-          ))}
+          )})}
         </motion.div>
       </section>
 
@@ -103,17 +108,17 @@ export default function VideosPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="section-title mb-4">Meer content op onze kanalen</h2>
-            <p className="text-fg-muted mb-8 max-w-xl mx-auto">Volg ons voor nieuwe uploads, live streams en exclusive behind-the-scenes content.</p>
+            <h2 className="section-title mb-4">{t("videos.more")}</h2>
+            <p className="text-fg-muted mb-8 max-w-xl mx-auto">{t("videos.follow")}</p>
             <div className="flex flex-wrap items-center justify-center gap-4">
               <a href={videos[0]?.embedUrl.replace("/embed/", "/").split("?")[0] || "#"} target="_blank" rel="noopener noreferrer">
                 <Button icon={<Youtube className="h-5 w-5" />} iconPosition="left">
-                  YouTube Kanaal
+                  {t("videos.youtube")}
                 </Button>
               </a>
               <a href="https://instagram.com/djcannix" target="_blank" rel="noopener noreferrer">
                 <Button variant="secondary" icon={<ExternalLink className="h-4 w-4" />}>
-                  Instagram Reels
+                  {t("videos.instagram")}
                 </Button>
               </a>
             </div>
@@ -145,7 +150,7 @@ export default function VideosPage() {
             >
               <iframe
                 src={getEmbedUrl(selectedVideo)}
-                title={selectedVideo.title}
+                title={t(`video.${videos.findIndex((video) => video.id === selectedVideo.id) + 1}.title`)}
                 className="w-full h-full rounded-xl border-0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
@@ -155,7 +160,7 @@ export default function VideosPage() {
             <button
               onClick={closeModal}
               className="absolute top-4 right-4 p-2 rounded-full bg-bg-surface/50 backdrop-blur border border-border-subtle hover:border-accent-blue-bright hover:bg-bg-surface transition-colors text-fg-primary"
-              aria-label="Sluiten video"
+              aria-label={t("videos.close")}
             >
               <X className="h-6 w-6" />
             </button>
@@ -165,8 +170,8 @@ export default function VideosPage() {
               animate={{ opacity: 1, y: 0 }}
               className="absolute bottom-4 left-1/2 -translate-x-1/2 w-full max-w-5xl px-4 text-center"
             >
-              <h3 className="font-display text-lg font-bold mb-1">{selectedVideo.title}</h3>
-              <p className="text-sm text-fg-muted">{selectedVideo.description}</p>
+              <h3 className="font-display text-lg font-bold mb-1">{t(`video.${videos.findIndex((video) => video.id === selectedVideo.id) + 1}.title`)}</h3>
+              <p className="text-sm text-fg-muted">{t(`video.${videos.findIndex((video) => video.id === selectedVideo.id) + 1}.description`)}</p>
               <div className="flex items-center justify-center gap-4 mt-3 text-xs text-fg-muted/60">
                 <span>{selectedVideo.year}</span>
                 {selectedVideo.event && <span>· {selectedVideo.event}</span>}

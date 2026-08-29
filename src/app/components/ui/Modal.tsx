@@ -4,6 +4,7 @@ import { Fragment, ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/lib/i18n";
 
 export interface ModalProps {
   isOpen: boolean;
@@ -15,6 +16,7 @@ export interface ModalProps {
 }
 
 export function Modal({ isOpen, onClose, children, title, className, size = "md" }: ModalProps) {
+  const { t } = useLanguage();
   const sizes = {
     sm: "max-w-md",
     md: "max-w-lg",
@@ -59,7 +61,7 @@ export function Modal({ isOpen, onClose, children, title, className, size = "md"
                   type="button"
                   onClick={onClose}
                   className="btn-ghost p-2 rounded-lg hover:bg-bg-deep transition-colors"
-                  aria-label="Sluiten"
+                  aria-label={t("close")}
                 >
                   <X className="h-5 w-5" />
                 </button>
@@ -85,18 +87,19 @@ export interface ConfirmModalProps {
 }
 
 export function ConfirmModal({ isOpen, onClose, onConfirm, title, message, confirmText = "Bevestigen", cancelText = "Annuleren", variant = "primary" }: ConfirmModalProps) {
+  const { t } = useLanguage();
   return (
     <Modal isOpen={isOpen} onClose={onClose} title={title} size="sm">
       <p className="text-fg-muted mb-6">{message}</p>
       <div className="flex justify-end gap-3">
         <button onClick={onClose} className="btn-secondary">
-          {cancelText}
+          {cancelText === "Annuleren" ? t("modal.cancel") : cancelText}
         </button>
         <button
           onClick={() => { onConfirm(); onClose(); }}
           className={cn("btn", variant === "danger" ? "bg-red-600 hover:bg-red-500" : "btn-primary")}
         >
-          {confirmText}
+          {confirmText === "Bevestigen" ? t("modal.confirm") : confirmText}
         </button>
       </div>
     </Modal>

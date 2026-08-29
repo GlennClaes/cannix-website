@@ -4,23 +4,27 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { ChevronDown, Globe2, Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { StaticLogo } from "./AnimatedLogo";
 import { Button } from "./ui";
-
-const navItems = [
-    { href: "/home", label: "Home" },
-    { href: "/about", label: "About" },
-    { href: "/gallery", label: "Foto's" },
-    { href: "/contact", label: "Contact" },
-];
+import { languages, useLanguage, type Language } from "@/lib/i18n";
 
 export function Header() {
     const pathname = usePathname();
     const [isOpen, setIsOpen] = useState(false);
+    const { language, setLanguage, languageInfo, t } = useLanguage();
 
     const closeMenu = () => setIsOpen(false);
+    const changeLanguage = (value: Language) => {
+        setLanguage(value);
+    };
+    const navItems = [
+        { href: "/home", label: t("nav.home") },
+        { href: "/about", label: t("nav.about") },
+        { href: "/gallery", label: t("nav.gallery") },
+        { href: "/contact", label: t("nav.contact") },
+    ];
 
     return (
         <>
@@ -32,7 +36,7 @@ export function Header() {
                     <Link
                         href="/home"
                         className="flex min-w-0 items-center"
-                        aria-label="Cannix home"
+                        aria-label={t("header.home")}
                     >
                         <StaticLogo size="header" glow={true} />
                     </Link>
@@ -40,7 +44,7 @@ export function Header() {
                     {/* ================= DESKTOP NAVIGATIE ================= */}
                     <nav
                         className="hidden items-center gap-1 lg:flex"
-                        aria-label="Hoofdnavigatie"
+                        aria-label={t("nav.main")}
                     >
                         {navItems.map((item) => {
                             const active = pathname === item.href;
@@ -78,10 +82,18 @@ export function Header() {
                     <div className="hidden lg:flex items-center">
                         <Link href="/contact">
                             <Button glow={true} className="px-6 py-2.5 text-sm font-semibold">
-                                Boek Cannix
+                                {t("booking")}
                             </Button>
                         </Link>
                     </div>
+
+                    <LanguagePicker
+                        className="hidden lg:block"
+                        language={language}
+                        languageInfo={languageInfo}
+                        onChange={changeLanguage}
+                        label={t("language.label")}
+                    />
 
                     {/* ================= HAMBURGER BUTTON ================= */}
                     <button
@@ -92,7 +104,7 @@ export function Header() {
                             "border border-border-subtle/60 bg-bg-surface/80 text-fg-primary",
                             "transition-all duration-200 hover:border-accent-blue/50 lg:hidden"
                         )}
-                        aria-label={isOpen ? "Menu sluiten" : "Menu openen"}
+                        aria-label={isOpen ? t("nav.close") : t("nav.open")}
                         aria-expanded={isOpen}
                         aria-controls="mobile-menu"
                     >
@@ -123,7 +135,7 @@ export function Header() {
                         {/* BACKDROP */}
                         <motion.button
                             type="button"
-                            aria-label="Menu sluiten"
+                            aria-label={t("nav.close")}
                             className="fixed inset-0 z-[110] bg-black/80 backdrop-blur-md lg:hidden"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
@@ -145,7 +157,7 @@ export function Header() {
                                 <Link
                                     href="/home"
                                     onClick={closeMenu}
-                                    aria-label="Cannix home"
+                                    aria-label={t("header.home")}
                                     className="flex min-w-0 items-center"
                                 >
                                     <StaticLogo size="hamburger" glow={true} />
@@ -155,7 +167,7 @@ export function Header() {
                                     type="button"
                                     onClick={closeMenu}
                                     className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border-subtle/50 text-fg-muted hover:text-fg-primary"
-                                    aria-label="Menu sluiten"
+                                    aria-label={t("nav.close")}
                                 >
                                     <X className="h-5 w-5" />
                                 </button>
@@ -164,7 +176,7 @@ export function Header() {
                             {/* MOBILE NAVIGATION LINKS */}
                             <nav
                                 className="mt-6 flex flex-col gap-2 sm:mt-8"
-                                aria-label="Mobiele navigatie"
+                                aria-label={t("nav.mobile")}
                             >
                                 {navItems.map((item, index) => {
                                     const active = pathname === item.href;
@@ -194,11 +206,19 @@ export function Header() {
                                 })}
                             </nav>
 
+                            <LanguagePicker
+                                className="mt-6 border-t border-border-subtle/40 pt-6"
+                                language={language}
+                                languageInfo={languageInfo}
+                                onChange={changeLanguage}
+                                label={t("language.label")}
+                            />
+
                             {/* MOBILE CTA */}
                             <div className="mt-auto shrink-0 pt-8 border-t border-border-subtle/40">
                                 <Link href="/contact" onClick={closeMenu} className="block w-full">
                                     <Button fullWidth={true} glow={true} className="py-3.5 text-base font-bold uppercase tracking-wider">
-                                        Boek Cannix
+                                        {t("booking")}
                                     </Button>
                                 </Link>
                             </div>
@@ -207,5 +227,75 @@ export function Header() {
                 )}
             </AnimatePresence>
         </>
+    );
+}
+
+function LanguagePicker({
+    className,
+    language,
+    languageInfo,
+    onChange,
+    label,
+}: {
+    className?: string;
+    language: Language;
+    languageInfo: (typeof languages)[number];
+    onChange: (language: Language) => void;
+    label: string;
+}) {
+    const [isOpen, setIsOpen] = useState(false);
+
+    return (
+        <div className={cn("relative", className)}>
+            <button
+                type="button"
+                onClick={() => setIsOpen((open) => !open)}
+                className="flex w-full items-center gap-2 rounded-full border border-border-subtle/60 bg-bg-surface/60 px-3 py-2 text-sm font-semibold text-fg-muted transition-colors hover:border-accent-blue/50 hover:text-fg-primary"
+                aria-haspopup="listbox"
+                aria-expanded={isOpen}
+                aria-label={`${label}: ${languageInfo.label}`}
+            >
+                <Globe2 className="h-4 w-4" aria-hidden="true" />
+                <span aria-hidden="true" className="text-base leading-none">{languageInfo.flag}</span>
+                <span>{languageInfo.label}</span>
+                <ChevronDown className={cn("h-4 w-4 transition-transform", isOpen && "rotate-180")} aria-hidden="true" />
+            </button>
+
+            <AnimatePresence>
+                {isOpen && (
+                    <motion.div
+                        initial={{ opacity: 0, y: -6, scale: 0.98 }}
+                        animate={{ opacity: 1, y: 4, scale: 1 }}
+                        exit={{ opacity: 0, y: -6, scale: 0.98 }}
+                        className="absolute right-0 top-full z-[140] min-w-[190px] overflow-hidden rounded-2xl border border-border-subtle bg-bg-surface p-1.5 shadow-2xl"
+                        role="listbox"
+                        aria-label={label}
+                    >
+                        {languages.map((item) => (
+                            <button
+                                key={item.value}
+                                type="button"
+                                role="option"
+                                aria-selected={language === item.value}
+                                onClick={() => {
+                                    onChange(item.value);
+                                    setIsOpen(false);
+                                }}
+                                className={cn(
+                                    "flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm transition-colors",
+                                    language === item.value
+                                        ? "bg-accent-blue/15 text-accent-blue-bright"
+                                        : "text-fg-muted hover:bg-bg-deep hover:text-fg-primary",
+                                )}
+                            >
+                                <span aria-hidden="true" className="text-base leading-none">{item.flag}</span>
+                                <span className="flex-1">{item.label}</span>
+                                <span className="text-xs uppercase text-fg-muted/60">{item.shortLabel}</span>
+                            </button>
+                        ))}
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </div>
     );
 }

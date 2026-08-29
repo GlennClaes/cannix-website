@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { AnimatedLogo } from "./AnimatedLogo";
 import { Button } from "./ui";
+import { useLanguage } from "@/lib/i18n";
 
 interface SplashProps {
     onComplete: () => void;
@@ -14,6 +15,7 @@ interface SplashProps {
 export function Splash({ onComplete, hasSeenSplash }: SplashProps) {
     const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
     const [showButton, setShowButton] = useState(false);
+    const { t } = useLanguage();
 
     useEffect(() => {
         const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -98,7 +100,7 @@ export function Splash({ onComplete, hasSeenSplash }: SplashProps) {
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className={cn("fixed inset-0 z-splash flex items-center justify-center bg-[#03050A]", hasSeenSplash && "pointer-events-none")}
             role="region"
-            aria-label="Welkomscherm"
+            aria-label={t("splash.welcome")}
             style={{ overflow: "hidden" }}
         >
             {/* Ambient radial glow background */}
@@ -149,9 +151,9 @@ export function Splash({ onComplete, hasSeenSplash }: SplashProps) {
                         onClick={onComplete}
                         glow={true}
                         className="px-12 py-4 text-base font-bold uppercase tracking-wider cursor-pointer"
-                        aria-label="Ga verder naar de website"
+                        aria-label={t("splash.continueLabel")}
                     >
-                        Ga verder
+                        {t("splash.continue")}
                     </Button>
                 </motion.div>
             </motion.div>

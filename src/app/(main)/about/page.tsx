@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { bio } from "@/content/bio";
 import { Card } from "@/app/components/ui";
 import { Award, Clock, Globe, Mail, Music, Phone } from "lucide-react";
+import { useLanguage } from "@/lib/i18n";
 
 const statIcons = {
     "Jaar ervaring": Clock,
@@ -13,6 +14,13 @@ const statIcons = {
 };
 
 export default function AboutPage() {
+    const { t } = useLanguage();
+    const statLabels: Record<string, string> = {
+        "Jaar ervaring": t("home.stats.experience"),
+        Optredens: t("home.stats.shows"),
+        Festivals: t("home.stats.festivals"),
+        Leeftijd: t("home.stats.age"),
+    };
     return (
         <div className="min-h-screen">
             {/* Hero Section */}
@@ -25,13 +33,13 @@ export default function AboutPage() {
                         className="max-w-3xl mx-auto"
                     >
                         <span className="inline-block px-4 py-1.5 rounded-full bg-accent-blue/15 border border-accent-blue/30 text-accent-blue-bright text-sm font-semibold tracking-wider uppercase mb-6">
-                            Over Cannix
+                            {t("nav.about")}
                         </span>
                         <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6">
-                            Energie, Beats & Unieke Sfeer
+                            {t("about.title")}
                         </h1>
                         <p className="text-fg-secondary text-lg sm:text-xl leading-relaxed max-w-2xl mx-auto">
-                            Passie voor het meeslepen van de dansvloer, van meezingers en fuifclassics tot harde DnB & hardstyle.
+                            {t("about.subtitle")}
                         </p>
                     </motion.div>
                 </div>
@@ -47,34 +55,27 @@ export default function AboutPage() {
                         className="lg:col-span-2 space-y-6"
                     >
                         <div className="prose prose-invert max-w-none">
-                            {bio.longBio.split("\n").map((paragraph, i) => (
+                            {[1, 2, 3, 4].map((paragraphNumber) => (
                                 <p
-                                    key={i}
+                                    key={paragraphNumber}
                                     className="text-fg-muted leading-relaxed text-base sm:text-lg mb-6"
                                 >
-                                    {paragraph.trim()}
+                                    {t(`bio.long.${paragraphNumber}`)}
                                 </p>
                             ))}
                         </div>
 
                         <div className="border-t border-border-subtle pt-8">
                             <h2 className="font-display text-2xl font-bold mb-4">
-                                Mijn Muziek & Stijl
+                                {t("about.musicStyle")}
                             </h2>
 
                             <p className="text-fg-muted leading-relaxed mb-6 text-base sm:text-lg">
-                                Als allround DJ draai ik vooral herkenbare fuifmuziek,
-                                echte meezingers en hardere remixes. Daarnaast draai en
-                                produceer ik Drum & Bass, met een focus op onder andere
-                                Jump Up. Ook Hardstyle en Jumpstyle komen regelmatig terug
-                                in mijn sets.
+                                {t("about.style1")}
                             </p>
 
                             <p className="text-fg-muted leading-relaxed mb-6 text-base sm:text-lg">
-                                Ik ben altijd op zoek naar nieuwe muziek en nieuwe sounds.
-                                Wat ik draai hangt af van het publiek, de locatie en de
-                                sfeer van het moment. Het belangrijkste is dat mensen
-                                bewegen en betrokken blijven bij de muziek.
+                                {t("about.style2")}
                             </p>
 
                             <div className="flex flex-wrap gap-3">
@@ -100,7 +101,7 @@ export default function AboutPage() {
                         <div className="space-y-6 lg:sticky lg:top-24">
                             <Card className="p-6">
                                 <h3 className="font-display text-xl font-bold mb-6">
-                                    Cijfers
+                                    {t("about.figures")}
                                 </h3>
 
                                 <div className="space-y-6">
@@ -124,7 +125,7 @@ export default function AboutPage() {
                                                     </div>
 
                                                     <div className="text-sm text-fg-muted">
-                                                        {stat.label}
+                                                        {statLabels[stat.label] || stat.label}
                                                     </div>
                                                 </div>
                                             </div>
@@ -135,12 +136,11 @@ export default function AboutPage() {
 
                             <Card className="p-6">
                                 <h3 className="font-display text-xl font-bold mb-6">
-                                    Boekingen & Contact
+                                    {t("about.bookings")}
                                 </h3>
 
                                 <p className="text-fg-muted mb-4">
-                                    Interesse in een booking? Stuur gerust een bericht voor
-                                    meer informatie en beschikbaarheid.
+                                    {t("about.interest")}
                                 </p>
 
                                 <div className="space-y-3">
@@ -179,26 +179,26 @@ export default function AboutPage() {
                         viewport={{ once: true }}
                         className="text-center max-w-3xl mx-auto mb-16"
                     >
-                        <h2 className="section-title mb-4">Waar het om draait</h2>
+                        <h2 className="section-title mb-4">{t("about.drives")}</h2>
 
                         <p className="text-fg-muted text-lg">
-                            Muziek draaien gaat voor mij vooral om de sfeer en het publiek.
+                            {t("about.drivesText")}
                         </p>
                     </motion.div>
 
                     <div className="grid items-stretch gap-8 md:grid-cols-3">
                         {[
                             {
-                                title: "Energie",
-                                desc: "Een goede set moet energie geven en ervoor zorgen dat de dansvloer blijft bewegen.",
+                                title: t("about.energy"),
+                                desc: t("about.energyText"),
                             },
                             {
-                                title: "Muziek",
-                                desc: "Van bekende meezingers tot DnB en hardere remixes. Ik blijf graag nieuwe muziek ontdekken.",
+                                title: t("about.music"),
+                                desc: t("about.musicText"),
                             },
                             {
-                                title: "Publiek",
-                                desc: "Ik kijk naar de zaal en speel in op wat er op dat moment gebeurt. Het publiek bepaalt mee de richting.",
+                                title: t("about.audience"),
+                                desc: t("about.audienceText"),
                             },
                         ].map((value) => (
                             <article

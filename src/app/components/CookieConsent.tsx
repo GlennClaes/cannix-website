@@ -5,9 +5,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { Cookie, X } from "lucide-react";
 import { Button } from "./ui";
+import { useLanguage } from "@/lib/i18n";
 
 export function CookieConsent() {
     const [visible, setVisible] = useState(false);
+    const { t } = useLanguage();
 
     useEffect(() => {
         const consent = localStorage.getItem("cannix_cookie_consent");
@@ -45,12 +47,12 @@ export function CookieConsent() {
                             </div>
                             <div className="flex-1 min-w-0">
                                 <h3 className="font-display text-base font-bold text-fg-primary mb-1.5">
-                                    Wij gebruiken cookies 🍪
+                                    {t("cookie.title")}
                                 </h3>
                                 <p className="text-sm text-fg-muted leading-relaxed mb-4">
-                                    Deze website gebruikt functionele cookies voor een optimale ervaring. Geen tracking of externe analytische diensten.{" "}
+                                    {t("cookie.description")}{" "}
                                     <Link href="/cookies" className="text-accent-blue-bright hover:underline">
-                                        Lees meer
+                                        {t("cookie.more")}
                                     </Link>
                                 </p>
                                 <div className="flex flex-wrap items-center gap-3">
@@ -59,20 +61,20 @@ export function CookieConsent() {
                                         glow={false}
                                         className="px-5 py-2 text-sm font-semibold cursor-pointer"
                                     >
-                                        Accepteren
+                                        {t("cookie.accept")}
                                     </Button>
                                     <button
                                         onClick={handleDecline}
                                         className="px-5 py-2 text-sm font-semibold text-fg-muted hover:text-fg-primary border border-border-subtle/60 rounded-xl bg-transparent hover:bg-bg-surface/80 transition-colors cursor-pointer"
                                     >
-                                        Weigeren
+                                        {t("cookie.decline")}
                                     </button>
                                 </div>
                             </div>
                             <button
                                 onClick={handleDecline}
                                 className="p-1.5 text-fg-muted/50 hover:text-fg-primary transition-colors flex-shrink-0 cursor-pointer"
-                                aria-label="Sluiten"
+                                aria-label={t("close")}
                             >
                                 <X className="h-4 w-4" />
                             </button>

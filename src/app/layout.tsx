@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import { isProductionSite, siteUrl } from "@/lib/site-config";
+import { LanguageProvider } from "@/lib/i18n";
 
 const syne = localFont({
     src: "../../public/fonts/Syne-Variable.ttf",
@@ -153,7 +154,7 @@ export default function RootLayout({
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
-        {children}
+        <LanguageProvider>{children}</LanguageProvider>
         <SpeedInsights />
         </body>
         </html>
