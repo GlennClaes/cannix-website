@@ -106,26 +106,39 @@ export default function RootLayout({
 }>) {
     const structuredData = {
         "@context": "https://schema.org",
-        "@type": "Person",
-        name: "Cannix",
-        jobTitle: "DJ en producer",
-        url: siteUrl,
-        image: `${siteUrl}/images/PEMP_2024.jpg`,
-        genre: ["Allround", "Drum & Bass", "Jump Up", "Hardstyle", "Jumpstyle"],
-        areaServed: ["Belgium", "Europe"],
-        email: "bookings@cannix.be",
-        contactPoint: {
-            "@type": "ContactPoint",
-            contactType: "booking",
-            email: "bookings@cannix.be",
-            telephone: "+32 471 74 36 77",
-            areaServed: "BE",
-            availableLanguage: ["nl", "en"],
-        },
-        sameAs: [
-            "https://www.instagram.com/cannix_dnb/",
-            "https://facebook.com/djcannix",
-            "https://soundcloud.com/cannix_dnb",
+        "@graph": [
+            {
+                "@type": "WebSite",
+                "@id": `${siteUrl}/#website`,
+                url: siteUrl,
+                name: "Cannix",
+                inLanguage: "nl-BE",
+                publisher: { "@id": `${siteUrl}/#person` },
+            },
+            {
+                "@type": "Person",
+                "@id": `${siteUrl}/#person`,
+                name: "Cannix",
+                jobTitle: "DJ en producer",
+                url: siteUrl,
+                image: `${siteUrl}/images/PEMP_2024.jpg`,
+                genre: ["Allround", "Drum & Bass", "Jump Up", "Hardstyle", "Jumpstyle"],
+                areaServed: ["Belgium", "Europe"],
+                email: "bookings@cannix.be",
+                contactPoint: {
+                    "@type": "ContactPoint",
+                    contactType: "booking",
+                    email: "bookings@cannix.be",
+                    telephone: "+32 471 74 36 77",
+                    areaServed: "BE",
+                    availableLanguage: ["nl", "en"],
+                },
+                sameAs: [
+                    "https://www.instagram.com/cannix_dnb/",
+                    "https://facebook.com/djcannix",
+                    "https://soundcloud.com/cannix_dnb",
+                ],
+            },
         ],
     };
 

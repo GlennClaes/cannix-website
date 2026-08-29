@@ -1,15 +1,24 @@
 const defaultSiteUrl = "http://localhost:3000";
+const productionSiteUrl = "https://cannix.be";
 
 function resolveSiteUrl(): string {
     const configuredUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+    const vercelEnv = process.env.VERCEL_ENV?.trim();
+    const vercelUrl = process.env.VERCEL_URL?.trim();
+
+    if (vercelEnv === "preview" && vercelUrl) {
+        return `https://${vercelUrl}`;
+    }
 
     if (configuredUrl) {
         return configuredUrl.replace(/\/+$/, "");
     }
 
-    const vercelUrl = process.env.VERCEL_URL?.trim();
+    if (vercelEnv === "production") {
+        return productionSiteUrl;
+    }
 
-    if (vercelUrl) {
+    if (vercelEnv !== "production" && vercelUrl) {
         return `https://${vercelUrl}`;
     }
 

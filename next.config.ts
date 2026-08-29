@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
     images: {
         remotePatterns: [{ protocol: "https", hostname: "**" }],
         formats: ["image/avif", "image/webp"],
+        qualities: [55, 75],
     },
     experimental: {
         optimizePackageImports: ["lucide-react", "framer-motion"],

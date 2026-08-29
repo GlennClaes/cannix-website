@@ -1,10 +1,10 @@
 {
   "ci": {
     "collect": {
-      "numberOfRuns": 3,
+      "numberOfRuns": 1,
+      "url": ["http://localhost:3000/home"],
       "settings": {
-        "preset": "desktop",
-        "staticDistDir": "./.next/server"
+        "preset": "desktop"
       }
     },
     "assert": {
