@@ -1,21 +1,21 @@
-# DJ Cannix Website
+# Cannix Website
 
-Professionele Next.js website voor DJ Cannix met splash animatie, portfolio, contactformulier en deployment naar Vercel.
+[![Node.js 22](https://img.shields.io/badge/Node.js-22-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
+[![Next.js 16](https://img.shields.io/badge/Next.js-16-000000?logo=next.js&logoColor=white)](https://nextjs.org/)
+[![Vercel](https://img.shields.io/badge/Deployment-Vercel-000000?logo=vercel&logoColor=white)](https://vercel.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
 
-Productie-instellingen voor Resend, Vercel, DNS, CI/CD, Docker en monitoring staan in [DEPLOYMENT.md](./DEPLOYMENT.md).
+A production-ready marketing and booking website for Cannix, built with Next.js and deployed to Vercel. The project includes multilingual routing, a contact form, SEO metadata, accessibility-focused frontend work, and automated release and maintenance checks.
 
-## Features
+For infrastructure, DNS, deployment, and production configuration, see [DEPLOYMENT.md](./DEPLOYMENT.md).
 
-- 🎬 **Splash pagina** - Full-screen entry met logo animatie, achtergrondvideo en "Ga verder" CTA
-- 🎨 **Design systeem** - Aangepaste kleuren (teal/cyan + amber), typografie (Syne + DM Sans), motion tokens
-- 📱 **Responsive** - Mobile-first met hamburger menu, touch-friendly
-- 🖼️ **Gallery** - Masonry grid met lightbox, filter op jaar
-- 🎥 **Videos** - Grid met modale player (YouTube/Vimeo/MP4)
-- 📝 **Contact formulier** - React Hook Form + Zod validatie, Resend API route
-- ⚡ **Performance** - Next.js Image optimalisatie, lazy loading, blur placeholders
-- ♿ **Accessibility** - Semantic HTML, focus states, reduced motion, ARIA labels
-- 🔄 **CI/CD** - GitHub Actions-controles + native Vercel Preview/Production deployments
-- 🚀 **Releases** - GitHub Releases via `.github/workflows/release.yml` en semver-tags (`v1.0.0`)
+## Overview
+
+- Marketing website and booking funnel for live DJ services
+- Multilingual routing for Dutch, English, French, and German
+- Contact form with validation and email delivery
+- Search and metadata configuration for production deployment
+- Automated CI, nightly QA checks, and major-release flow
 
 ## Tech Stack
 
@@ -86,6 +86,14 @@ npm run typecheck
 npm run format
 ```
 
+## Documentation
+
+- [SECURITY.md](./SECURITY.md) — security policy and responsible disclosure
+- [CONTRIBUTING.md](./CONTRIBUTING.md) — contribution workflow and coding standards
+- [DEPLOYMENT.md](./DEPLOYMENT.md) — Vercel, DNS, environment, and release setup
+- [CHANGELOG.md](./CHANGELOG.md) — release history and policy
+- [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md) — community conduct expectations
+
 ## Project Structure
 
 ```
@@ -149,27 +157,58 @@ Bewerk `src/app/globals.css` → `@theme` blok voor kleuren, typografie, spacing
 - **Gallery items:** `src/content/gallery.ts`
 - **Video items:** `src/content/videos.ts` (vervang YouTube IDs)
 
-### Forms
-
-
-### SEO na livegang
+### SEO after launch
 
 Verifieer de site in Google Search Console, dien `/sitemap.xml` in en voeg het bedrijfsprofiel (Google Business Profile) handmatig toe of claim het. Controleer adres-, categorie- en contactgegevens daar rechtstreeks; deze externe verificatie en profielinstellingen kunnen niet vanuit de repository worden uitgevoerd.
 
 
 ## Deployment
 
-### Vercel (Aanbevolen)
+### Release strategy
 
-1. Push naar GitHub
-2. Importeer in Vercel
-3. Voeg in Vercel Project Settings → Environment Variables toe voor Preview en Production:
+- No release is created for every push.
+- A release is created only for a true breaking change.
+- Release detection checks for conventional breaking indicators:
+  - `feat!:` or `fix!:`
+  - `BREAKING CHANGE:` in the commit body
+  - `!` in the commit subject
+- When detected, GitHub Actions creates a `vX.0.0` tag and publishes a GitHub Release.
+
+Example:
+
+```bash
+git commit -m "feat!: rewrite booking flow for multilingual forms"
+```
+
+Normal `feat`, `fix`, and `chore` commits do not trigger a release.
+
+### Vercel deployment
+
+1. Push the repository to GitHub.
+2. Import it into Vercel.
+3. Add the required environment variables in Vercel project settings for preview and production:
    - `RESEND_API_KEY`
    - `MAIL_TO`
-   - `MAIL_FROM` (een afzender op een in Resend geverifieerd domein)
-4. Koppel het GitHub-repository aan Vercel. Vercel maakt automatisch preview deployments voor pull requests en een production deployment bij een push naar `main`.
+   - `MAIL_FROM` (must use a verified Resend sender)
+   - `SITE_URL=https://cannix.be` for production
+4. Connect the repository to Vercel. Preview deployments are created automatically for pull requests and production deployments on `main`.
 
-Resend vereist eerst domeinverificatie (SPF/DKIM). Gebruik niet `onboarding@resend.dev` voor productie; die afzender is alleen bedoeld voor testen.
+Resend requires domain verification (SPF/DKIM). Do not use `onboarding@resend.dev` for a production sender.
+
+### Nightly automation
+
+The nightly workflow runs automatically at 00:00 CET and validates:
+
+- `npm audit --omit=dev --audit-level=high`
+- ESLint
+- TypeScript
+- production build
+- bundle-size budget
+- SEO smoke checks for `/`, `/robots.txt`, and `/sitemap.xml`
+- Lighthouse
+- secrets scan and dependency checks
+
+Results are logged to the nightly log directory and dashboard.
 
 ### Docker
 

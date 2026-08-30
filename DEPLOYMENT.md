@@ -77,6 +77,26 @@ https://cannix.be/api/health
 
 Gebruik de native GitHub-integratie van Vercel voor de eigenlijke deployment. De aparte `CD - Deployment Verification` workflow controleert daarna automatisch de live homepage, healthcheck, robots.txt en sitemap.
 
+### Releasebeleid
+
+- **Geen automatische release voor kleine fixes**.
+- **Automatisch releasen alleen bij breaking changes**.
+- Vereiste signalen:
+  - commit subject bevat `!`
+  - of `BREAKING CHANGE:` in de commit message
+  - of `feat!:` / `fix!:`
+- Dan maakt GitHub Actions automatisch een nieuwe `vX.0.0`-tag aan en publiceert een GitHub Release.
+
+### Nightly checks
+
+De `nightly-loop.js`-workflow draait op vaste tijdstippen en voert extra productiecontroles uit, waaronder:
+
+- bundle-size check
+- SEO smoke test voor homepage, robots.txt en sitemap
+- Lighthouse-score controle
+- audit en security scans
+- logboek en dashboard updates
+
 - Pull request naar `main`: automatische Preview Deployment
 - Push naar `main`: automatische Production Deployment
 - Na een geslaagde CI-run: automatische production smoke test wanneer de GitHub repository variable `PRODUCTION_URL` is ingesteld

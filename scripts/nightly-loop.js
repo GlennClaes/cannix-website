@@ -25,6 +25,7 @@ const NIGHTLY_TASKS = [
     { id: 'typecheck', name: 'TypeScript', cmd: 'npm run typecheck', critical: true },
     { id: 'build', name: 'Production Build', cmd: 'npm run build', critical: true },
     { id: 'bundle-check', name: 'Bundle Size Check', cmd: 'node scripts/check-bundle-size.js', critical: true },
+    { id: 'seo-smoke', name: 'SEO Smoke Check', cmd: 'PRODUCTION_URL=https://cannix.be node scripts/seo-smoke-check.js', critical: false },
     { id: 'lighthouse', name: 'Lighthouse CI', cmd: 'npx @lhci/cli@latest autorun --collect.startServerCommand="npm run start"', critical: false },
     // The dedicated GitHub Actions workflow performs the authoritative secrets scan.
     { id: 'secrets-scan', name: 'Secrets Scan', cmd: 'npx trufflehog filesystem . --fail', critical: false },

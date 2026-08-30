@@ -9,7 +9,9 @@
     "lint": "eslint . --max-warnings=0",
     "check": "npm run lint && npm run typecheck && npm run build",
     "typecheck": "tsc --noEmit",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "smoke": "node scripts/smoke-routes.js --base http://localhost:3000",
+    "check:links": "node scripts/check-links.js --base http://localhost:3000"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.9.1",

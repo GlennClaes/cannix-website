@@ -1,35 +1,75 @@
-name: Release - GitHub Release
+name: Release - Major Changes Only
 
 on:
   push:
-    tags:
-      - "v*.*.*"
+    branches: [main]
   workflow_dispatch:
-    inputs:
-      tag:
-        description: "Existing version tag to release"
-        required: true
-        type: string
 
 permissions:
   contents: write
 
 jobs:
-  release:
-    name: Publish GitHub Release
+  auto-release:
+    name: Publish release for breaking changes
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Create GitHub Release
+      - name: Detect breaking change
+        id: detect
+        shell: bash
+        run: |
+          git fetch --tags --force
+          latest_tag=$(git tag --sort=-v:refname | head -n 1)
+          if [ -z "$latest_tag" ]; then
+            latest_tag="v0.0.0"
+          fi
+
+          echo "Latest tag: $latest_tag"
+          if git rev-list "$latest_tag" >/dev/null 2>&1; then
+            range="${latest_tag}..HEAD"
+          else
+            range="HEAD"
+          fi
+
+          if git log "$range" --pretty=format:'%s%n%b' | grep -E '(^|[[:space:]])!|BREAKING CHANGE:|BREAKING-CHANGE:' >/dev/null; then
+            current=${latest_tag#v}
+            IFS='.' read -r major minor patch <<< "$current"
+            next_major=$((major + 1))
+            next_tag="v${next_major}.0.0"
+            echo "should_release=true" >> "$GITHUB_OUTPUT"
+            echo "next_tag=${next_tag}" >> "$GITHUB_OUTPUT"
+          else
+            echo "should_release=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create and push tag
+        if: steps.detect.outputs.should_release == 'true'
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git rev-parse --verify "${{ steps.detect.outputs.next_tag }}" >/dev/null 2>&1; then
+            echo "Tag already exists: ${{ steps.detect.outputs.next_tag }}"
+            exit 0
+          fi
+          git tag "${{ steps.detect.outputs.next_tag }}"
+          git push origin "${{ steps.detect.outputs.next_tag }}"
+
+      - name: Publish GitHub Release
+        if: steps.detect.outputs.should_release == 'true'
         uses: softprops/action-gh-release@3d0d9888cb7fd7b750713d6e236d1fcb99157228
         with:
-          tag_name: ${{ inputs.tag || github.ref_name }}
+          tag_name: ${{ steps.detect.outputs.next_tag }}
           generate_release_notes: true
           make_latest: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Skip release for non-breaking changes
+        if: steps.detect.outputs.should_release != 'true'
+        run: echo "No breaking change detected; no release tag created."
