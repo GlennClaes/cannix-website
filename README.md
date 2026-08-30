@@ -52,7 +52,7 @@ cp .env.example .env.local
 
 ```env
 # Optional: canonical site URL. Leave empty until a custom domain is connected.
-NEXT_PUBLIC_SITE_URL=
+SITE_URL=
 
 # Resend (required for the contact form in production)
 RESEND_API_KEY=re_...

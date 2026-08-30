@@ -49,10 +49,10 @@ De repository ondersteunt Node.js 22 en 24 (`package.json`). Kies in Vercel bij 
 | `RESEND_API_KEY` | Ja | Ja | Optioneel |
 | `MAIL_TO` | Ja | Ja | Optioneel |
 | `MAIL_FROM` | Ja | Ja | Optioneel |
-| `NEXT_PUBLIC_SITE_URL` | Optioneel | Optioneel | Optioneel |
-Zolang `cannix.be` nog niet beschikbaar is, laat je `NEXT_PUBLIC_SITE_URL` leeg. De site gebruikt
+| `SITE_URL` | Optioneel | Optioneel | Optioneel |
+Zolang `cannix.be` nog niet beschikbaar is, laat je `SITE_URL` leeg. De site gebruikt
 dan automatisch de Vercel-deployment-URL (en lokaal `http://localhost:3000`). Zodra het domein
-gekoppeld is, stel je `NEXT_PUBLIC_SITE_URL=https://cannix.be` in voor Production.
+gekoppeld is, stel je `SITE_URL=https://cannix.be` in voor Production.
 Preview-deployments krijgen automatisch `noindex`, zodat tijdelijke URLs niet in Google verschijnen.
 
 Gebruik voor Preview bij voorkeur een aparte testmailbox, zodat testaanvragen niet tussen echte boekingen terechtkomen.

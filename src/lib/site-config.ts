@@ -2,7 +2,7 @@ const defaultSiteUrl = "http://localhost:3000";
 const productionSiteUrl = "https://cannix.be";
 
 function resolveSiteUrl(): string {
-    const configuredUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+    const configuredUrl = process.env.SITE_URL?.trim();
     const vercelEnv = process.env.VERCEL_ENV?.trim();
     const vercelUrl = process.env.VERCEL_URL?.trim();
 
@@ -28,4 +28,4 @@ function resolveSiteUrl(): string {
 export const siteUrl = resolveSiteUrl();
 export const isProductionSite =
     process.env.VERCEL_ENV === "production" ||
-    process.env.NEXT_PUBLIC_SITE_URL?.includes("cannix.be") === true;
+    process.env.SITE_URL?.includes("cannix.be") === true;
