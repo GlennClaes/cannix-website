@@ -4,6 +4,12 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      force:
+        description: "Force release (ignore breaking change check)"
+        required: false
+        default: "false"
+        type: boolean
 
 permissions:
   contents: write
@@ -19,7 +25,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Detect breaking change
+      - name: Detect breaking change or force release
         id: detect
         shell: bash
         run: |
@@ -36,7 +42,16 @@ jobs:
             range="HEAD"
           fi
 
-          if git log "$range" --pretty=format:'%s%n%b' | grep -E '(^|[[:space:]])!|BREAKING CHANGE:|BREAKING-CHANGE:' >/dev/null; then
+          # Check for breaking change OR force flag from manual trigger
+          if [ "${{ inputs.force }}" = "true" ]; then
+            echo "Force release requested via workflow_dispatch"
+            current=${latest_tag#v}
+            IFS='.' read -r major minor patch <<< "$current"
+            next_major=$((major + 1))
+            next_tag="v${next_major}.0.0"
+            echo "should_release=true" >> "$GITHUB_OUTPUT"
+            echo "next_tag=${next_tag}" >> "$GITHUB_OUTPUT"
+          elif git log "$range" --pretty=format:'%s%n%b' | grep -E '(^|[[:space:]])!|BREAKING CHANGE:|BREAKING-CHANGE:' >/dev/null; then
             current=${latest_tag#v}
             IFS='.' read -r major minor patch <<< "$current"
             next_major=$((major + 1))
@@ -72,4 +87,4 @@ jobs:
 
       - name: Skip release for non-breaking changes
         if: steps.detect.outputs.should_release != 'true'
-        run: echo "No breaking change detected; no release tag created."
+        run: echo "No breaking change detected; no release tag created. Use 'force' option to create a release manually."
