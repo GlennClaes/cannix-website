@@ -5,6 +5,10 @@
 [![Vercel](https://img.shields.io/badge/Deployment-Vercel-000000?logo=vercel&logoColor=white)](https://vercel.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
 
+<div align="center">
+  <img src="public/images/logo_cannix.png" alt="Cannix Logo" width="200">
+</div>
+
 A production-ready marketing and booking website for Cannix, built with Next.js and deployed to Vercel. The project includes multilingual routing, a contact form, SEO metadata, accessibility-focused frontend work, and automated release and maintenance checks.
 
 For infrastructure, DNS, deployment, and production configuration, see [DEPLOYMENT.md](./DEPLOYMENT.md).
@@ -69,7 +73,7 @@ NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in je browser.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ### Build & Production
 
@@ -135,31 +139,31 @@ src/
 
 ## Required Assets
 
-Voeg deze assets toe aan `public/`:
+Add these assets to `public/`:
 
-| Bestand | Specificaties | Opmerking |
+| File | Specifications | Notes |
 |---------|--------------|-----------|
-| `public/videos/splash-bg.mp4` | 1080p, 15-20s, H.264, ~2MB, muted, loop | Achtergrondvideo splash |
-| `public/videos/splash-poster.jpg` | 1920x1080, ~100KB | Poster frame voor video |
-| `public/images/logo_cannix.png` | Transparant, ~120x54px | Logo in header/footer |
+| `public/videos/splash-bg.mp4` | 1080p, 15-20s, H.264, ~2MB, muted, loop | Splash background video |
+| `public/videos/splash-poster.jpg` | 1920x1080, ~100KB | Poster frame for the video |
+| `public/images/logo_cannix.png` | Transparent, ~120x54px | Logo in header/footer |
 
-De gallery afbeeldingen worden automatisch gekopieerd vanuit `assets/images/`.
+The gallery images are copied automatically from `assets/images/`.
 
 ## Customization
 
 ### Design Tokens
 
-Bewerk `src/app/globals.css` → `@theme` blok voor kleuren, typografie, spacing, shadows.
+Edit the `@theme` block in `src/app/globals.css` for colors, typography, spacing, and shadows.
 
 ### Content
 
 - **Bio/Stats/Socials:** `src/content/bio.ts`
 - **Gallery items:** `src/content/gallery.ts`
-- **Video items:** `src/content/videos.ts` (vervang YouTube IDs)
+- **Video items:** `src/content/videos.ts` (replace the YouTube IDs)
 
 ### SEO after launch
 
-Verifieer de site in Google Search Console, dien `/sitemap.xml` in en voeg het bedrijfsprofiel (Google Business Profile) handmatig toe of claim het. Controleer adres-, categorie- en contactgegevens daar rechtstreeks; deze externe verificatie en profielinstellingen kunnen niet vanuit de repository worden uitgevoerd.
+Verify the site in Google Search Console, submit `/sitemap.xml`, and manually add or claim the business profile (Google Business Profile). Check address, category, and contact details there directly; these external verification and profile settings cannot be performed from the repository.
 
 
 ## Deployment
@@ -216,13 +220,13 @@ Results are logged to the nightly log directory and dashboard.
 docker compose up --build
 ```
 
-De compose-configuratie werkt zonder `.env.local`; zet `RESEND_API_KEY`, `MAIL_TO` en `MAIL_FROM` als environment variables voor een werkende mailflow.
+The compose configuration works without `.env.local`; set `RESEND_API_KEY`, `MAIL_TO`, and `MAIL_FROM` as environment variables for a working email flow.
 
-### Andere Platforms
+### Other Platforms
 
 ```bash
 npm run build
-# Output in .next/ - deploy naar Node.js hosting
+# Output in .next/ - deploy to Node.js hosting
 ```
 
 ## Accessibility Checklist
@@ -250,4 +254,4 @@ MIT - Feel free to use for your own projects.
 
 ---
 
-**Gemaakt met ❤️ voor DJ Cannix**
+**Made with ❤️ for DJ Cannix**

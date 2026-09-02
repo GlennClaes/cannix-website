@@ -1,5 +1,5 @@
 # Security Backlog
 
-> Audit gedraaid op 2026-08-29T22:55:17.508Z
+> Audit ran on 2026-08-29T22:55:17.508Z
 
-- [x] Geen bekende NPM kwetsbaarheden gevonden. #security
+- [x] No known NPM vulnerabilities found. #security

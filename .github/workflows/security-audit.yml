@@ -2,7 +2,7 @@ name: Security - Daily Vulnerability Audit
 
 on:
   schedule:
-    - cron: "0 21 * * *" # Elke dag om 21:00 UTC (23:00 CET)
+    - cron: "0 21 * * *" # Daily at 21:00 UTC (23:00 CET)
   workflow_dispatch: { }
 
 permissions:
@@ -30,22 +30,22 @@ jobs:
           const { execSync } = require("child_process");
           const fs = require("fs");
           const backlogPath = "./obsidian-vault/06-Security-Backlog.md";
-          
-          let content = "# Security Backlog\n\n> Audit gedraaid op " + new Date().toISOString() + "\n\n";
-          
+
+          let content = "# Security Backlog\n\n> Audit ran on " + new Date().toISOString() + "\n\n";
+
           try {
             execSync("npm audit --json", { stdio: "pipe" });
-            content += "- [x] Geen bekende NPM kwetsbaarheden gevonden. #security\n";
+            content += "- [x] No known NPM vulnerabilities found. #security\n";
           } catch (err) {
             const audit = JSON.parse(err.stdout.toString() || "{}");
             const vulns = audit.vulnerabilities || {};
             const keys = Object.keys(vulns);
-            content += `### Gevonden Vulnerabilities (${keys.length})\n`;
+            content += `### Found Vulnerabilities (${keys.length})\n`;
             keys.forEach(k => {
-              content += `- [ ] Fix kwetsbaarheid in \`${k}\` (Severity: ${vulns[k].severity}) #security #priority-high\n`;
+              content += `- [ ] Fix vulnerability in \`${k}\` (Severity: ${vulns[k].severity}) #security #priority-high\n`;
             });
           }
-          
+
           fs.writeFileSync(backlogPath, content);
           '
 

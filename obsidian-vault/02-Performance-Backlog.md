@@ -1,8 +1,8 @@
 # Performance Backlog
 
-- [ ] Converteer en optimaliseer afbeeldingen naar WebP/AVIF via `sharp` #performance #priority-high
-- [ ] Genereer blur placeholders (base64) voor `next/image` in de gallery #performance #priority-medium
-- [ ] Pas `next/dynamic` toe voor zware componenten (Modal, Lightbox, Video Player) #performance #priority-high
-- [ ] Optimaliseer font-loading met `font-display: swap` en preloading voor Syne & DM Sans #performance #priority-high
-- [ ] Voeg Caching Headers toe aan `vercel.json` voor statische media assets #performance #priority-medium
-- [ ] Analyseer JS bundle size met `@next/bundle-analyzer` en verklein dependencies #performance #priority-low
+- [ ] Convert and optimize images to WebP/AVIF via `sharp` #performance #priority-high
+- [ ] Generate blur placeholders (base64) for `next/image` in the gallery #performance #priority-medium
+- [ ] Apply `next/dynamic` for heavy components (Modal, Lightbox, Video Player) #performance #priority-high
+- [ ] Optimize font loading with `font-display: swap` and preloading for Syne & DM Sans #performance #priority-high
+- [ ] Add Caching Headers to `vercel.json` for static media assets #performance #priority-medium
+- [ ] Analyze JS bundle size with `@next/bundle-analyzer` and reduce dependencies #performance #priority-low

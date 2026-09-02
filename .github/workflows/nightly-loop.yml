@@ -2,7 +2,7 @@ name: Maintenance - Nightly SEO & Performance
 
 on:
   schedule:
-    - cron: "0 22 * * *" # 00:00 Belgische/Nederlandse tijd (22:00 UTC)
+    - cron: "0 22 * * *" # 00:00 Belgian/Dutch time (22:00 UTC)
   workflow_dispatch: { }
 
 permissions:
@@ -12,7 +12,7 @@ jobs:
   nightly-automation:
     name: Run Nightly Maintenance
     runs-on: ubuntu-latest
-    timeout-minutes: 360 # Maximaal 6 uur draaien
+    timeout-minutes: 360 # Run for max 6 hours
 
     steps:
       - name: Checkout repository
@@ -41,5 +41,5 @@ jobs:
           git config --local user.email "nightly-bot@github.com"
           git config --local user.name "Nightly Automation Bot"
           git add obsidian-vault/
-          git commit -m "docs(nightly): update obsidian backlogs & dashboard [skip ci]" || echo "Geen log wijzigingen"
+          git commit -m "docs(nightly): update obsidian backlogs & dashboard [skip ci]" || echo "No log changes"
           git push origin main

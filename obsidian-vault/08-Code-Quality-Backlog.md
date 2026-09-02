@@ -1,9 +1,9 @@
 # Code Quality & Maintenance Backlog
 
-- [ ] Configureer Bundle Size Budgets in next.config.ts (max 250KB JS) #quality #priority-high
-- [ ] Voeg Visual Regression Testing toe met Chromatic/Percy #quality #priority-medium
-- [ ] Implementeer Mutation Testing met Stryker JS (target > 80%) #quality #priority-low
-- [ ] Voeg Secrets Scanning toe (TruffleHog) in CI pipeline #quality #priority-high
-- [ ] Genereer SBOM (Software Bill of Materials) bij elke release #quality #priority-medium
-- [ ] Automatische Changelog generatie via conventional-commits #quality #priority-medium
-- [ ] Voeg License Compliance check toe (FOSSA / clearlydefined) #quality #priority-low
+- [ ] Configure Bundle Size Budgets in next.config.ts (max 250KB JS) #quality #priority-high
+- [ ] Add Visual Regression Testing with Chromatic/Percy #quality #priority-medium
+- [ ] Implement Mutation Testing with Stryker JS (target > 80%) #quality #priority-low
+- [ ] Add Secrets Scanning (TruffleHog) to CI pipeline #quality #priority-high
+- [ ] Generate SBOM (Software Bill of Materials) on every release #quality #priority-medium
+- [ ] Automatic Changelog generation via conventional-commits #quality #priority-medium
+- [ ] Add License Compliance check (FOSSA / clearlydefined) #quality #priority-low
