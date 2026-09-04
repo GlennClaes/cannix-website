@@ -16,6 +16,7 @@ export default function HomePage() {
     event: "Kermisfuif Loksbergen",
     location: "Loksbergen, Kerkplein",
     time: "01:30 - 03:00",
+    infoUrl: "https://www.instagram.com/p/DcwSdFcMwpM/",
   };
 
   return (
@@ -118,11 +119,11 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
-            <Link href="/contact" className="w-full shrink-0 lg:w-auto">
+            <a href={upcomingGig.infoUrl} target="_blank" rel="noopener noreferrer" className="w-full shrink-0 lg:w-auto">
               <Button glow={true} className="w-full px-6 py-3 text-sm font-bold lg:w-auto">
-                {t("home.tickets")}
+                Info
               </Button>
-            </Link>
+            </a>
           </div>
         </motion.div>
       </section>

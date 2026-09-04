@@ -51,9 +51,7 @@ export function Header() {
     }, [isOpen]);
     const changeLanguage = (value: Language) => {
         setLanguage(value);
-        if (localePrefix) {
-            router.push(localePath(value, currentSlug));
-        }
+        router.push(localePath(value, currentSlug));
     };
     const navItems = [
         { href: "/home", label: t("nav.home") },
