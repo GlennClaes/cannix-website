@@ -44,9 +44,9 @@ export function AnimatedLogo({
         duration: 3.2,
         repeat: Infinity,
         repeatType: "loop" as const,
-        ease: [0.4, 0, 0.2, 1],
+        ease: [0.4, 0, 0.2, 1] as [number, number, number, number],
         times: [0, 0.5, 1],
-    } : { duration: 0.8, ease: [0.16, 1, 0.3, 1] };
+    } : { duration: 0.8, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] };
 
     const LogoContent = (
         <motion.div

@@ -67,12 +67,9 @@ export const metadata: Metadata = {
         },
     },
     icons: {
-        icon: [
-            { url: "/images/logo-cannix.svg", type: "image/svg+xml" },
-            { url: "/images/logo_cannix.webp", type: "image/webp" },
-        ],
-        shortcut: "/images/logo_cannix.webp",
-        apple: "/images/logo_cannix.webp",
+        icon: { url: "/images/favicon.webp", type: "image/webp" },
+        shortcut: "/images/favicon.webp",
+        apple: "/images/favicon.webp",
     },
     manifest: "/site.webmanifest",
     openGraph: {

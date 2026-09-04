@@ -13,6 +13,7 @@ export function BackgroundSystem() {
                     src={backgroundImage}
                     alt="DJ Cannix"
                     fill
+                    priority
                     quality={55}
                     className="object-contain object-center"
                     sizes="100vw"
