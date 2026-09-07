@@ -8,7 +8,7 @@
   "theme_color": "#1A5FD8",
   "icons": [
     {
-      "src": "/images/favicon.webp",
+      "src": "/images/logo_cannix.webp",
       "sizes": "512x512",
       "type": "image/webp",
       "purpose": "any"
