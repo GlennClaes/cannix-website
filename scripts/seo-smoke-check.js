@@ -1,4 +1,4 @@
-const siteUrl = (process.env.PRODUCTION_URL || 'https://cannix.be').replace(/\/+$/, '');
+const siteUrl = (process.env.PRODUCTION_URL || 'https://www.cannix.be').replace(/\/+$/, '');
 const paths = ['/', '/robots.txt', '/sitemap.xml'];
 
 async function main() {

@@ -1,5 +1,5 @@
 const defaultSiteUrl = "http://localhost:3000";
-const productionSiteUrl = "https://cannix.be";
+const productionSiteUrl = "https://www.cannix.be";
 
 function resolveSiteUrl(): string {
     const configuredUrl = process.env.SITE_URL?.trim();
@@ -11,7 +11,9 @@ function resolveSiteUrl(): string {
     }
 
     if (configuredUrl) {
-        return configuredUrl.replace(/\/+$/, "");
+        return configuredUrl
+            .replace(/^(https?:\/\/)cannix\.be(?=\/|$)/i, "$1www.cannix.be")
+            .replace(/\/+$/, "");
     }
 
     if (vercelEnv === "production") {
