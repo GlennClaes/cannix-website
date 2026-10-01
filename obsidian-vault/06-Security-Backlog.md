@@ -1,5 +1,7 @@
 # Security Backlog
 
-> Audit ran on 2026-09-30T00:00:04.285Z
+> Audit ran on 2026-10-01T00:15:04.293Z
 
-- [x] No known NPM vulnerabilities found. #security
+### Found Vulnerabilities (2)
+- [ ] Fix vulnerability in `brace-expansion` (Severity: high) #security #priority-high
+- [ ] Fix vulnerability in `next` (Severity: critical) #security #priority-high
