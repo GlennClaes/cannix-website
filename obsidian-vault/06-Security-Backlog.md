@@ -1,6 +1,6 @@
 # Security Backlog
 
-> Audit ran on 2026-10-03T23:26:02.513Z
+> Audit ran on 2026-10-04T23:42:20.487Z
 
 ### Found Vulnerabilities (7)
 - [ ] Fix vulnerability in `@next/eslint-plugin-next` (Severity: high) #security #priority-high
