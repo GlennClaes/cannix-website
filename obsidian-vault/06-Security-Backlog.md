@@ -1,14 +1,10 @@
 # Security Backlog
 
-> Audit ran on 2026-10-22T23:46:07.946Z
+> Audit ran on 2026-10-23T23:39:25.302Z
 
-### Found Vulnerabilities (9)
-- [ ] Fix vulnerability in `@next/eslint-plugin-next` (Severity: high) #security #priority-high
+### Found Vulnerabilities (5)
 - [ ] Fix vulnerability in `brace-expansion` (Severity: high) #security #priority-high
-- [ ] Fix vulnerability in `braces` (Severity: high) #security #priority-high
-- [ ] Fix vulnerability in `eslint-config-next` (Severity: high) #security #priority-high
-- [ ] Fix vulnerability in `fast-glob` (Severity: high) #security #priority-high
-- [ ] Fix vulnerability in `micromatch` (Severity: high) #security #priority-high
 - [ ] Fix vulnerability in `next` (Severity: critical) #security #priority-high
 - [ ] Fix vulnerability in `sharp` (Severity: high) #security #priority-high
 - [ ] Fix vulnerability in `source-map-js` (Severity: high) #security #priority-high
+- [ ] Fix vulnerability in `zod` (Severity: high) #security #priority-high
