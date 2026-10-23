@@ -36,7 +36,7 @@ jobs:
       # Chromatic is enabled automatically once Storybook and its project token exist.
       - name: Publish Storybook to Chromatic
         if: ${{ hashFiles('.storybook/**', 'storybook/**') != '' }}
-        uses: chromaui/action@v17
+        uses: chromaui/action@v18
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           buildScriptName: build-storybook
