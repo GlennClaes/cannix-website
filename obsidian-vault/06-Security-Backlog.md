@@ -1,6 +1,6 @@
 # Security Backlog
 
-> Audit ran on 2026-10-31T23:51:54.500Z
+> Audit ran on 2026-11-02T00:02:41.855Z
 
 ### Found Vulnerabilities (21)
 - [ ] Fix vulnerability in `@eslint-community/eslint-utils` (Severity: moderate) #security #priority-high
