@@ -1,23 +1,15 @@
 # Security Backlog
 
-> Audit ran on 2026-11-04T00:58:47.264Z
+> Audit ran on 2026-11-05T01:09:49.738Z
 
-### Found Vulnerabilities (21)
-- [ ] Fix vulnerability in `@eslint-community/eslint-utils` (Severity: moderate) #security #priority-high
-- [ ] Fix vulnerability in `@eslint/config-array` (Severity: moderate) #security #priority-high
-- [ ] Fix vulnerability in `@eslint/eslintrc` (Severity: moderate) #security #priority-high
-- [ ] Fix vulnerability in `@next/eslint-plugin-next` (Severity: moderate) #security #priority-high
+### Found Vulnerabilities (13)
 - [ ] Fix vulnerability in `@typescript-eslint/eslint-plugin` (Severity: moderate) #security #priority-high
 - [ ] Fix vulnerability in `@typescript-eslint/parser` (Severity: moderate) #security #priority-high
 - [ ] Fix vulnerability in `@typescript-eslint/type-utils` (Severity: moderate) #security #priority-high
 - [ ] Fix vulnerability in `@typescript-eslint/typescript-estree` (Severity: moderate) #security #priority-high
 - [ ] Fix vulnerability in `@typescript-eslint/utils` (Severity: moderate) #security #priority-high
 - [ ] Fix vulnerability in `brace-expansion` (Severity: high) #security #priority-high
-- [ ] Fix vulnerability in `eslint` (Severity: moderate) #security #priority-high
 - [ ] Fix vulnerability in `eslint-config-next` (Severity: moderate) #security #priority-high
-- [ ] Fix vulnerability in `eslint-plugin-import` (Severity: moderate) #security #priority-high
-- [ ] Fix vulnerability in `eslint-plugin-jsx-a11y` (Severity: moderate) #security #priority-high
-- [ ] Fix vulnerability in `eslint-plugin-react` (Severity: moderate) #security #priority-high
 - [ ] Fix vulnerability in `minimatch` (Severity: moderate) #security #priority-high
 - [ ] Fix vulnerability in `next` (Severity: critical) #security #priority-high
 - [ ] Fix vulnerability in `sharp` (Severity: high) #security #priority-high
