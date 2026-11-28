@@ -1,6 +1,6 @@
 # Security Backlog
 
-> Audit ran on 2026-11-27T03:22:54.621Z
+> Audit ran on 2026-11-28T03:00:21.955Z
 
 ### Found Vulnerabilities (12)
 - [ ] Fix vulnerability in `@typescript-eslint/eslint-plugin` (Severity: moderate) #security #priority-high
